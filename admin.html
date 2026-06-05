@@ -8,463 +8,88 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
 <style>
-/* ---------- DARK MODERN ADMIN (LARGER, READABLE) ---------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  font-family: 'Outfit', sans-serif;
-  background: #01010a;
-  color: #eeeeff;
-  overflow-x: hidden;
-}
-button {
-  cursor: pointer;
-  font-family: inherit;
-}
-input, textarea, select {
-  font-family: 'Outfit', monospace;
-  background: #0f0f1c;
-  border: 1.5px solid #2a2a4a;
-  color: #f0f0ff;
-  border-radius: 14px;
-  padding: 14px 16px;
-  font-size: 16px;
-  transition: 0.2s;
-  width: 100%;
-}
-input:focus, textarea:focus, select:focus {
-  outline: none;
-  border-color: #a89eff;
-  box-shadow: 0 0 0 3px rgba(168,158,255,0.2);
-}
-textarea {
-  resize: vertical;
-  line-height: 1.6;
-}
-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #b8adff;
-  margin-bottom: 8px;
-  display: block;
-}
-
-/* Screens */
-.screen { display: none; min-height: 100vh; }
-.screen.active { display: flex; }
-
-/* Login + Config (glass) */
-#loginScreen, #configScreen {
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(ellipse at 30% 40%, #12102a, #01010a);
-}
-.login-card, .config-card {
-  background: rgba(10, 10, 25, 0.85);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(168,158,255,0.3);
-  border-radius: 2rem;
-  padding: 3rem;
-  width: 100%;
-  max-width: 520px;
-  box-shadow: 0 25px 45px rgba(0,0,0,0.5);
-}
-.login-logo {
-  font-family: 'Bebas Neue', cursive;
-  font-size: 3rem;
-  background: linear-gradient(135deg, #fff, #bfb5ff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-.login-title {
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: 2rem;
-  font-weight: 800;
-  margin-top: 0.5rem;
-}
-.field {
-  margin-bottom: 1.8rem;
-}
-.btn-primary {
-  width: 100%;
-  padding: 1rem;
-  background: linear-gradient(135deg, #a89eff, #7a6bdb);
-  border: none;
-  border-radius: 3rem;
-  font-weight: 700;
-  font-size: 1rem;
-  color: #01010a;
-  transition: 0.2s;
-}
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(168,158,255,0.4);
-}
-.hash-display {
-  background: #0c0c18;
-  padding: 1rem;
-  border-radius: 1rem;
-  font-family: monospace;
-  font-size: 0.85rem;
-  word-break: break-all;
-  margin-top: 0.5rem;
-  color: #bfb5ff;
-}
-.config-actions, .modal-actions {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-.btn-ghost {
-  background: transparent;
-  border: 1.5px solid #a89eff;
-  border-radius: 3rem;
-  padding: 0.8rem;
-  color: #a89eff;
-  font-weight: 600;
-  width: 100%;
-}
-
-/* Dashboard */
-#dashScreen {
-  flex-direction: column;
-}
-.topbar {
-  height: 76px;
-  background: rgba(1, 1, 10, 0.92);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(168,158,255,0.2);
-  display: flex;
-  align-items: center;
-  padding: 0 2rem;
-  gap: 1.5rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.topbar-logo {
-  font-family: 'Bebas Neue', cursive;
-  font-size: 2rem;
-  background: linear-gradient(135deg, #fff, #bfb5ff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-.topbar-title {
-  flex: 1;
-  font-size: 0.85rem;
-  color: #a2a2d0;
-  letter-spacing: 0.04em;
-}
-.topbar-actions {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-.status-dot.ok { background: #22c55e; box-shadow: 0 0 0 2px rgba(34,197,94,0.3); }
-.status-dot.err { background: #ef4444; }
-.status-dot.idle { background: #f59e0b; }
-.topbar-btn {
-  padding: 0.6rem 1.4rem;
-  border-radius: 3rem;
-  background: rgba(168,158,255,0.1);
-  border: 1px solid rgba(168,158,255,0.3);
-  color: white;
-  font-weight: 600;
-  font-size: 0.85rem;
-  transition: 0.2s;
-}
-.topbar-btn.primary {
-  background: #a89eff;
-  color: #01010a;
-  border: none;
-}
-.topbar-btn.danger {
-  border-color: #ef4444;
-  color: #fca5a5;
-}
-.dashboard-body {
-  display: flex;
-  height: calc(100vh - 76px);
-  overflow: hidden;
-}
-/* Sidebar - more spacious list */
-.sidebar {
-  width: 340px;
-  background: rgba(8, 8, 20, 0.85);
-  border-right: 1px solid rgba(168,158,255,0.1);
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-}
-.sidebar-header {
-  padding: 1.5rem 1.5rem 0.8rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 700;
-}
-.sidebar-count {
-  background: rgba(168,158,255,0.2);
-  padding: 0.2rem 0.7rem;
-  border-radius: 2rem;
-  font-size: 0.8rem;
-}
-.new-post-btn {
-  margin: 1rem 1.2rem;
-  padding: 0.9rem;
-  background: linear-gradient(135deg, #a89eff, #7a6bdb);
-  border: none;
-  border-radius: 3rem;
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: #01010a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.post-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 0.5rem 0.8rem;
-}
-.post-item {
-  padding: 1rem 1rem;
-  border-radius: 1rem;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  transition: 0.2s;
-  border: 1px solid transparent;
-}
-.post-item:hover {
-  background: #1a1a30;
-  border-color: rgba(168,158,255,0.3);
-}
-.post-item.active {
-  background: rgba(168,158,255,0.15);
-  border-color: #a89eff;
-}
-.post-item-title {
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 4px;
-}
-.post-item-meta {
-  font-size: 0.7rem;
-  color: #9a9ac0;
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-/* Editor area - large comfortable fields */
-.editor-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.editor-placeholder {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 1rem;
-  color: #6a6a9a;
-}
-.editor-toolbar {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(168,158,255,0.1);
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.editor-tabs {
-  display: flex;
-  background: #0c0c18;
-  border-radius: 3rem;
-  padding: 0.2rem;
-}
-.editor-tab {
-  padding: 0.5rem 1.4rem;
-  border-radius: 3rem;
-  background: transparent;
-  border: none;
-  color: #aaaaff;
-  font-weight: 600;
-  font-size: 0.85rem;
-}
-.editor-tab.active {
-  background: #a89eff;
-  color: #01010a;
-}
-.img-upload-btn {
-  background: rgba(168,158,255,0.15);
-  border: 1px solid #a89eff;
-  border-radius: 3rem;
-  padding: 0.5rem 1.2rem;
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: #cdbeff;
-}
-.editor-panes {
-  flex: 1;
-  display: grid;
-  overflow: hidden;
-}
-.editor-panes.split {
-  grid-template-columns: 1fr 1fr;
-}
-.fields-pane {
-  padding: 2rem;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.8rem;
-}
-.editor-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-#contentArea {
-  min-height: 480px;
-  font-family: 'Courier New', 'Fira Code', monospace;
-  font-size: 14px;
-  line-height: 1.7;
-  padding: 16px;
-}
-.char-count {
-  font-size: 0.7rem;
-  color: #8a8aba;
-  text-align: right;
-  margin-top: 4px;
-}
-.preview-pane {
-  padding: 2rem;
-  border-left: 1px solid rgba(168,158,255,0.1);
-  overflow-y: auto;
-  background: #05050c;
-}
-/* Preview markdown styles (matching blog) */
-.preview-pane h1, .preview-pane h2, .preview-pane h3 {
-  color: white;
-  margin-top: 1.5rem;
-  margin-bottom: 0.8rem;
-}
-.preview-pane p {
-  margin-bottom: 1rem;
-  color: #ddddf5;
-}
-.preview-pane code {
-  background: rgba(168,158,255,0.15);
-  padding: 0.2rem 0.4rem;
-  border-radius: 6px;
-}
-.preview-pane pre {
-  background: #0a0a14;
-  border-radius: 1rem;
-  padding: 1.2rem;
-  overflow-x: auto;
-}
-.preview-pane table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-  background: rgba(10,10,20,0.6);
-  border-radius: 1rem;
-  overflow: hidden;
-}
-.preview-pane th, .preview-pane td {
-  border: 1px solid rgba(168,158,255,0.25);
-  padding: 0.7rem 1rem;
-  text-align: left;
-}
-.preview-pane th {
-  background: rgba(168,158,255,0.15);
-  color: white;
-}
-.preview-pane td {
-  background: rgba(15,15,28,0.7);
-}
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(8px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-}
-.modal-overlay.show { display: flex; }
-.modal {
-  background: #11111e;
-  border-radius: 2rem;
-  padding: 2rem;
-  max-width: 440px;
-  width: 90%;
-  border: 1px solid #a89eff;
-}
-.modal h3 {
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
-}
-.modal-actions {
-  margin-top: 1.8rem;
-}
-.toast-wrap {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  z-index: 300;
-}
-.toast {
-  padding: 0.8rem 1.5rem;
-  border-radius: 2rem;
-  background: #1a1a30;
-  border-left: 4px solid #a89eff;
-  font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-.spin {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-@media (max-width: 900px) {
-  .sidebar { width: 280px; }
-}
-@media (max-width: 700px) {
-  .dashboard-body { flex-direction: column; height: auto; }
-  .sidebar { width: 100%; height: auto; max-height: 260px; border-right: none; border-bottom: 1px solid rgba(168,158,255,0.2); }
-  .editor-panes.split { grid-template-columns: 1fr; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:#01010a;color:#eeeeff;overflow-x:hidden;}
+button{cursor:pointer;font-family:inherit;}
+input,textarea,select{font-family:'Outfit',monospace;background:#0f0f1c;border:1.5px solid #2a2a4a;color:#f0f0ff;border-radius:14px;padding:14px 16px;font-size:16px;transition:0.2s;width:100%;}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#a89eff;box-shadow:0 0 0 3px rgba(168,158,255,0.2);}
+textarea{resize:vertical;line-height:1.6;}
+label{font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#b8adff;margin-bottom:8px;display:block;}
+.screen{display:none;min-height:100vh;}
+.screen.active{display:flex;}
+#loginScreen,#configScreen{align-items:center;justify-content:center;background:radial-gradient(ellipse at 30% 40%,#12102a,#01010a);}
+.login-card,.config-card{background:rgba(10,10,25,0.85);backdrop-filter:blur(16px);border:1px solid rgba(168,158,255,0.3);border-radius:2rem;padding:3rem;width:100%;max-width:520px;box-shadow:0 25px 45px rgba(0,0,0,0.5);}
+.login-logo{font-family:'Bebas Neue',cursive;font-size:3rem;background:linear-gradient(135deg,#fff,#bfb5ff);background-clip:text;-webkit-background-clip:text;color:transparent;}
+.login-title{font-family:'Bricolage Grotesque',sans-serif;font-size:2rem;font-weight:800;margin-top:0.5rem;}
+.field{margin-bottom:1.8rem;}
+.btn-primary{width:100%;padding:1rem;background:linear-gradient(135deg,#a89eff,#7a6bdb);border:none;border-radius:3rem;font-weight:700;font-size:1rem;color:#01010a;transition:0.2s;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(168,158,255,0.4);}
+.hash-display{background:#0c0c18;padding:1rem;border-radius:1rem;font-family:monospace;font-size:0.85rem;word-break:break-all;margin-top:0.5rem;color:#bfb5ff;}
+.config-actions,.modal-actions{display:flex;gap:1rem;margin-top:1.5rem;}
+.btn-ghost{background:transparent;border:1.5px solid #a89eff;border-radius:3rem;padding:0.8rem;color:#a89eff;font-weight:600;width:100%;}
+#dashScreen{flex-direction:column;}
+.topbar{height:76px;background:rgba(1,1,10,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(168,158,255,0.2);display:flex;align-items:center;padding:0 2rem;gap:1.5rem;position:sticky;top:0;z-index:100;}
+.topbar-logo{font-family:'Bebas Neue',cursive;font-size:2rem;background:linear-gradient(135deg,#fff,#bfb5ff);background-clip:text;-webkit-background-clip:text;color:transparent;}
+.topbar-title{flex:1;font-size:0.85rem;color:#a2a2d0;letter-spacing:0.04em;}
+.topbar-actions{display:flex;gap:1rem;align-items:center;}
+.status-dot{width:10px;height:10px;border-radius:50%;}
+.status-dot.ok{background:#22c55e;box-shadow:0 0 0 2px rgba(34,197,94,0.3);}
+.status-dot.err{background:#ef4444;}
+.status-dot.idle{background:#f59e0b;}
+.topbar-btn{padding:0.6rem 1.4rem;border-radius:3rem;background:rgba(168,158,255,0.1);border:1px solid rgba(168,158,255,0.3);color:white;font-weight:600;font-size:0.85rem;transition:0.2s;}
+.topbar-btn.primary{background:#a89eff;color:#01010a;border:none;}
+.topbar-btn.danger{border-color:#ef4444;color:#fca5a5;}
+.dashboard-body{display:flex;height:calc(100vh - 76px);overflow:hidden;}
+.sidebar{width:340px;background:rgba(8,8,20,0.85);border-right:1px solid rgba(168,158,255,0.1);display:flex;flex-direction:column;flex-shrink:0;}
+.sidebar-header{padding:1.5rem 1.5rem 0.8rem;display:flex;justify-content:space-between;align-items:center;font-weight:700;}
+.sidebar-count{background:rgba(168,158,255,0.2);padding:0.2rem 0.7rem;border-radius:2rem;font-size:0.8rem;}
+.new-post-btn{margin:1rem 1.2rem;padding:0.9rem;background:linear-gradient(135deg,#a89eff,#7a6bdb);border:none;border-radius:3rem;font-weight:700;font-size:0.9rem;color:#01010a;display:flex;align-items:center;justify-content:center;gap:0.5rem;}
+.post-list{flex:1;overflow-y:auto;padding:0.5rem 0.8rem;}
+.post-item{padding:1rem 1rem;border-radius:1rem;margin-bottom:0.5rem;cursor:pointer;transition:0.2s;border:1px solid transparent;}
+.post-item:hover{background:#1a1a30;border-color:rgba(168,158,255,0.3);}
+.post-item.active{background:rgba(168,158,255,0.15);border-color:#a89eff;}
+.post-item-title{font-weight:600;font-size:1rem;margin-bottom:4px;}
+.post-item-meta{font-size:0.7rem;color:#9a9ac0;display:flex;gap:0.5rem;flex-wrap:wrap;}
+.editor-area{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.editor-placeholder{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;color:#6a6a9a;}
+.editor-toolbar{padding:1rem 1.5rem;border-bottom:1px solid rgba(168,158,255,0.1);display:flex;gap:1rem;align-items:center;flex-wrap:wrap;}
+.editor-tabs{display:flex;background:#0c0c18;border-radius:3rem;padding:0.2rem;}
+.editor-tab{padding:0.5rem 1.4rem;border-radius:3rem;background:transparent;border:none;color:#aaaaff;font-weight:600;font-size:0.85rem;}
+.editor-tab.active{background:#a89eff;color:#01010a;}
+.img-upload-btn{background:rgba(168,158,255,0.15);border:1px solid #a89eff;border-radius:3rem;padding:0.5rem 1.2rem;font-weight:600;font-size:0.85rem;color:#cdbeff;}
+.editor-panes{flex:1;display:grid;overflow:hidden;}
+.editor-panes.split{grid-template-columns:1fr 1fr;}
+.fields-pane{padding:2rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.8rem;}
+.editor-field{display:flex;flex-direction:column;gap:6px;}
+#contentArea{min-height:480px;font-family:'Courier New','Fira Code',monospace;font-size:14px;line-height:1.7;padding:16px;}
+.char-count{font-size:0.7rem;color:#8a8aba;text-align:right;margin-top:4px;}
+.preview-pane{padding:2rem;border-left:1px solid rgba(168,158,255,0.1);overflow-y:auto;background:#05050c;}
+.preview-pane h1,.preview-pane h2,.preview-pane h3{color:white;margin-top:1.5rem;margin-bottom:0.8rem;}
+.preview-pane p{margin-bottom:1rem;color:#ddddf5;}
+.preview-pane code{background:rgba(168,158,255,0.15);padding:0.2rem 0.4rem;border-radius:6px;}
+.preview-pane pre{background:#0a0a14;border-radius:1rem;padding:1.2rem;overflow-x:auto;}
+.preview-pane table{width:100%;border-collapse:collapse;margin:1.5rem 0;background:rgba(10,10,20,0.6);border-radius:1rem;overflow:hidden;}
+.preview-pane th,.preview-pane td{border:1px solid rgba(168,158,255,0.25);padding:0.7rem 1rem;text-align:left;}
+.preview-pane th{background:rgba(168,158,255,0.15);color:white;}
+.preview-pane td{background:rgba(15,15,28,0.7);}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:200;}
+.modal-overlay.show{display:flex;}
+.modal{background:#11111e;border-radius:2rem;padding:2rem;max-width:440px;width:90%;border:1px solid #a89eff;}
+.modal h3{font-size:1.6rem;margin-bottom:0.5rem;}
+.modal-actions{margin-top:1.8rem;}
+.toast-wrap{position:fixed;bottom:1.5rem;right:1.5rem;display:flex;flex-direction:column;gap:0.6rem;z-index:300;}
+.toast{padding:0.8rem 1.5rem;border-radius:2rem;background:#1a1a30;border-left:4px solid #a89eff;font-weight:500;box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@media (max-width:900px){.sidebar{width:280px;}}
+@media (max-width:700px){
+  .dashboard-body{flex-direction:column;height:auto;}
+  .sidebar{width:100%;height:auto;max-height:260px;border-right:none;border-bottom:1px solid rgba(168,158,255,0.2);}
+  .editor-panes.split{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
-
 <div class="screen" id="configScreen">
   <div class="config-card">
     <h2>⚙️ First-Time Setup</h2>
@@ -474,7 +99,6 @@ label {
     <div class="config-actions"><button class="btn-ghost" onclick="showScreen('loginScreen')">← Back</button><button class="btn-primary" onclick="copyHash()">📋 Copy Hash</button></div>
   </div>
 </div>
-
 <div class="screen active" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">LxZy</div>
@@ -487,7 +111,6 @@ label {
     <div class="setup-link" style="margin-top:1rem; text-align:center;"><a onclick="showScreen('configScreen')" style="color:#a89eff; cursor:pointer;">First time? Generate hash</a></div>
   </div>
 </div>
-
 <div class="screen" id="dashScreen">
   <div class="topbar">
     <span class="topbar-logo">LxZy</span><span class="topbar-title">Blog Admin</span>
@@ -512,204 +135,42 @@ label {
     </div>
   </div>
 </div>
-
 <div class="modal-overlay" id="deleteModal"><div class="modal"><h3>Delete Post?</h3><p>Permanently delete "<span id="deleteTitle"></span>"?</p><div class="modal-actions"><button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn-primary" onclick="doDelete()" style="background:#ef4444;">Yes, Delete</button></div></div></div>
 <div class="toast-wrap" id="toastWrap"></div>
-
 <script>
-// ════════════════════════════════════════════
-// CONFIG — EDIT THESE VALUES BEFORE DEPLOY
-// ════════════════════════════════════════════
-const CONFIG = {
-  REPO_OWNER:    'xLazyass',
-  REPO_NAME:     'lxzy.github.io',
-  BRANCH:        'main',
-  POSTS_PATH:    'posts.json',
-  PASSWORD_HASH: 'f4105da046af9ba7495b257eae71f246869e7ee47614fe5c3e37a105fda3b1fe'
-};
-// ════════════════════════════════════════════
-
-let githubToken = '';
-let posts       = [];
-let activeId    = null;
-let isNew       = false;
-let activeTab   = 'write';
-
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-document.getElementById('setupPassword').addEventListener('input', async (e) => {
-  const val = e.target.value;
-  if (!val) { document.getElementById('hashDisplay').textContent = 'Type a password above…'; return; }
-  document.getElementById('hashDisplay').textContent = await sha256(val);
-});
-async function copyHash() {
-  const hash = document.getElementById('hashDisplay').textContent;
-  if (hash.length < 60) { toast('Enter a password first', 'error'); return; }
-  await navigator.clipboard.writeText(hash);
-  toast('Hash copied! Update admin.html', 'success');
-}
-async function doLogin() {
-  const pw    = document.getElementById('passwordInput').value.trim();
-  const token = document.getElementById('tokenInput').value.trim();
-  const err   = document.getElementById('loginError');
-  err.classList.remove('show');
-  if (!pw || !token) { err.textContent = 'Both fields required.'; err.classList.add('show'); return; }
-  const hash = await sha256(pw);
-  if (hash !== CONFIG.PASSWORD_HASH) { err.textContent = 'Incorrect password.'; err.classList.add('show'); return; }
-  githubToken = token;
-  showScreen('dashScreen');
-  loadPosts();
-}
-function logout() { githubToken = ''; posts = []; activeId = null; renderSidebar(); resetEditor(); showScreen('loginScreen'); }
-const API = `https://api.github.com/repos/${CONFIG.REPO_OWNER}/${CONFIG.REPO_NAME}/contents/${CONFIG.POSTS_PATH}`;
-async function ghGet() {
-  const r = await fetch(API + `?ref=${CONFIG.BRANCH}`, { headers: { Authorization: `Bearer ${githubToken}` } });
-  if (!r.ok) throw new Error(`GitHub ${r.status}`);
-  return r.json();
-}
-async function ghPut(content, sha, message) {
-  const r = await fetch(API, { method: 'PUT', headers: { Authorization: `Bearer ${githubToken}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ message, content: btoa(unescape(encodeURIComponent(content))), sha, branch: CONFIG.BRANCH }) });
-  if (!r.ok) throw new Error(`GitHub ${r.status}`);
-  return r.json();
-}
-async function loadPosts() {
-  setStatus('idle');
-  try {
-    const file = await ghGet();
-    const json = decodeURIComponent(escape(atob(file.content.replace(/\n/g,''))));
-    posts = JSON.parse(json);
-    posts.sort((a,b) => new Date(b.date) - new Date(a.date));
-    renderSidebar();
-    setStatus('ok');
-    toast(`Loaded ${posts.length} posts`, 'info');
-  } catch (e) { setStatus('err'); toast('Failed to load posts: ' + e.message, 'error'); }
-}
-async function savePosts(message) {
-  setStatus('idle');
-  const file = await ghGet();
-  const content = JSON.stringify(posts, null, 2);
-  await ghPut(content, file.sha, message);
-  setStatus('ok');
-}
-function renderSidebar() {
-  document.getElementById('postCount').textContent = posts.length;
-  const list = document.getElementById('postList');
-  if (!posts.length) { list.innerHTML = '<div class="empty-sidebar" style="padding:2rem;text-align:center;color:#7a7aaa;"><div class="icon">📝</div><p>No posts yet.<br>Click "New Post" to write your first.</p></div>'; return; }
-  list.innerHTML = posts.map(p => `<div class="post-item ${p.id === activeId ? 'active' : ''}" onclick="selectPost('${p.id}')"><div class="post-item-title">${escapeHtml(p.title)}</div><div class="post-item-meta"><span>${formatDate(p.date)}</span>${p.tags.slice(0,2).map(t => `<span style="background:rgba(168,158,255,0.1); padding:2px 8px; border-radius:20px;">${escapeHtml(t)}</span>`).join('')}</div></div>`).join('');
-}
-function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
-function selectPost(id) {
-  activeId = id; isNew = false;
-  const post = posts.find(p => p.id === id); if (!post) return;
-  renderSidebar(); showEditor();
-  document.getElementById('titleInput').value = post.title;
-  document.getElementById('slugInput').value = post.id;
-  document.getElementById('dateInput').value = post.date;
-  document.getElementById('tagsInput').value = post.tags.join(', ');
-  document.getElementById('summaryInput').value = post.summary;
-  document.getElementById('contentArea').value = post.content;
-  updateWordCount();
-  if (activeTab !== 'write') updatePreview();
-}
-function newPost() {
-  activeId = null; isNew = true;
-  renderSidebar(); showEditor();
-  document.getElementById('titleInput').value = '';
-  document.getElementById('slugInput').value = '';
-  document.getElementById('dateInput').value = new Date().toISOString().slice(0,10);
-  document.getElementById('tagsInput').value = '';
-  document.getElementById('summaryInput').value = '';
-  document.getElementById('contentArea').value = '';
-  updateWordCount();
-}
-function showEditor() {
-  document.getElementById('editorPlaceholder').style.display = 'none';
-  document.getElementById('editorPanel').style.display = 'flex';
-}
-function resetEditor() {
-  document.getElementById('editorPlaceholder').style.display = '';
-  document.getElementById('editorPanel').style.display = 'none';
-  activeId = null; isNew = false;
-}
-function switchTab(tab) {
-  activeTab = tab;
-  document.querySelectorAll('.editor-tab').forEach(btn => btn.classList.toggle('active', btn.innerText.toLowerCase() === tab));
-  const panes = document.getElementById('editorPanes');
-  const fields = document.getElementById('fieldsPane');
-  const preview = document.getElementById('previewPane');
-  if (tab === 'write') { panes.classList.remove('split'); fields.style.display = ''; preview.style.display = 'none'; }
-  if (tab === 'preview') { panes.classList.remove('split'); fields.style.display = 'none'; preview.style.display = ''; updatePreview(); }
-  if (tab === 'split') { panes.classList.add('split'); fields.style.display = ''; preview.style.display = ''; updatePreview(); }
-}
-function onContentChange() { updateWordCount(); if (activeTab !== 'write') updatePreview(); }
-function updatePreview() { if (typeof marked !== 'undefined') document.getElementById('previewPane').innerHTML = marked.parse(document.getElementById('contentArea').value || '*Nothing to preview.*'); else { const s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js'; s.onload=updatePreview; document.head.appendChild(s); } }
-function updateWordCount() { const words = (document.getElementById('contentArea').value.match(/\S+/g) || []).length; document.getElementById('charCount').textContent = words + ' word' + (words !== 1 ? 's' : ''); }
-function slugify(str) { return str.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/[\s_]+/g,'-').replace(/^-+|-+$/g,''); }
-function autoSlug() { if (isNew) document.getElementById('slugInput').value = slugify(document.getElementById('titleInput').value); }
-async function savePost() {
-  const title = document.getElementById('titleInput').value.trim();
-  const slug = document.getElementById('slugInput').value.trim();
-  const date = document.getElementById('dateInput').value;
-  const tags = document.getElementById('tagsInput').value.split(',').map(t=>t.trim()).filter(Boolean);
-  const summary = document.getElementById('summaryInput').value.trim();
-  const content = document.getElementById('contentArea').value.trim();
-  if (!title || !slug || !content) { toast('Title, Slug and Content are required.', 'error'); return; }
-  const duplicate = posts.find(p => p.id === slug && p.id !== activeId);
-  if (duplicate) { toast('Slug already in use.', 'error'); return; }
-  const post = { id: slug, title, date, tags, summary, content };
-  if (isNew) { posts.unshift(post); activeId = slug; isNew = false; } else {
-    const idx = posts.findIndex(p => p.id === activeId);
-    if (idx === -1) { toast('Post not found.', 'error'); return; }
-    if (slug !== activeId) posts.splice(idx, 1, post), activeId = slug;
-    else posts[idx] = post;
-  }
-  const label = document.getElementById('saveBtnLabel');
-  label.innerHTML = '<span class="spin"></span>';
-  try {
-    await savePosts(`blog: ${isNew ? 'add' : 'update'} "${title}"`);
-    toast('Published!', 'success');
-    renderSidebar();
-  } catch (e) { toast('Save failed: ' + e.message, 'error'); if (isNew) posts.shift(); }
-  finally { label.innerHTML = '💾 Publish'; }
-}
-function confirmDelete() { const post = posts.find(p => p.id === activeId); if (!post) return; document.getElementById('deleteTitle').textContent = post.title; document.getElementById('deleteModal').classList.add('show'); }
-function closeModal() { document.getElementById('deleteModal').classList.remove('show'); }
-async function doDelete() {
-  closeModal(); const idx = posts.findIndex(p => p.id === activeId); if (idx === -1) return;
-  const title = posts[idx].title; posts.splice(idx, 1);
-  try { await savePosts(`blog: delete "${title}"`); toast('Post deleted.', 'info'); resetEditor(); renderSidebar(); } catch (e) { toast('Delete failed: ' + e.message, 'error'); posts.splice(idx, 0, posts[idx]); renderSidebar(); }
-}
-function setStatus(state) { const dot = document.getElementById('statusDot'); dot.className = 'status-dot ' + state; }
-function toast(msg, type) { const wrap = document.getElementById('toastWrap'); const el = document.createElement('div'); el.className = 'toast'; el.innerHTML = msg; wrap.appendChild(el); setTimeout(() => { el.style.opacity='0'; setTimeout(()=>el.remove(),400); }, 3500); }
-async function uploadImage(input) {
-  const file = input.files[0]; if (!file) return; input.value = '';
-  toast('Uploading image...', 'info');
-  try {
-    const base64 = await new Promise((res,rej)=>{const r=new FileReader(); r.onload=()=>res(r.result.split(',')[1]); r.onerror=rej; r.readAsDataURL(file);});
-    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '-').toLowerCase();
-    const path = `images/${Date.now()}-${safeName}`;
-    const apiUrl = `https://api.github.com/repos/${CONFIG.REPO_OWNER}/${CONFIG.REPO_NAME}/contents/${path}`;
-    let sha;
-    try { const check = await fetch(apiUrl, { headers: { Authorization: `Bearer ${githubToken}` } }); if (check.ok) { const d = await check.json(); sha = d.sha; } } catch(_) {}
-    const body = { message: `blog: add image ${safeName}`, content: base64, branch: CONFIG.BRANCH }; if (sha) body.sha = sha;
-    const res = await fetch(apiUrl, { method: 'PUT', headers: { Authorization: `Bearer ${githubToken}`, 'Content-Type':'application/json' }, body: JSON.stringify(body) });
-    if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
-    const textarea = document.getElementById('contentArea');
-    const mdSnippet = `\n![${file.name}](${path})\n`;
-    const start = textarea.selectionStart, end = textarea.selectionEnd;
-    textarea.value = textarea.value.slice(0, start) + mdSnippet + textarea.value.slice(end);
-    textarea.selectionStart = textarea.selectionEnd = start + mdSnippet.length;
-    textarea.focus(); onContentChange();
-    toast('Image uploaded!', 'success');
-  } catch(e) { toast('Upload failed: ' + e.message, 'error'); }
-}
-function formatDate(iso) { return new Date(iso).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }); }
+const CONFIG = { REPO_OWNER: 'xLazyass', REPO_NAME: 'lxzy.github.io', BRANCH: 'main', POSTS_PATH: 'posts.json', PASSWORD_HASH: 'f4105da046af9ba7495b257eae71f246869e7ee47614fe5c3e37a105fda3b1fe' };
+let githubToken = '', posts = [], activeId = null, isNew = false, activeTab = 'write';
+async function sha256(str){const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+document.getElementById('setupPassword').addEventListener('input',async(e)=>{const val=e.target.value;if(!val){document.getElementById('hashDisplay').textContent='Type a password above…';return;}document.getElementById('hashDisplay').textContent=await sha256(val);});
+async function copyHash(){const hash=document.getElementById('hashDisplay').textContent;if(hash.length<60){toast('Enter a password first','error');return;}await navigator.clipboard.writeText(hash);toast('Hash copied! Update admin.html','success');}
+async function doLogin(){const pw=document.getElementById('passwordInput').value.trim(),token=document.getElementById('tokenInput').value.trim(),err=document.getElementById('loginError');err.classList.remove('show');if(!pw||!token){err.textContent='Both fields required.';err.classList.add('show');return;}const hash=await sha256(pw);if(hash!==CONFIG.PASSWORD_HASH){err.textContent='Incorrect password.';err.classList.add('show');return;}githubToken=token;showScreen('dashScreen');loadPosts();}
+function logout(){githubToken='';posts=[];activeId=null;renderSidebar();resetEditor();showScreen('loginScreen');}
+const API=`https://api.github.com/repos/${CONFIG.REPO_OWNER}/${CONFIG.REPO_NAME}/contents/${CONFIG.POSTS_PATH}`;
+async function ghGet(){const r=await fetch(API+`?ref=${CONFIG.BRANCH}`,{headers:{Authorization:`Bearer ${githubToken}`}});if(!r.ok)throw new Error(`GitHub ${r.status}`);return r.json();}
+async function ghPut(content,sha,message){const r=await fetch(API,{method:'PUT',headers:{Authorization:`Bearer ${githubToken}`,'Content-Type':'application/json'},body:JSON.stringify({message,content:btoa(unescape(encodeURIComponent(content))),sha,branch:CONFIG.BRANCH})});if(!r.ok)throw new Error(`GitHub ${r.status}`);return r.json();}
+async function loadPosts(){setStatus('idle');try{const file=await ghGet();const json=decodeURIComponent(escape(atob(file.content.replace(/\n/g,''))));posts=JSON.parse(json);posts.sort((a,b)=>new Date(b.date)-new Date(a.date));renderSidebar();setStatus('ok');toast(`Loaded ${posts.length} posts`,'info');}catch(e){setStatus('err');toast('Failed to load posts: '+e.message,'error');}}
+async function savePosts(message){setStatus('idle');const file=await ghGet();const content=JSON.stringify(posts,null,2);await ghPut(content,file.sha,message);setStatus('ok');}
+function renderSidebar(){document.getElementById('postCount').textContent=posts.length;const list=document.getElementById('postList');if(!posts.length){list.innerHTML='<div class="empty-sidebar" style="padding:2rem;text-align:center;color:#7a7aaa;"><div class="icon">📝</div><p>No posts yet.<br>Click "New Post" to write your first.</p></div>';return;}list.innerHTML=posts.map(p=>`<div class="post-item ${p.id===activeId?'active':''}" onclick="selectPost('${p.id}')"><div class="post-item-title">${escapeHtml(p.title)}</div><div class="post-item-meta"><span>${formatDate(p.date)}</span>${p.tags.slice(0,2).map(t=>`<span style="background:rgba(168,158,255,0.1); padding:2px 8px; border-radius:20px;">${escapeHtml(t)}</span>`).join('')}</div></div>`).join('');}
+function escapeHtml(str){return str.replace(/[&<>]/g,function(m){if(m==='&')return'&amp;';if(m==='<')return'&lt;';if(m==='>')return'&gt;';return m;});}
+function selectPost(id){activeId=id;isNew=false;const post=posts.find(p=>p.id===id);if(!post)return;renderSidebar();showEditor();document.getElementById('titleInput').value=post.title;document.getElementById('slugInput').value=post.id;document.getElementById('dateInput').value=post.date;document.getElementById('tagsInput').value=post.tags.join(', ');document.getElementById('summaryInput').value=post.summary;document.getElementById('contentArea').value=post.content;updateWordCount();if(activeTab!=='write')updatePreview();}
+function newPost(){activeId=null;isNew=true;renderSidebar();showEditor();document.getElementById('titleInput').value='';document.getElementById('slugInput').value='';document.getElementById('dateInput').value=new Date().toISOString().slice(0,10);document.getElementById('tagsInput').value='';document.getElementById('summaryInput').value='';document.getElementById('contentArea').value='';updateWordCount();}
+function showEditor(){document.getElementById('editorPlaceholder').style.display='none';document.getElementById('editorPanel').style.display='flex';}
+function resetEditor(){document.getElementById('editorPlaceholder').style.display='';document.getElementById('editorPanel').style.display='none';activeId=null;isNew=false;}
+function switchTab(tab){activeTab=tab;document.querySelectorAll('.editor-tab').forEach(btn=>btn.classList.toggle('active',btn.innerText.toLowerCase()===tab));const panes=document.getElementById('editorPanes');const fields=document.getElementById('fieldsPane');const preview=document.getElementById('previewPane');if(tab==='write'){panes.classList.remove('split');fields.style.display='';preview.style.display='none';}if(tab==='preview'){panes.classList.remove('split');fields.style.display='none';preview.style.display='';updatePreview();}if(tab==='split'){panes.classList.add('split');fields.style.display='';preview.style.display='';updatePreview();}}
+function onContentChange(){updateWordCount();if(activeTab!=='write')updatePreview();}
+function updatePreview(){if(typeof marked!=='undefined')document.getElementById('previewPane').innerHTML=marked.parse(document.getElementById('contentArea').value||'*Nothing to preview.*');else{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js';s.onload=updatePreview;document.head.appendChild(s);}}
+function updateWordCount(){const words=(document.getElementById('contentArea').value.match(/\S+/g)||[]).length;document.getElementById('charCount').textContent=words+' word'+(words!==1?'s':'');}
+function slugify(str){return str.toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/[\s_]+/g,'-').replace(/^-+|-+$/g,'');}
+function autoSlug(){if(isNew)document.getElementById('slugInput').value=slugify(document.getElementById('titleInput').value);}
+async function savePost(){const title=document.getElementById('titleInput').value.trim(),slug=document.getElementById('slugInput').value.trim(),date=document.getElementById('dateInput').value,tags=document.getElementById('tagsInput').value.split(',').map(t=>t.trim()).filter(Boolean),summary=document.getElementById('summaryInput').value.trim(),content=document.getElementById('contentArea').value.trim();if(!title||!slug||!content){toast('Title, Slug and Content are required.','error');return;}const duplicate=posts.find(p=>p.id===slug&&p.id!==activeId);if(duplicate){toast('Slug already in use.','error');return;}const post={id:slug,title,date,tags,summary,content};if(isNew){posts.unshift(post);activeId=slug;isNew=false;}else{const idx=posts.findIndex(p=>p.id===activeId);if(idx===-1){toast('Post not found.','error');return;}if(slug!==activeId)posts.splice(idx,1,post),activeId=slug;else posts[idx]=post;}const label=document.getElementById('saveBtnLabel');label.innerHTML='<span class="spin"></span>';try{await savePosts(`blog: ${isNew?'add':'update'} "${title}"`);toast('Published!','success');renderSidebar();}catch(e){toast('Save failed: '+e.message,'error');if(isNew)posts.shift();}finally{label.innerHTML='💾 Publish';}}
+function confirmDelete(){const post=posts.find(p=>p.id===activeId);if(!post)return;document.getElementById('deleteTitle').textContent=post.title;document.getElementById('deleteModal').classList.add('show');}
+function closeModal(){document.getElementById('deleteModal').classList.remove('show');}
+async function doDelete(){closeModal();const idx=posts.findIndex(p=>p.id===activeId);if(idx===-1)return;const title=posts[idx].title;posts.splice(idx,1);try{await savePosts(`blog: delete "${title}"`);toast('Post deleted.','info');resetEditor();renderSidebar();}catch(e){toast('Delete failed: '+e.message,'error');posts.splice(idx,0,posts[idx]);renderSidebar();}}
+function setStatus(state){const dot=document.getElementById('statusDot');dot.className='status-dot '+state;}
+function toast(msg,type){const wrap=document.getElementById('toastWrap');const el=document.createElement('div');el.className='toast';el.innerHTML=msg;wrap.appendChild(el);setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),400);},3500);}
+async function uploadImage(input){const file=input.files[0];if(!file)return;input.value='';toast('Uploading image...','info');try{const base64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(file);});const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'-').toLowerCase();const path=`images/${Date.now()}-${safeName}`;const apiUrl=`https://api.github.com/repos/${CONFIG.REPO_OWNER}/${CONFIG.REPO_NAME}/contents/${path}`;let sha;try{const check=await fetch(apiUrl,{headers:{Authorization:`Bearer ${githubToken}`}});if(check.ok){const d=await check.json();sha=d.sha;}}catch(_){}const body={message:`blog: add image ${safeName}`,content:base64,branch:CONFIG.BRANCH};if(sha)body.sha=sha;const res=await fetch(apiUrl,{method:'PUT',headers:{Authorization:`Bearer ${githubToken}`,'Content-Type':'application/json'},body:JSON.stringify(body)});if(!res.ok)throw new Error(`Upload failed: ${res.status}`);const textarea=document.getElementById('contentArea');const mdSnippet=`\n![${file.name}](${path})\n`;const start=textarea.selectionStart,end=textarea.selectionEnd;textarea.value=textarea.value.slice(0,start)+mdSnippet+textarea.value.slice(end);textarea.selectionStart=textarea.selectionEnd=start+mdSnippet.length;textarea.focus();onContentChange();toast('Image uploaded!','success');}catch(e){toast('Upload failed: '+e.message,'error');}}
+function formatDate(iso){return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
 </script>
 </body>
 </html>
