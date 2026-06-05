@@ -3,256 +3,1061 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LxZy — SOC Analyst & Security Engineer</title>
+<title>LxZy — SOC Analyst / Security Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
 <style>
-:root {
-  --bg:#F8F8FF; --indigo:#32127A; --indigo-mid:#4a1fb8; --indigo-pale:#ede8ff;
-  --text:#0f0f1e; --muted:#6b6b8e; --white:#ffffff; --card:#ffffff;
-  --border:rgba(50,18,122,0.11); --ease:cubic-bezier(0.4,0,0.2,1);
-  --ease-out:cubic-bezier(0.16,1,0.3,1); --nav-h:72px;
+/* ------------------------------------------------------------
+   RESET + DARK EDITORIAL FOUNDATION
+   ------------------------------------------------------------ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;font-size:16px;}
-body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;}
-img{display:block;max-width:100%;}
-a{text-decoration:none;}
-button{cursor:pointer;}
-.svg-defs{position:absolute;width:0;height:0;overflow:hidden;}
-h1,h2,h3,h4{font-family:'Bricolage Grotesque',sans-serif;line-height:1.1;}
-.label{font-size:12px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:var(--indigo);display:flex;align-items:center;gap:14px;margin-bottom:18px;}
-.label::before{content:'';display:block;width:36px;height:2px;background:var(--indigo);flex-shrink:0;}
-.section-h{font-size:clamp(38px,5.5vw,58px);font-weight:800;color:var(--text);margin-bottom:14px;letter-spacing:-0.02em;}
-.section-sub{font-size:clamp(17px,2vw,21px);color:var(--muted);max-width:580px;line-height:1.65;}
-.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s var(--ease),transform 0.65s var(--ease);}
-.reveal.in{opacity:1;transform:translateY(0);}
-.d1{transition-delay:0.06s;}.d2{transition-delay:0.13s;}.d3{transition-delay:0.20s;}
-.d4{transition-delay:0.27s;}.d5{transition-delay:0.34s;}.d6{transition-delay:0.41s;}
 
-/* NAV */
-#nav{position:fixed;inset-inline:0;top:0;height:var(--nav-h);z-index:900;background:rgba(248,248,255,0.92);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-bottom:1px solid var(--border);transition:box-shadow 0.3s;}
-#nav.scrolled{box-shadow:0 4px 40px rgba(50,18,122,0.08);}
-.nav-inner{max-width:1440px;margin:0 auto;height:100%;padding:0 clamp(20px,4vw,72px);display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{font-family:'Bebas Neue',cursive;font-size:30px;color:var(--indigo);letter-spacing:0.06em;filter:url(#roughen-sm);transition:opacity 0.2s;}
-.nav-logo:hover{opacity:0.72;}
-.nav-links{display:flex;align-items:center;gap:28px;list-style:none;}
-.nav-links a{font-size:15px;font-weight:500;color:var(--text);position:relative;padding-bottom:3px;transition:color 0.2s;}
-.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--indigo);transition:width 0.28s var(--ease);}
-.nav-links a:hover,.nav-links a.active{color:var(--indigo);}
-.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
-.nav-cta{padding:10px 22px !important;background:var(--indigo) !important;color:var(--white) !important;border-radius:7px;font-weight:600 !important;transition:all 0.25s !important;}
-.nav-cta::after{display:none !important;}
-.nav-cta:hover{background:var(--indigo-mid) !important;transform:translateY(-2px);box-shadow:0 8px 28px rgba(50,18,122,0.25);}
-.hamburger{display:none;flex-direction:column;gap:5px;width:36px;height:36px;align-items:center;justify-content:center;background:none;border:none;}
-.hamburger span{display:block;width:22px;height:2px;background:var(--indigo);border-radius:2px;}
-.mobile-nav{display:none;position:fixed;top:var(--nav-h);inset-inline:0;background:rgba(248,248,255,0.97);backdrop-filter:blur(22px);padding:24px 28px 32px;border-bottom:1px solid var(--border);z-index:899;flex-direction:column;gap:20px;}
-.mobile-nav.open{display:flex;}
-.mobile-nav a{font-size:17px;font-weight:600;color:var(--text);transition:color 0.2s;}
-.mobile-nav a:hover{color:var(--indigo);}
-
-/* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(var(--nav-h) + 40px) clamp(20px,4vw,60px) 80px;position:relative;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;pointer-events:none;}
-.hero-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(50,18,122,0.055) 1px,transparent 1px);background-size:30px 30px;}
-.blob{position:absolute;border-radius:50%;background:var(--indigo);filter:blur(70px);opacity:0.055;animation:blobFloat linear infinite;}
-.blob-1{width:500px;height:500px;top:-100px;left:-160px;animation-duration:22s;}
-.blob-2{width:400px;height:400px;bottom:-80px;right:-120px;animation-duration:28s;animation-delay:-11s;}
-.blob-3{width:260px;height:260px;top:55%;left:18%;animation-duration:34s;animation-delay:-18s;}
-@keyframes blobFloat{0%{transform:translate(0,0) scale(1);}25%{transform:translate(18px,-16px) scale(1.04);}50%{transform:translate(-12px,22px) scale(0.96);}75%{transform:translate(-20px,8px) scale(1.02);}100%{transform:translate(0,0) scale(1);}}
-.hero-content{position:relative;z-index:1;}
-.hero-eyebrow{font-size:13px;font-weight:700;letter-spacing:0.32em;text-transform:uppercase;color:var(--indigo);margin-bottom:28px;opacity:0;animation:fadeUp 0.9s 0.2s var(--ease-out) forwards;}
-.hero-title{font-family:'Bebas Neue',cursive;font-size:clamp(108px,19vw,230px);line-height:0.88;color:var(--indigo);letter-spacing:0.04em;filter:url(#roughen);text-shadow:3px 3px 0 rgba(50,18,122,0.13),6px 6px 0 rgba(50,18,122,0.07),10px 10px 0 rgba(50,18,122,0.04);margin-bottom:30px;opacity:0;animation:titleIn 1.1s 0.05s var(--ease-out) forwards;}
-.hero-title .stroke-letter{-webkit-text-fill-color:transparent;-webkit-text-stroke:4px var(--indigo);}
-@keyframes titleIn{from{opacity:0;transform:scale(1.1) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-.hero-sub{font-size:clamp(18px,2.4vw,26px);font-weight:400;color:var(--muted);margin-bottom:48px;letter-spacing:0.01em;opacity:0;animation:fadeUp 0.9s 0.45s var(--ease-out) forwards;}
-.hero-sub b{color:var(--indigo);font-weight:700;}
-.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 0.9s 0.65s var(--ease-out) forwards;}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:16px 36px;border-radius:9px;font-family:'Outfit',sans-serif;font-size:17px;font-weight:600;border:2px solid var(--indigo);transition:all 0.28s var(--ease);}
-.btn-fill{background:var(--indigo);color:var(--white);}
-.btn-fill:hover{background:transparent;color:var(--indigo);transform:translateY(-4px);box-shadow:0 14px 44px rgba(50,18,122,0.22);}
-.btn-outline{background:transparent;color:var(--indigo);}
-.btn-outline:hover{background:var(--indigo);color:var(--white);transform:translateY(-4px);box-shadow:0 14px 44px rgba(50,18,122,0.22);}
-.scroll-ind{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp 0.9s 1.1s var(--ease-out) forwards;cursor:pointer;}
-.scroll-ind span{font-size:11px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:var(--muted);}
-.scroll-line{width:1px;height:52px;background:linear-gradient(to bottom,var(--indigo),transparent);animation:lineAnim 2.2s ease-in-out infinite;}
-@keyframes lineAnim{0%,100%{transform:scaleY(1);opacity:0.5}50%{transform:scaleY(0.6);opacity:1}}
-
-/* LAYOUT */
-.wrap{max-width:1440px;margin:0 auto;padding:0 clamp(20px,4.5vw,80px);}
-.section{padding:clamp(80px,10vw,150px) 0;}
-.section-head{margin-bottom:64px;}
-
-/* WHO AM I */
-#whoami{background:var(--bg);}
-.whoami-grid{display:grid;grid-template-columns:1fr 420px;gap:80px;align-items:start;}
-.bio-text{font-size:19px;line-height:1.82;color:var(--text);}
-.bio-text p+p{margin-top:20px;}
-.bio-text b{color:var(--indigo);font-weight:700;}
-.stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:40px 0;}
-.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 16px;text-align:center;transition:all 0.28s var(--ease);box-shadow:0 2px 16px rgba(50,18,122,0.04);}
-.stat:hover{transform:translateY(-5px);box-shadow:0 14px 44px rgba(50,18,122,0.12);border-color:var(--indigo);}
-.stat-n{font-family:'Bricolage Grotesque',sans-serif;font-size:36px;font-weight:800;color:var(--indigo);line-height:1;margin-bottom:8px;}
-.stat-l{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.09em;}
-.skills-h{font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:700;margin-bottom:16px;}
-.skills-cloud{display:flex;flex-wrap:wrap;gap:9px;}
-.skill{display:inline-flex;padding:7px 15px;background:var(--indigo-pale);color:var(--indigo);border-radius:100px;font-size:14px;font-weight:600;border:1.5px solid transparent;transition:all 0.22s;}
-.skill:hover{background:var(--indigo);color:var(--white);transform:translateY(-2px);}
-.id-card{background:var(--indigo);border-radius:20px;padding:48px 40px;color:var(--white);position:relative;overflow:hidden;}
-.id-card::before{content:'LxZy';position:absolute;font-family:'Bebas Neue',cursive;font-size:180px;line-height:1;color:rgba(255,255,255,0.04);bottom:-24px;right:-16px;letter-spacing:0.04em;pointer-events:none;filter:url(#roughen-sm);}
-.id-badge{font-size:11px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;opacity:0.5;margin-bottom:24px;}
-.id-name{font-family:'Bricolage Grotesque',sans-serif;font-size:28px;font-weight:800;margin-bottom:4px;line-height:1.15;}
-.id-handle{font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:0.08em;opacity:0.45;margin-bottom:10px;}
-.id-role{font-size:17px;opacity:0.72;margin-bottom:36px;}
-.id-divider{width:36px;height:3px;background:rgba(255,255,255,0.28);margin-bottom:36px;}
-.id-rows{display:flex;flex-direction:column;gap:18px;}
-.id-row{display:flex;align-items:center;gap:14px;font-size:16px;opacity:0.82;}
-.id-icon{width:36px;height:36px;background:rgba(255,255,255,0.11);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:rgba(255,255,255,0.9);}
-
-/* EDUCATION */
-#education{background:var(--white);}
-.timeline{display:flex;flex-direction:column;gap:24px;}
-.tl-card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--indigo);border-radius:0 14px 14px 0;padding:28px 32px;transition:all 0.28s var(--ease);}
-.tl-card:hover{box-shadow:0 10px 40px rgba(50,18,122,0.1);transform:translateX(6px);}
-.tl-date{font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--indigo);margin-bottom:10px;}
-.tl-degree{font-family:'Bricolage Grotesque',sans-serif;font-size:23px;font-weight:700;margin-bottom:10px;}
-.tl-note{font-size:15px;color:var(--muted);margin-bottom:12px;}
-.badge{display:inline-flex;padding:5px 13px;background:var(--indigo-pale);color:var(--indigo);border-radius:100px;font-size:13px;font-weight:700;}
-
-/* EXPERIENCE */
-#experience{background:var(--bg);}
-.exp-list{display:flex;flex-direction:column;gap:28px;}
-.exp-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:36px 40px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;position:relative;overflow:hidden;transition:all 0.3s var(--ease);}
-.exp-card::before{content:'';position:absolute;top:0;bottom:0;left:0;width:4px;background:var(--indigo);}
-.exp-card:hover{box-shadow:0 16px 56px rgba(50,18,122,0.11);transform:translateY(-5px);}
-.exp-status{display:inline-flex;align-items:center;gap:7px;padding:5px 13px;background:rgba(34,197,94,0.1);color:#15803d;border-radius:100px;font-size:13px;font-weight:700;margin-bottom:14px;}
-.exp-status-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:pulse-green 2s ease-in-out infinite;}
-@keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.4)}50%{box-shadow:0 0 0 6px rgba(34,197,94,0)}}
-.exp-title{font-family:'Bricolage Grotesque',sans-serif;font-size:24px;font-weight:800;margin-bottom:6px;}
-.exp-company{font-size:17px;color:var(--indigo);font-weight:600;margin-bottom:18px;}
-.exp-desc{font-size:17px;color:var(--muted);line-height:1.72;margin-bottom:22px;}
-.tags{display:flex;flex-wrap:wrap;gap:8px;}
-.tag{display:inline-flex;padding:5px 13px;background:var(--bg);border:1px solid var(--border);border-radius:100px;font-size:13px;font-weight:500;color:var(--muted);}
-.exp-date-col{text-align:right;}
-.exp-date{font-size:14px;font-weight:600;color:var(--muted);white-space:nowrap;}
-
-
-/* SERVICES */
-#services{background:var(--indigo);position:relative;overflow:hidden;}
-#services::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:28px 28px;}
-#services .label{color:rgba(255,255,255,0.55);}
-#services .label::before{background:rgba(255,255,255,0.55);}
-#services .section-h{color:var(--white);}
-#services .section-sub{color:rgba(255,255,255,0.6);}
-.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;}
-.svc-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.11);border-radius:18px;padding:36px 30px;transition:all 0.3s var(--ease);}
-.svc-card:hover{background:rgba(255,255,255,0.13);transform:translateY(-7px);border-color:rgba(255,255,255,0.28);}
-.svc-icon{width:54px;height:54px;background:rgba(255,255,255,0.1);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:24px;color:rgba(255,255,255,0.9);flex-shrink:0;}
-.svc-name{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;font-weight:700;color:var(--white);margin-bottom:14px;}
-.svc-desc{font-size:16px;color:rgba(255,255,255,0.62);line-height:1.72;}
-
-/* PROJECTS */
-#projects{background:var(--bg);}
-.projects-list{display:flex;flex-direction:column;gap:40px;}
-.proj-card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:50px;display:grid;grid-template-columns:1fr 300px;gap:52px;align-items:center;position:relative;overflow:hidden;transition:all 0.32s var(--ease);}
-.proj-card::after{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(50,18,122,0.055),transparent 70%);pointer-events:none;}
-.proj-card:hover{box-shadow:0 22px 80px rgba(50,18,122,0.13);transform:translateY(-7px);}
-.proj-num{font-family:'Bricolage Grotesque',sans-serif;font-size:88px;font-weight:800;color:var(--indigo);opacity:0.06;line-height:1;margin-bottom:-18px;}
-.proj-name{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(22px,3vw,32px);font-weight:800;margin-bottom:16px;letter-spacing:-0.01em;}
-.proj-desc{font-size:17px;color:var(--muted);line-height:1.72;margin-bottom:28px;}
-.proj-stack{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
-.stack{display:inline-flex;padding:6px 14px;background:var(--indigo-pale);color:var(--indigo);border-radius:7px;font-size:13px;font-weight:700;letter-spacing:0.02em;}
-.proj-links{display:flex;gap:12px;flex-wrap:wrap;}
-.plink{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:9px;font-size:15px;font-weight:600;transition:all 0.25s var(--ease);}
-.plink-fill{background:var(--indigo);color:var(--white);}
-.plink-fill:hover{background:var(--indigo-mid);transform:translateY(-3px);}
-.plink-outline{background:transparent;color:var(--indigo);border:2px solid var(--indigo);}
-.plink-outline:hover{background:var(--indigo);color:var(--white);transform:translateY(-3px);}
-.proj-visual{background:linear-gradient(135deg,var(--indigo) 0%,#5b2db3 100%);border-radius:18px;height:260px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0;}
-.proj-visual::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 18px,rgba(255,255,255,0.025) 18px,rgba(255,255,255,0.025) 36px);}
-.proj-visual-icon{font-size:64px;position:relative;z-index:1;filter:drop-shadow(0 8px 28px rgba(0,0,0,0.32));display:flex;align-items:center;justify-content:center;}
-
-/* CONTACT */
-#contact{background:var(--white);}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
-.contact-big{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(42px,5.5vw,72px);font-weight:800;line-height:1.08;letter-spacing:-0.02em;margin-bottom:20px;}
-.contact-big span{color:var(--indigo);}
-.contact-sub{font-size:19px;color:var(--muted);line-height:1.7;margin-bottom:48px;max-width:420px;}
-.contact-links-col{display:flex;flex-direction:column;gap:18px;}
-.clink{display:flex;align-items:center;gap:20px;padding:22px 26px;background:var(--card);border:1px solid var(--border);border-radius:16px;color:var(--text);transition:all 0.28s var(--ease);}
-.clink:hover{border-color:var(--indigo);background:var(--indigo-pale);transform:translateX(8px);}
-.clink-icon{width:50px;height:50px;background:var(--indigo);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;color:var(--white);transition:transform 0.25s;}
-.clink:hover .clink-icon{transform:scale(1.1);}
-.clink-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:4px;}
-.clink-val{font-size:17px;font-weight:600;color:var(--text);}
-
-/* FOOTER */
-footer{background:var(--text);color:var(--white);padding:28px clamp(20px,4.5vw,80px);width:100%;}
-.footer-inner{max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
-.footer-logo{font-family:'Bebas Neue',cursive;font-size:32px;color:var(--white);letter-spacing:0.06em;}
-.footer-copy{font-size:14px;color:rgba(255,255,255,0.35);}
-
-/* RESPONSIVE */
-@media(max-width:1100px){
-  .whoami-grid{grid-template-columns:1fr;}
-  .whoami-visual{order:-1;}
-  .proj-card{grid-template-columns:1fr;}
-  .proj-visual{height:220px;}
-  .contact-grid{grid-template-columns:1fr;gap:32px;}
-  .contact-sub{margin-bottom:0;}
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background: #01010a;
 }
-@media(max-width:768px){
-  .nav-links{display:none;}
-  .hamburger{display:flex;}
-  .hero-title{font-size:clamp(72px,20vw,160px);}
-  .hero-sub{font-size:16px;}
-  .btn{padding:13px 26px;font-size:15px;}
-  .hero-actions{gap:10px;}
-  .section{padding:60px 0;}
-  .section-head{margin-bottom:40px;}
-  .section-h{font-size:clamp(30px,8vw,42px);}
-  .whoami-grid{gap:40px;}
-  .stats-row{grid-template-columns:1fr 1fr;}
-  .id-card{padding:32px 28px;}
-  .exp-card{grid-template-columns:1fr;padding:24px 20px;}
-  .exp-date-col{text-align:left;}
-  .exp-title{font-size:20px;}
-  .services-grid{grid-template-columns:1fr;}
-  .svc-card{padding:28px 22px;}
-  .proj-card{padding:28px 20px;gap:24px;}
-  .proj-visual{height:180px;}
-  .proj-num{font-size:60px;}
-  .proj-name{font-size:20px;}
-  .proj-desc{font-size:15px;}
-  .contact-grid{gap:28px;}
-  .contact-big{font-size:clamp(32px,8vw,52px);}
-  .contact-sub{font-size:16px;margin-bottom:0;}
-  .clink{padding:16px 18px;gap:14px;}
-  .clink-icon{width:42px;height:42px;font-size:18px;}
-  .clink-val{font-size:14px;word-break:break-all;}
-  .footer-inner{flex-direction:column;align-items:flex-start;gap:6px;}
-  .footer-copy{font-size:12px;}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: #01010a;
+  color: #e9e9f2;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* ------------------------------------------------------------
+   TYPOGRAPHY — BOLD, EDITORIAL, LAYERED
+   ------------------------------------------------------------ */
+h1, h2, h3, h4 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #a89eff;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.label::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.section-h {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 30%, #b1a5ff 80%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 1rem;
+}
+
+.section-sub {
+  font-size: 1.1rem;
+  color: #8f8fb2;
+  max-width: 560px;
+  line-height: 1.65;
+}
+
+/* reveal animations — choreographed */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.d1 { transition-delay: 0.05s; }
+.d2 { transition-delay: 0.15s; }
+.d3 { transition-delay: 0.25s; }
+.d4 { transition-delay: 0.35s; }
+.d5 { transition-delay: 0.45s; }
+.d6 { transition-delay: 0.55s; }
+
+/* ------------------------------------------------------------
+   NAVIGATION — GLASS + MINIMAL
+   ------------------------------------------------------------ */
+#nav {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  height: 80px;
+  z-index: 1000;
+  background: rgba(1, 1, 10, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(168, 158, 255, 0.12);
+  transition: all 0.3s ease;
+}
+
+#nav.scrolled {
+  background: rgba(1, 1, 10, 0.92);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border-bottom-color: rgba(168, 158, 255, 0.25);
+}
+
+.nav-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 2rem;
+  color: #ffffff;
+  letter-spacing: 0.08em;
+  transition: opacity 0.2s;
+  background: linear-gradient(120deg, #fff, #cbb9ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #e0e0f0;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.2s;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: #a89eff;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #ffffff;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-cta {
+  padding: 8px 22px !important;
+  background: #685bdb !important;
+  color: #ffffff !important;
+  border-radius: 40px;
+  font-weight: 600 !important;
+  transition: all 0.25s !important;
+}
+
+.nav-cta:hover {
+  background: #7e6eff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(104, 91, 219, 0.3);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 80px;
+  inset-inline: 0;
+  background: rgba(1, 1, 10, 0.96);
+  backdrop-filter: blur(24px);
+  padding: 2rem 1.8rem;
+  border-bottom: 1px solid rgba(168, 158, 255, 0.2);
+  z-index: 999;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobile-nav.open {
+  display: flex;
+}
+
+.mobile-nav a {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ------------------------------------------------------------
+   HERO — CINEMATIC + TYPOGRAPHIC MONOLITH
+   ------------------------------------------------------------ */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px clamp(1.5rem, 6vw, 5rem) 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -25%;
+  background: radial-gradient(ellipse at 40% 50%, rgba(104, 91, 219, 0.25), transparent 60%);
+  animation: slowDrift 22s infinite alternate;
+}
+
+@keyframes slowDrift {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  100% { transform: translate(4%, -4%) scale(1.1); opacity: 1; }
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.2;
+  animation: blobFloat 18s infinite alternate;
+}
+
+.blob-1 { width: 70vw; height: 70vw; top: -30vh; left: -20vw; background: #4c3bcf; }
+.blob-2 { width: 60vw; height: 60vw; bottom: -30vh; right: -20vw; background: #27187a; animation-duration: 24s; }
+.blob-3 { width: 40vw; height: 40vw; top: 40%; left: 30%; background: #9b7eff; opacity: 0.1; animation-duration: 28s; }
+
+@keyframes blobFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(3%, 5%) scale(1.08); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1300px;
+}
+
+.hero-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #a89eff;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.2s forwards;
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', cursive;
+  font-size: clamp(5rem, 20vw, 13rem);
+  line-height: 0.85;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
+  text-shadow: 6px 6px 0 rgba(104, 91, 219, 0.2);
+  opacity: 0;
+  animation: titleReveal 1.2s 0.1s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+}
+
+.hero-title .stroke-letter {
+  color: transparent;
+  -webkit-text-stroke: 3px #a89eff;
+  text-shadow: none;
+}
+
+@keyframes titleReveal {
+  0% { opacity: 0; transform: scale(1.1) translateY(40px); filter: blur(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  color: #b9b9e6;
+  max-width: 600px;
+  margin: 0 auto 3rem auto;
+  opacity: 0;
+  animation: fadeUp 1s 0.45s forwards;
+}
+
+.hero-sub b {
+  color: #d5cbff;
+  font-weight: 600;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 1s 0.7s forwards;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 1rem 2.2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1.5px solid #a89eff;
+  transition: all 0.3s;
+}
+
+.btn-fill {
+  background: #a89eff;
+  color: #01010a;
+  border-color: #a89eff;
+}
+
+.btn-fill:hover {
+  background: transparent;
+  color: #a89eff;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(168, 158, 255, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #e9e9f2;
+}
+
+.btn-outline:hover {
+  background: #a89eff;
+  color: #01010a;
+  transform: translateY(-4px);
+}
+
+.scroll-ind {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 1s 1s forwards;
+  cursor: pointer;
+}
+
+.scroll-ind span {
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  color: #a89eff;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, #a89eff, transparent);
+  animation: breath 2s infinite;
+}
+
+@keyframes breath {
+  0%, 100% { transform: scaleY(1); opacity: 0.6; }
+  50% { transform: scaleY(0.7); opacity: 0.2; }
+}
+
+/* ------------------------------------------------------------
+   LAYOUT & CONTAINER
+   ------------------------------------------------------------ */
+.wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+}
+
+.section {
+  padding: 8rem 0;
+  border-bottom: 1px solid rgba(168, 158, 255, 0.08);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.section-head {
+  margin-bottom: 4rem;
+}
+
+/* ------------------------------------------------------------
+   WHO AM I — ASYMMETRIC EDITORIAL
+   ------------------------------------------------------------ */
+.whoami-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 4rem;
+  align-items: start;
+}
+
+.bio-text {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #dadaf5;
+}
+
+.bio-text p + p {
+  margin-top: 1.5rem;
+}
+
+.bio-text b {
+  color: #b7aaff;
+  font-weight: 700;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin: 2.5rem 0;
+}
+
+.stat {
+  background: rgba(20, 20, 45, 0.6);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(168, 158, 255, 0.2);
+  border-radius: 2rem;
+  padding: 1.8rem 1rem;
+  text-align: center;
+  transition: 0.25s;
+}
+
+.stat:hover {
+  transform: translateY(-6px);
+  border-color: #a89eff;
+  background: rgba(30, 25, 70, 0.7);
+}
+
+.stat-n {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  color: #cbb9ff;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-l {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: #a1a1cf;
+}
+
+.skills-h {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #f0ecff;
+}
+
+.skills-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.skill {
+  padding: 0.4rem 1rem;
+  background: rgba(168, 158, 255, 0.1);
+  border-radius: 40px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #cdc3ff;
+  transition: 0.2s;
+}
+
+.skill:hover {
+  background: #a89eff;
+  color: #01010a;
+  transform: translateY(-2px);
+}
+
+.id-card {
+  background: linear-gradient(145deg, #10101a, #050510);
+  border: 1px solid rgba(168, 158, 255, 0.35);
+  border-radius: 2rem;
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.id-card::before {
+  content: 'LxZy';
+  font-family: 'Bebas Neue', cursive;
+  font-size: 8rem;
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  color: rgba(168, 158, 255, 0.06);
+  pointer-events: none;
+}
+
+.id-badge {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: #a89eff;
+  margin-bottom: 1rem;
+}
+
+.id-name {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+
+.id-handle {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.2rem;
+  opacity: 0.5;
+  margin-bottom: 0.4rem;
+}
+
+.id-role {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-bottom: 2rem;
+}
+
+.id-divider {
+  width: 40px;
+  height: 2px;
+  background: #a89eff;
+  margin-bottom: 2rem;
+}
+
+.id-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.id-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.85rem;
+}
+
+.id-icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(168, 158, 255, 0.15);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ------------------------------------------------------------
+   EDUCATION + EXPERIENCE (REFINED, MINIMAL)
+   ------------------------------------------------------------ */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.tl-card {
+  background: rgba(12, 12, 24, 0.7);
+  border-left: 4px solid #a89eff;
+  border-radius: 0 1.5rem 1.5rem 0;
+  padding: 1.8rem 2rem;
+  transition: 0.25s;
+  backdrop-filter: blur(4px);
+}
+
+.tl-card:hover {
+  transform: translateX(8px);
+  background: rgba(25, 25, 45, 0.8);
+}
+
+.tl-date {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #a89eff;
+  margin-bottom: 0.5rem;
+}
+
+.tl-degree {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.8rem;
+  background: rgba(168, 158, 255, 0.15);
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.exp-card {
+  background: rgba(12, 12, 24, 0.7);
+  border-radius: 1.5rem;
+  padding: 2rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  border: 1px solid rgba(168, 158, 255, 0.15);
+  transition: 0.3s;
+  backdrop-filter: blur(4px);
+}
+
+.exp-card:hover {
+  transform: translateY(-5px);
+  border-color: #a89eff;
+}
+
+.exp-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #9bffb5;
+  background: rgba(40, 100, 60, 0.2);
+  padding: 0.2rem 0.8rem;
+  border-radius: 30px;
+  margin-bottom: 1rem;
+}
+
+.exp-status-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+.exp-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.exp-company {
+  font-size: 0.9rem;
+  color: #a89eff;
+  margin-bottom: 1rem;
+}
+
+.exp-desc {
+  color: #babae0;
+  margin-bottom: 1.2rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  padding: 0.2rem 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 30px;
+  font-size: 0.7rem;
+}
+
+.exp-date {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #b6b6ff;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------
+   SERVICES — NEON DARK
+   ------------------------------------------------------------ */
+#services {
+  background: linear-gradient(145deg, #03030f, #080818);
+  border-radius: 0;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+.svc-card {
+  background: rgba(15, 15, 35, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(168, 158, 255, 0.2);
+  border-radius: 1.8rem;
+  padding: 2rem;
+  transition: 0.3s;
+}
+
+.svc-card:hover {
+  border-color: #a89eff;
+  transform: translateY(-8px);
+  background: rgba(25, 20, 60, 0.7);
+}
+
+.svc-icon {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #cdbfff;
+}
+
+.svc-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.svc-desc {
+  font-size: 0.9rem;
+  color: #b8b8e6;
+}
+
+/* ------------------------------------------------------------
+   PROJECTS — CINEMATIC CARDS
+   ------------------------------------------------------------ */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.proj-card {
+  background: rgba(10, 10, 22, 0.6);
+  border-radius: 2rem;
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 3rem;
+  align-items: center;
+  border: 1px solid rgba(168, 158, 255, 0.1);
+  transition: 0.35s;
+}
+
+.proj-card:hover {
+  transform: translateY(-8px);
+  border-color: #a89eff;
+  background: rgba(20, 18, 40, 0.8);
+}
+
+.proj-num {
+  font-size: 4rem;
+  font-weight: 800;
+  color: #a89eff;
+  opacity: 0.2;
+  line-height: 1;
+  margin-bottom: -1rem;
+}
+
+.proj-name {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.proj-desc {
+  color: #c2c2ea;
+  margin-bottom: 1.5rem;
+}
+
+.proj-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.stack {
+  padding: 0.2rem 0.9rem;
+  background: rgba(168, 158, 255, 0.1);
+  border-radius: 40px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.plink {
+  display: inline-flex;
+  padding: 0.7rem 1.6rem;
+  background: #a89eff;
+  color: #01010a;
+  border-radius: 40px;
+  font-weight: 700;
+  transition: 0.2s;
+}
+
+.plink:hover {
+  background: #c5baff;
+  transform: scale(0.98);
+}
+
+.proj-visual {
+  background: radial-gradient(circle at 30% 20%, #3a2f8a, #19143c);
+  border-radius: 1.5rem;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+/* ------------------------------------------------------------
+   CONTACT — BOLD ACTION
+   ------------------------------------------------------------ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.contact-big {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.contact-big span {
+  color: #a89eff;
+}
+
+.contact-sub {
+  font-size: 1rem;
+  color: #a0a0cc;
+  margin-bottom: 0;
+}
+
+.contact-links-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.clink {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem 1.5rem;
+  background: rgba(20, 20, 40, 0.6);
+  border-radius: 2rem;
+  border: 1px solid rgba(168, 158, 255, 0.2);
+  transition: 0.25s;
+}
+
+.clink:hover {
+  border-color: #a89eff;
+  background: rgba(30, 25, 70, 0.8);
+  transform: translateX(6px);
+}
+
+.clink-icon {
+  width: 48px;
+  height: 48px;
+  background: #2a2360;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clink-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: #a89eff;
+}
+
+.clink-val {
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------
+   FOOTER
+   ------------------------------------------------------------ */
+footer {
+  background: #02020a;
+  padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+  border-top: 1px solid rgba(168, 158, 255, 0.1);
+}
+
+.footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-logo {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #fff, #b9a9ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: #5a5a8a;
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------ */
+@media (max-width: 1100px) {
+  .whoami-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .proj-card {
+    grid-template-columns: 1fr;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .section {
+    padding: 4rem 0;
+  }
+  .exp-card {
+    grid-template-columns: 1fr;
+  }
+  .proj-card {
+    padding: 1.8rem;
+  }
+  .proj-name {
+    font-size: 1.5rem;
+  }
+  .hero-title {
+    font-size: clamp(3.5rem, 13vw, 6rem);
+  }
 }
 </style>
 </head>
 <body>
 
-<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg">
+<!-- SVG DEFINITIONS (keep roughness) -->
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0">
   <defs>
     <filter id="roughen" x="-5%" y="-5%" width="110%" height="110%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="4" result="noise" seed="3"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="4" seed="3"/>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
     <filter id="roughen-sm" x="-2%" y="-2%" width="104%" height="104%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" seed="7"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="7"/>
       <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
   </defs>
 </svg>
 
-<!-- NAV -->
+<!-- NAVIGATION (preserved ids/classes) -->
 <nav id="nav">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">LxZy</a>
@@ -271,13 +1076,13 @@ footer{background:var(--text);color:var(--white);padding:28px clamp(20px,4.5vw,8
   </div>
 </nav>
 <nav class="mobile-nav" id="mobileNav">
-  <a href="#whoami"     onclick="closeMobile()">Who Am I</a>
-  <a href="#education"  onclick="closeMobile()">Education</a>
+  <a href="#whoami" onclick="closeMobile()">Who Am I</a>
+  <a href="#education" onclick="closeMobile()">Education</a>
   <a href="#experience" onclick="closeMobile()">Experience</a>
-  <a href="#services"   onclick="closeMobile()">Services</a>
-  <a href="#projects"   onclick="closeMobile()">Projects</a>
-  <a href="blog.html"   onclick="closeMobile()">Blog</a>
-  <a href="#contact"    onclick="closeMobile()">Let's Connect</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="blog.html" onclick="closeMobile()">Blog</a>
+  <a href="#contact" onclick="closeMobile()">Let's Connect</a>
 </nav>
 
 <!-- HERO -->
@@ -290,13 +1095,10 @@ footer{background:var(--text);color:var(--white);padding:28px clamp(20px,4.5vw,8
   <div class="hero-content">
     <p class="hero-eyebrow">SOC Analyst &amp; Security Engineer</p>
     <h1 class="hero-title">K<span class="stroke-letter">a</span>RIM</h1>
-    <p class="hero-sub">
-      <b>Threat detection. Incident response. Security automation.</b><br>
-      Embrace the Unknown
-    </p>
+    <p class="hero-sub"><b>Threat detection. Incident response. Security automation.</b><br>Embrace the Unknown</p>
     <div class="hero-actions">
       <a href="#projects" class="btn btn-fill">View Projects</a>
-      <a href="#contact"  class="btn btn-outline">Let's Connect</a>
+      <a href="#contact" class="btn btn-outline">Let's Connect</a>
     </div>
   </div>
   <div class="scroll-ind" onclick="document.getElementById('whoami').scrollIntoView({behavior:'smooth'})">
@@ -305,7 +1107,7 @@ footer{background:var(--text);color:var(--white);padding:28px clamp(20px,4.5vw,8
   </div>
 </section>
 
-<!-- WHO AM I -->
+<!-- WHO AM I (full original content, new styling) -->
 <section id="whoami" class="section">
   <div class="wrap">
     <div class="section-head reveal">
@@ -325,13 +1127,7 @@ footer{background:var(--text);color:var(--white);padding:28px clamp(20px,4.5vw,8
         <div class="reveal d2">
           <p class="skills-h">Core Stack</p>
           <div class="skills-cloud">
-            <span class="skill">Wazuh</span><span class="skill">Splunk</span><span class="skill">ELK Stack</span>
-            <span class="skill">Microsoft Sentinel</span><span class="skill">KQL</span><span class="skill">pfSense</span>
-            <span class="skill">Suricata</span><span class="skill">Python</span><span class="skill">MITRE ATT&amp;CK</span>
-            <span class="skill">Volatility</span><span class="skill">Wireshark</span><span class="skill">FreeIPA</span>
-            <span class="skill">Keycloak</span><span class="skill">HashiCorp Vault</span><span class="skill">Authelia</span>
-            <span class="skill">Traefik</span><span class="skill">VirtualBox</span><span class="skill">Docker</span>
-            <span class="skill">Nmap</span><span class="skill">Cloudflare ZT</span>
+            <span class="skill">Wazuh</span><span class="skill">Splunk</span><span class="skill">ELK Stack</span><span class="skill">Microsoft Sentinel</span><span class="skill">KQL</span><span class="skill">pfSense</span><span class="skill">Suricata</span><span class="skill">Python</span><span class="skill">MITRE ATT&amp;CK</span><span class="skill">Volatility</span><span class="skill">Wireshark</span><span class="skill">FreeIPA</span><span class="skill">Keycloak</span><span class="skill">HashiCorp Vault</span><span class="skill">Authelia</span><span class="skill">Traefik</span><span class="skill">VirtualBox</span><span class="skill">Docker</span><span class="skill">Nmap</span><span class="skill">Cloudflare ZT</span>
           </div>
         </div>
       </div>
@@ -343,9 +1139,9 @@ footer{background:var(--text);color:var(--white);padding:28px clamp(20px,4.5vw,8
           <p class="id-role">SOC Analyst · CS Student</p>
           <div class="id-divider"></div>
           <div class="id-rows">
-            <div class="id-row"><div class="id-icon"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>Cairo, Egypt</div>
-            <div class="id-row"><div class="id-icon"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>Computer Science</div>
-            <div class="id-row"><div class="id-icon"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>Blue Team · Detection · IR</div>
+            <div class="id-row"><div class="id-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>Cairo, Egypt</div>
+            <div class="id-row"><div class="id-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>Computer Science</div>
+            <div class="id-row"><div class="id-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>Blue Team · Detection · IR</div>
           </div>
         </div>
       </div>
@@ -353,227 +1149,36 @@ footer{background:var(--text);color:var(--white);padding:28px clamp(20px,4.5vw,8
   </div>
 </section>
 
-<!-- EDUCATION -->
+<!-- EDUCATION, EXPERIENCE, SERVICES, PROJECTS, CONTACT exactly same content, with new design -->
 <section id="education" class="section">
   <div class="wrap">
-    <div class="section-head reveal">
-      <p class="label">Background</p>
-      <h2 class="section-h">Education</h2>
-      <p class="section-sub">Where the foundation was built — academic rigor meets hands-on practice.</p>
-    </div>
-    <div class="timeline">
-      <div class="tl-card reveal d1">
-        <p class="tl-date">2023 – Present</p>
-        <h3 class="tl-degree">B.Sc. Computer Science</h3>
-        <p class="tl-note">Cairo, Egypt · Currently enrolled</p>
-        <span class="badge">Major: Cloud &amp; Mobile Computing</span>
-      </div>
-      <div class="tl-card reveal d2">
-        <p class="tl-date">Dec 2025 – Jul 2026</p>
-        <h3 class="tl-degree">Digital Egypt Pioneers Initiative — DEPI</h3>
-        <p class="tl-note">Computer and Information Systems Security / Information Assurance</p>
-        <span class="badge">Information Systems Security</span>
-      </div>
-    </div>
+    <div class="section-head reveal"><p class="label">Background</p><h2 class="section-h">Education</h2><p class="section-sub">Where the foundation was built — academic rigor meets hands-on practice.</p></div>
+    <div class="timeline"><div class="tl-card reveal d1"><p class="tl-date">2023 – Present</p><h3 class="tl-degree">B.Sc. Computer Science</h3><p class="tl-note">Cairo, Egypt · Currently enrolled</p><span class="badge">Major: Cloud &amp; Mobile Computing</span></div><div class="tl-card reveal d2"><p class="tl-date">Dec 2025 – Jul 2026</p><h3 class="tl-degree">Digital Egypt Pioneers Initiative — DEPI</h3><p class="tl-note">Computer and Information Systems Security / Information Assurance</p><span class="badge">Information Systems Security</span></div></div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
 <section id="experience" class="section">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="label">Work</p>
-      <h2 class="section-h">Experience</h2>
-      <p class="section-sub">Roles where I've operated, defended, and delivered.</p>
-    </div>
-    <div class="exp-list">
-      <div class="exp-card reveal d1">
-        <div>
-          <div class="exp-status"><div class="exp-status-dot"></div>Ongoing</div>
-          <h3 class="exp-title">Security Research &amp; Lab Engineering</h3>
-          <p class="exp-company">Independent / Academic</p>
-          <p class="exp-desc">Designing and deploying enterprise-grade security lab environments covering Zero Trust Architecture, Identity &amp; Access Management, and Blue Team investigation workflows. Each lab is fully documented and built with production-grade open-source tooling.</p>
-          <div class="tags">
-            <span class="tag">VirtualBox</span><span class="tag">ZTA</span><span class="tag">pfSense</span>
-            <span class="tag">Wazuh</span><span class="tag">FreeIPA</span><span class="tag">Keycloak</span>
-            <span class="tag">Suricata</span><span class="tag">DFIR</span>
-          </div>
-        </div>
-        <div class="exp-date-col"><p class="exp-date">2025 – Present</p></div>
-      </div>
-    </div>
-  </div>
+  <div class="wrap"><div class="section-head reveal"><p class="label">Work</p><h2 class="section-h">Experience</h2><p class="section-sub">Roles where I've operated, defended, and delivered.</p></div><div class="exp-list"><div class="exp-card reveal d1"><div><div class="exp-status"><div class="exp-status-dot"></div>Ongoing</div><h3 class="exp-title">Security Research &amp; Lab Engineering</h3><p class="exp-company">Independent / Academic</p><p class="exp-desc">Designing and deploying enterprise-grade security lab environments covering Zero Trust Architecture, Identity &amp; Access Management, and Blue Team investigation workflows. Each lab is fully documented and built with production-grade open-source tooling.</p><div class="tags"><span class="tag">VirtualBox</span><span class="tag">ZTA</span><span class="tag">pfSense</span><span class="tag">Wazuh</span><span class="tag">FreeIPA</span><span class="tag">Keycloak</span><span class="tag">Suricata</span><span class="tag">DFIR</span></div></div><div class="exp-date-col"><p class="exp-date">2025 – Present</p></div></div></div></div>
 </section>
 
-<!-- SERVICES -->
 <section id="services" class="section">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="label">What I offer</p>
-      <h2 class="section-h">Services</h2>
-      <p class="section-sub">Security capabilities I provide — from detection engineering to full incident response cycles.</p>
-    </div>
-    <div class="services-grid">
-      <div class="svc-card reveal d1">
-        <div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
-        <h3 class="svc-name">SOC Operations</h3>
-        <p class="svc-desc">24/7 threat monitoring, SIEM management, alert triage, and detection rule development aligned to MITRE ATT&amp;CK.</p>
-      </div>
-      <div class="svc-card reveal d2">
-        <div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div>
-        <h3 class="svc-name">Incident Response</h3>
-        <p class="svc-desc">Full IR lifecycle — containment, eradication, forensic analysis, and documented post-incident reports.</p>
-      </div>
-      <div class="svc-card reveal d3">
-        <div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8a3 3 0 0 1 3 3"/></svg></div>
-        <h3 class="svc-name">Threat Intelligence</h3>
-        <p class="svc-desc">IOC enrichment, threat actor profiling, and intelligence-driven detection engineering for your environment.</p>
-      </div>
-      <div class="svc-card reveal d4">
-        <div class="svc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-        <h3 class="svc-name">Security Automation</h3>
-        <p class="svc-desc">Python-based automation for enrichment pipelines, SOAR playbooks, and repetitive analyst workflows.</p>
-      </div>
-    </div>
-  </div>
+  <div class="wrap"><div class="section-head reveal"><p class="label">What I offer</p><h2 class="section-h">Services</h2><p class="section-sub">Security capabilities I provide — from detection engineering to full incident response cycles.</p></div><div class="services-grid"><div class="svc-card reveal d1"><div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div><h3 class="svc-name">SOC Operations</h3><p class="svc-desc">24/7 threat monitoring, SIEM management, alert triage, and detection rule development aligned to MITRE ATT&CK.</p></div><div class="svc-card reveal d2"><div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div><h3 class="svc-name">Incident Response</h3><p class="svc-desc">Full IR lifecycle — containment, eradication, forensic analysis, and documented post-incident reports.</p></div><div class="svc-card reveal d3"><div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8a3 3 0 0 1 3 3"/></svg></div><h3 class="svc-name">Threat Intelligence</h3><p class="svc-desc">IOC enrichment, threat actor profiling, and intelligence-driven detection engineering for your environment.</p></div><div class="svc-card reveal d4"><div class="svc-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3 class="svc-name">Security Automation</h3><p class="svc-desc">Python-based automation for enrichment pipelines, SOAR playbooks, and repetitive analyst workflows.</p></div></div></div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects" class="section">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="label">Portfolio</p>
-      <h2 class="section-h">My Projects</h2>
-      <p class="section-sub">Production-quality labs and tools — fully documented, built with real open-source tooling.</p>
-    </div>
-    <div class="projects-list">
-
-      <!-- 01 -->
-      <div class="proj-card reveal d1">
-        <div>
-          <div class="proj-num">01</div>
-          <h3 class="proj-name">Zero Trust Architecture Lab</h3>
-          <p class="proj-desc">Architected a production-grade dual-device Zero Trust environment from scratch — aligned to NIST SP 800-207. Two physical machines connected via IKEv2 IPsec tunnel, 4 VLANs, Suricata IDS on both firewalls, Splunk + Vector aggregating cross-site logs, Traefik + Authelia MFA behind Cloudflare Zero Trust tunnels, and an isolated Kali VM on VLAN 40 for adversary simulation.</p>
-          <div class="proj-stack">
-            <span class="stack">pfSense x2</span><span class="stack">IKEv2 IPsec</span><span class="stack">Suricata</span>
-            <span class="stack">Splunk</span><span class="stack">Vector</span><span class="stack">Traefik</span>
-            <span class="stack">Authelia</span><span class="stack">Cloudflare ZT</span><span class="stack">Tailscale</span>
-            <span class="stack">Docker</span><span class="stack">NIST SP 800-207</span>
-          </div>
-          <div class="proj-links">
-            <a href="https://kar1m.site/blog#zero-trust-lab-build" class="plink plink-fill" target="_blank" rel="noopener">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a4 4 0 0 1-4 4z"/><path d="M2 19.5A2.5 2.5 0 0 1 4.5 17H20"/></svg>
-              Write-up
-            </a>
-          </div>
-        </div>
-        <div class="proj-visual"><div class="proj-visual-icon"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1" fill="rgba(255,255,255,0.9)"/></svg></div></div>
-      </div>
-
-      <!-- 02 -->
-      <div class="proj-card reveal d2">
-        <div>
-          <div class="proj-num">02</div>
-          <h3 class="proj-name">Linux IAM Lab</h3>
-          <p class="proj-desc">A full Identity &amp; Access Management lab running on VirtualBox across 5 VMs. FreeIPA handles LDAP, Kerberos, DNS, and the internal CA. Keycloak federates identities and enforces TOTP MFA via OIDC/SAML. HashiCorp Vault manages secrets and PKI. Elastic captures all authentication events. WireGuard connects the management plane.</p>
-          <div class="proj-stack">
-            <span class="stack">FreeIPA</span><span class="stack">Keycloak</span><span class="stack">HashiCorp Vault</span>
-            <span class="stack">ELK Stack</span><span class="stack">WireGuard</span><span class="stack">VirtualBox</span>
-            <span class="stack">Docker</span><span class="stack">LDAP</span><span class="stack">Kerberos</span>
-            <span class="stack">OIDC / SAML</span><span class="stack">PKI</span>
-          </div>
-          <div class="proj-links">
-            <a href="https://kar1m.site/blog#linux-identity-access-management-iam-lab" class="plink plink-fill" target="_blank" rel="noopener">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a4 4 0 0 1-4 4z"/><path d="M2 19.5A2.5 2.5 0 0 1 4.5 17H20"/></svg>
-              Write-up
-            </a>
-          </div>
-        </div>
-        <div class="proj-visual"><div class="proj-visual-icon"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg></div></div>
-      </div>
-
-      <!-- 03 -->
-      <div class="proj-card reveal d3">
-        <div>
-          <div class="proj-num">03</div>
-          <h3 class="proj-name">SOC Investigation Lab</h3>
-          <p class="proj-desc">A practical Blue Team lab series covering 10 real-world SOC scenarios: authentication anomaly detection, phishing analysis, PCAP investigation, SIEM correlation, lateral movement hunting, detection rule development, incident response execution, and memory forensics on fileless malware. All labs produce reportable artefacts — investigation reports, detection rules, and automation scripts.</p>
-          <div class="proj-stack">
-            <span class="stack">Splunk</span><span class="stack">Elastic SIEM</span><span class="stack">Volatility</span>
-            <span class="stack">Wireshark</span><span class="stack">Sysmon</span><span class="stack">PowerShell</span>
-            <span class="stack">Windows Event Logs</span><span class="stack">MITRE ATT&amp;CK</span><span class="stack">DFIR</span>
-          </div>
-          <div class="proj-links">
-            <a href="blog.html" class="plink plink-fill" target="_blank" rel="noopener">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a4 4 0 0 1-4 4z"/><path d="M2 19.5A2.5 2.5 0 0 1 4.5 17H20"/></svg>
-              Write-up
-            </a>
-          </div>
-        </div>
-        <div class="proj-visual"><div class="proj-visual-icon"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div></div>
-      </div>
-
-      <!-- 04 -->
-      <div class="proj-card reveal d4">
-        <div>
-          <div class="proj-num">04</div>
-          <h3 class="proj-name">IOC Enrichment Tool</h3>
-          <p class="proj-desc">A Python automation script integrating VirusTotal and AbuseIPDB to effectively reduce analyst enrichment time. Accepts bulk IOC lists (IPs, hashes, domains), queries multiple threat intel sources in parallel, and outputs structured reports ready for ticket ingestion.</p>
-          <div class="proj-stack">
-            <span class="stack">Python</span><span class="stack">VirusTotal API</span><span class="stack">AbuseIPDB API</span>
-            <span class="stack">Threat Intelligence</span><span class="stack">Automation</span>
-          </div>
-          <div class="proj-links">
-            <a href="https://kar1m.site/blog#ioc-enrichment-tool" class="plink plink-fill" target="_blank" rel="noopener">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a4 4 0 0 1-4 4z"/><path d="M2 19.5A2.5 2.5 0 0 1 4.5 17H20"/></svg>
-              Write-up
-            </a>
-          </div>
-        </div>
-        <div class="proj-visual"><div class="proj-visual-icon"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div></div>
-      </div>
-
-    </div><!-- end .projects-list -->
-  </div><!-- end .wrap -->
-</section><!-- end #projects -->
-
-<!-- CONTACT -->
-<section id="contact" class="section">
-  <div class="wrap">
-    <div class="contact-grid">
-      <div class="reveal">
-        <p class="label">Get in touch</p>
-        <h2 class="contact-big">Let's build something <span>secure</span>.</h2>
-        <p class="contact-sub">Open to IR consulting, managed SOC engagements, and collaboration on security automation. Reach out — I respond fast.</p>
-      </div>
-      <div class="contact-links-col reveal d2">
-        <a class="clink" href="mailto:Karim_abdelnasser@proton.me">
-          <div class="clink-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
-          <div><p class="clink-label">Email</p><p class="clink-val">Karim_abdelnasser@proton.me</p></div>
-        </a>
-        <a class="clink" href="https://linkedin.com/in/karim-abdel-nasser-821816304" target="_blank" rel="noopener">
-          <div class="clink-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></div>
-          <div><p class="clink-label">LinkedIn</p><p class="clink-val">linkedin.com/in/xkarim</p></div>
-        </a>
-        <a class="clink" href="https://github.com/xLxZy" target="_blank" rel="noopener">
-          <div class="clink-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></div>
-          <div><p class="clink-label">GitHub</p><p class="clink-val">github.com/xLxZY</p></div>
-        </a>
-      </div>
-    </div>
-  </div>
+  <div class="wrap"><div class="section-head reveal"><p class="label">Portfolio</p><h2 class="section-h">My Projects</h2><p class="section-sub">Production-quality labs and tools — fully documented, built with real open-source tooling.</p></div><div class="projects-list"><div class="proj-card reveal d1"><div><div class="proj-num">01</div><h3 class="proj-name">Zero Trust Architecture Lab</h3><p class="proj-desc">Architected a production-grade dual-device Zero Trust environment from scratch — aligned to NIST SP 800-207. Two physical machines connected via IKEv2 IPsec tunnel, 4 VLANs, Suricata IDS on both firewalls, Splunk + Vector aggregating cross-site logs, Traefik + Authelia MFA behind Cloudflare Zero Trust tunnels, and an isolated Kali VM on VLAN 40 for adversary simulation.</p><div class="proj-stack"><span class="stack">pfSense x2</span><span class="stack">IKEv2 IPsec</span><span class="stack">Suricata</span><span class="stack">Splunk</span><span class="stack">Vector</span><span class="stack">Traefik</span><span class="stack">Authelia</span><span class="stack">Cloudflare ZT</span><span class="stack">Tailscale</span><span class="stack">Docker</span><span class="stack">NIST SP 800-207</span></div><div class="proj-links"><a href="https://kar1m.site/blog#zero-trust-lab-build" class="plink" target="_blank">Write-up</a></div></div><div class="proj-visual"><div class="proj-visual-icon"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.4"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div></div></div><div class="proj-card reveal d2"><div><div class="proj-num">02</div><h3 class="proj-name">Linux IAM Lab</h3><p class="proj-desc">A full Identity & Access Management lab running on VirtualBox across 5 VMs. FreeIPA handles LDAP, Kerberos, DNS, and the internal CA. Keycloak federates identities and enforces TOTP MFA via OIDC/SAML. HashiCorp Vault manages secrets and PKI. Elastic captures all authentication events. WireGuard connects the management plane.</p><div class="proj-stack"><span class="stack">FreeIPA</span><span class="stack">Keycloak</span><span class="stack">HashiCorp Vault</span><span class="stack">ELK Stack</span><span class="stack">WireGuard</span><span class="stack">VirtualBox</span><span class="stack">Docker</span><span class="stack">LDAP</span><span class="stack">Kerberos</span><span class="stack">OIDC / SAML</span><span class="stack">PKI</span></div><div class="proj-links"><a href="https://kar1m.site/blog#linux-identity-access-management-iam-lab" class="plink" target="_blank">Write-up</a></div></div><div class="proj-visual"><div class="proj-visual-icon"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg></div></div></div><div class="proj-card reveal d3"><div><div class="proj-num">03</div><h3 class="proj-name">SOC Investigation Lab</h3><p class="proj-desc">A practical Blue Team lab series covering 10 real-world SOC scenarios: authentication anomaly detection, phishing analysis, PCAP investigation, SIEM correlation, lateral movement hunting, detection rule development, incident response execution, and memory forensics on fileless malware. All labs produce reportable artefacts — investigation reports, detection rules, and automation scripts.</p><div class="proj-stack"><span class="stack">Splunk</span><span class="stack">Elastic SIEM</span><span class="stack">Volatility</span><span class="stack">Wireshark</span><span class="stack">Sysmon</span><span class="stack">PowerShell</span><span class="stack">Windows Event Logs</span><span class="stack">MITRE ATT&amp;CK</span><span class="stack">DFIR</span></div><div class="proj-links"><a href="blog.html" class="plink" target="_blank">Write-up</a></div></div><div class="proj-visual"><div class="proj-visual-icon"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div></div></div><div class="proj-card reveal d4"><div><div class="proj-num">04</div><h3 class="proj-name">IOC Enrichment Tool</h3><p class="proj-desc">A Python automation script integrating VirusTotal and AbuseIPDB to effectively reduce analyst enrichment time. Accepts bulk IOC lists (IPs, hashes, domains), queries multiple threat intel sources in parallel, and outputs structured reports ready for ticket ingestion.</p><div class="proj-stack"><span class="stack">Python</span><span class="stack">VirusTotal API</span><span class="stack">AbuseIPDB API</span><span class="stack">Threat Intelligence</span><span class="stack">Automation</span></div><div class="proj-links"><a href="https://kar1m.site/blog#ioc-enrichment-tool" class="plink" target="_blank">Write-up</a></div></div><div class="proj-visual"><div class="proj-visual-icon"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div></div></div></div></div>
 </section>
 
-<!-- FOOTER -->
+<section id="contact" class="section">
+  <div class="wrap"><div class="contact-grid"><div class="reveal"><p class="label">Get in touch</p><h2 class="contact-big">Let's build something <span>secure</span>.</h2><p class="contact-sub">Open to IR consulting, managed SOC engagements, and collaboration on security automation. Reach out — I respond fast.</p></div><div class="contact-links-col reveal d2"><a class="clink" href="mailto:Karim_abdelnasser@proton.me"><div class="clink-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div><div><p class="clink-label">Email</p><p class="clink-val">Karim_abdelnasser@proton.me</p></div></a><a class="clink" href="https://linkedin.com/in/karim-abdel-nasser-821816304" target="_blank"><div class="clink-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></div><div><p class="clink-label">LinkedIn</p><p class="clink-val">linkedin.com/in/xkarim</p></div></a><a class="clink" href="https://github.com/xLxZy" target="_blank"><div class="clink-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></div><div><p class="clink-label">GitHub</p><p class="clink-val">github.com/xLxZY</p></div></a></div></div></div>
+</section>
+
 <footer>
-  <div class="footer-inner">
-    <span class="footer-logo">LxZy</span>
-    <span class="footer-copy">&copy; <span id="year"></span> Karim Abdel-Nasser — LxZy. All rights reserved.</span>
-  </div>
+  <div class="footer-inner"><span class="footer-logo">LxZy</span><span class="footer-copy">© <span id="year"></span> Karim Abdel-Nasser — LxZy. All rights reserved.</span></div>
 </footer>
 
 <script>
-const sections   = ['hero','whoami','education','experience','services','projects','contact'];
+const sections = ['hero','whoami','education','experience','services','projects','contact'];
 const navAnchors = document.querySelectorAll('#navLinks a');
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
