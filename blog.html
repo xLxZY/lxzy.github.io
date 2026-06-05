@@ -61,7 +61,7 @@ h1, h2, h3, h4 {
   background: #a89eff;
 }
 
-/* ---------- NAV (same structure, refined) ---------- */
+/* ---------- NAV ---------- */
 #nav {
   position: fixed;
   top: 0;
@@ -210,7 +210,7 @@ h1, h2, h3, h4 {
   max-width: 550px;
 }
 
-/* ---------- TAG BAR (sculptural) ---------- */
+/* ---------- TAG BAR ---------- */
 .tag-bar {
   display: flex;
   flex-wrap: wrap;
@@ -328,12 +328,13 @@ h1, h2, h3, h4 {
   stroke: #01010a;
 }
 
-/* ---------- SINGLE POST (magazine layout) ---------- */
+/* ---------- SINGLE POST (magazine layout, centered) ---------- */
 #singleView {
   animation: fadeIn 0.6s ease;
 }
 .post-header {
   margin-bottom: 3rem;
+  text-align: left;
 }
 .back-btn {
   display: inline-flex;
@@ -376,23 +377,43 @@ h1, h2, h3, h4 {
   background: rgba(168,158,255,0.2);
   margin: 2.5rem 0;
 }
+
+/* ---------- MARKDOWN CONTENT (centered + full table support) ---------- */
 .post-body {
-  max-width: 780px;
+  max-width: 880px;
+  margin: 0 auto;  /* ← CENTER THE CONTENT */
   font-size: 1.05rem;
   line-height: 1.75;
+  color: #e3e3f5;
 }
-.post-body h1, .post-body h2, .post-body h3 {
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
+.post-body h1 {
+  font-size: 2.5rem;
+  margin: 2rem 0 1rem;
+  font-weight: 800;
+}
+.post-body h2 {
+  font-size: 2rem;
+  margin: 1.8rem 0 1rem;
+  font-weight: 700;
+}
+.post-body h3 {
+  font-size: 1.5rem;
+  margin: 1.5rem 0 0.8rem;
+  font-weight: 700;
 }
 .post-body p {
   margin-bottom: 1.5rem;
-  color: #e3e3f5;
 }
 .post-body a {
   color: #cbb9ff;
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+.post-body ul, .post-body ol {
+  margin: 1rem 0 1.5rem 2rem;
+}
+.post-body li {
+  margin-bottom: 0.4rem;
 }
 .post-body blockquote {
   border-left: 4px solid #a89eff;
@@ -400,12 +421,14 @@ h1, h2, h3, h4 {
   padding: 1rem 1.5rem;
   margin: 2rem 0;
   font-style: italic;
+  color: #d0d0ff;
 }
 .post-body code {
   background: rgba(168,158,255,0.15);
   padding: 0.2rem 0.4rem;
   border-radius: 6px;
   font-size: 0.9em;
+  font-family: monospace;
 }
 .post-body pre {
   background: #0a0a14;
@@ -414,15 +437,57 @@ h1, h2, h3, h4 {
   overflow-x: auto;
   margin: 2rem 0;
 }
+.post-body pre code {
+  background: transparent;
+  padding: 0;
+  color: #cbd5e1;
+}
 .post-body img {
   border-radius: 1.2rem;
-  margin: 2rem 0;
+  margin: 2rem auto;
+  display: block;
+  max-width: 100%;
+  height: auto;
   box-shadow: 0 20px 30px -10px black;
 }
-.empty-state {
-  text-align: center;
-  padding: 4rem;
-  color: #7a7aaa;
+/* ---------- TABLES: visible, readable, premium ---------- */
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.9rem;
+  background: rgba(10, 10, 20, 0.6);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.post-body th,
+.post-body td {
+  border: 1px solid rgba(168, 158, 255, 0.25);
+  padding: 0.8rem 1rem;
+  text-align: left;
+  vertical-align: top;
+}
+.post-body th {
+  background: rgba(168, 158, 255, 0.15);
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.8rem;
+}
+.post-body td {
+  background: rgba(15, 15, 28, 0.7);
+  color: #e0e0f0;
+}
+.post-body tr:hover td {
+  background: rgba(168, 158, 255, 0.08);
+}
+.post-body table p {
+  margin: 0;
+}
+/* ensure nested markdown inside tables renders */
+.post-body table code {
+  background: rgba(0,0,0,0.3);
 }
 
 /* ---------- FOOTER ---------- */
@@ -479,12 +544,21 @@ footer {
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+/* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }
   .post-card { grid-template-columns: 1fr; padding: 1.5rem; }
   .post-meta { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; }
   .page-hero { padding: 5rem 0 3rem; }
+  .post-body {
+    padding: 0 1rem;
+  }
+  .post-body table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 </style>
 </head>
