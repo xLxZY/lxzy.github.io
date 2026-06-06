@@ -39,17 +39,11 @@ body {
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
-  cursor: none;
 }
 a { text-decoration: none; color: inherit; }
-button { cursor: none; font-family: 'Outfit', sans-serif; background: none; border: none; }
+button { font-family: 'Outfit', sans-serif; background: none; border: none; }
 img { display: block; max-width: 100%; }
 h1, h2, h3, h4 { font-family: 'Bricolage Grotesque', sans-serif; line-height: 1.05; }
-
-@media (pointer: coarse) {
-  body { cursor: auto; }
-  .cursor { display: none !important; }
-}
 
 /* ═══════════════════════════════════════════
    GLASS SYSTEM 
@@ -1115,7 +1109,7 @@ footer {
   </div>
 </section>
 
-<!-- EXPERIENCE (new layout from Untitled-1) -->
+<!-- EXPERIENCE -->
 <section id="experience">
   <div class="wrap">
     <div class="section-head reveal">
@@ -1303,7 +1297,7 @@ footer {
           <p class="clink-label">LinkedIn</p>
           <p class="clink-val">linkedin.com/in/xkarim</p>
         </a>
-        <a class="clink" href="https://github.com/xLxZy" target="_blank" rel="noopener">
+        <a class="clink" href="https://github.com/xLxZY" target="_blank" rel="noopener">
           <p class="clink-label">GitHub</p>
           <p class="clink-val">github.com/xLxZY</p>
         </a>
@@ -1321,9 +1315,6 @@ footer {
 </footer>
 
 <script>
-/* ═══════════════════════════════════════════
-   PRESERVED ORIGINAL LOGIC
-═══════════════════════════════════════════ */
 const sections   = ['hero','whoami','education','experience','services','projects','contact'];
 const navAnchors = document.querySelectorAll('#navLinks a');
 
@@ -1356,7 +1347,6 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
 </script>
 </body>
 </html>
