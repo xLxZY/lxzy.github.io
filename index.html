@@ -4,422 +4,93 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LxZY — Karim Abdel-Nasser</title>
-  <!-- Premium Editorial Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* ---------- RESET & BASE (Softer, Warmer Colors) ---------- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; background-color: #F5F0EB; }
+    body { font-family: 'Inter', sans-serif; background-color: #F5F0EB; color: #2A2826; line-height: 1.5; font-weight: 400; overflow-x: hidden; }
+    h1, h2, h3, h4, .logo, .nav-links a, .section-label { font-family: 'Sora', sans-serif; font-weight: 500; letter-spacing: -0.02em; }
+    .section-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: #9B8B7A; margin-bottom: 1.5rem; display: inline-block; }
+    h2 { font-size: clamp(2.8rem, 8vw, 5.5rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; color: #2A2826; }
+    .lead-text { font-size: 1.3rem; font-weight: 350; line-height: 1.5; color: #6A6360; max-width: 680px; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .pixel-border-hover { transition: all 0.3s; }
+    .pixel-border-hover:hover { background: #2A2826; color: #F5F0EB; padding: 0.4rem 1.2rem; border-radius: 0px; clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 95% 100%, 0% 100%); }
 
-    html {
-      scroll-behavior: smooth;
-      background-color: #F5F0EB;  /* soft cream, not pure white */
-    }
+    nav { position: fixed; top: 0; left: 0; width: 100%; padding: 1.8rem 2rem; z-index: 1000; background: rgba(245, 240, 235, 0.7); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); transition: all 0.3s; }
+    .nav-inner { max-width: 1440px; margin: 0 auto; display: flex; justify-content: space-between; align-items: baseline; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #F5F0EB;
-      color: #2A2826;  /* warm dark gray, not pure black */
-      line-height: 1.5;
-      font-weight: 400;
-      overflow-x: hidden;
-    }
-
-    /* ---------- TYPOGRAPHY ---------- */
-    h1, h2, h3, h4, .logo, .nav-links a, .section-label {
-      font-family: 'Sora', sans-serif;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-    }
-
-    .section-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: #9B8B7A;  /* muted warm gray */
-      margin-bottom: 1.5rem;
-      display: inline-block;
-    }
-
-    h2 {
-      font-size: clamp(2.8rem, 8vw, 5.5rem);
-      font-weight: 600;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      color: #2A2826;
-    }
-
-    .lead-text {
-      font-size: 1.3rem;
-      font-weight: 350;
-      line-height: 1.5;
-      color: #6A6360;  /* softer mid-tone */
-      max-width: 680px;
-    }
-
-    /* ---------- PIXEL REVEAL UTILITY ---------- */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1);
-    }
-    .reveal.in {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .pixel-border-hover {
-      transition: all 0.3s;
-    }
-    .pixel-border-hover:hover {
-      background: #2A2826;
-      color: #F5F0EB;
-      padding: 0.4rem 1.2rem;
-      border-radius: 0px;
-      clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 95% 100%, 0% 100%);
-    }
-
-    /* ---------- NAVIGATION (Glass, minimal) ---------- */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 1.8rem 2rem;
-      z-index: 1000;
-      background: rgba(245, 240, 235, 0.7);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      transition: all 0.3s;
-    }
-    .nav-inner {
-      max-width: 1440px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
     .logo {
       display: inline-flex;
       align-items: center;
       text-decoration: none;
+      transition: opacity 0.3s;
+      overflow: visible;
     }
     .logo img {
       height: 36px;
-      width: auto;
+      width: 36px;
       display: block;
+      object-fit: contain;
+      transform: scale(1.9);
+      transform-origin: left center;
     }
-    .nav-links {
-      display: flex;
-      gap: 2.2rem;
-      list-style: none;
-    }
-    .nav-links a {
-      text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #5A5450;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover {
-      color: #B87C5A;
-    }
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      top: 80px;
-      left: 0;
-      width: 100%;
-      background: #F5F0EB;
-      padding: 2rem;
-      flex-direction: column;
-      gap: 1.2rem;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      z-index: 999;
-    }
-    .mobile-nav.open {
-      display: flex;
-    }
-    .mobile-nav a {
-      font-size: 1.2rem;
-      text-decoration: none;
-      color: #2A2826;
-      font-weight: 500;
-    }
+    .logo:hover { opacity: 0.7; }
 
-    /* ---------- HERO ---------- */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 8rem 2rem 6rem;
-      max-width: 1300px;
-      margin: 0 auto;
-    }
-    .hero-eyebrow {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #9B8B7A;
-      margin-bottom: 1.5rem;
-    }
-    .hero-title {
-      font-size: clamp(3.2rem, 11vw, 7rem);
-      font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      color: #2A2826;
-      max-width: 1000px;
-      margin-bottom: 2rem;
-    }
-    .hero-description {
-      font-size: 1.3rem;
-      color: #6A6360;
-      max-width: 600px;
-      line-height: 1.5;
-      margin-bottom: 2.5rem;
-    }
-    .btn {
-      display: inline-block;
-      padding: 1rem 2.2rem;
-      background: transparent;
-      border: 1px solid #2A2826;
-      color: #2A2826;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      transition: all 0.3s;
-      font-family: 'Sora', sans-serif;
-    }
-    .btn:hover {
-      background: #2A2826;
-      color: #F5F0EB;
-      clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 95% 100%, 0% 100%);
-    }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: #5A5450; transition: color 0.3s; }
+    .nav-links a:hover { color: #B87C5A; }
+    .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+    .mobile-nav { display: none; position: fixed; top: 80px; left: 0; width: 100%; background: #F5F0EB; padding: 2rem; flex-direction: column; gap: 1.2rem; border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 999; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-size: 1.2rem; text-decoration: none; color: #2A2826; font-weight: 500; }
 
-    /* ---------- GENERAL SECTION STYLES ---------- */
-    section {
-      padding: 7rem 2rem;
-      max-width: 1300px;
-      margin: 0 auto;
-      border-top: 1px solid rgba(0, 0, 0, 0.05);
-    }
-    section:first-of-type {
-      border-top: none;
-    }
-    .chapter-intro {
-      max-width: 700px;
-      margin-bottom: 4rem;
-    }
-    .chapter-content {
-      max-width: 860px;
-    }
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 2rem 6rem; max-width: 1300px; margin: 0 auto; }
+    .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #9B8B7A; margin-bottom: 1.5rem; }
+    .hero-title { font-size: clamp(3.2rem, 11vw, 7rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; color: #2A2826; max-width: 1000px; margin-bottom: 2rem; }
+    .hero-description { font-size: 1.3rem; color: #6A6360; max-width: 600px; line-height: 1.5; margin-bottom: 2.5rem; }
+    .btn { display: inline-block; padding: 1rem 2.2rem; background: transparent; border: 1px solid #2A2826; color: #2A2826; text-decoration: none; font-weight: 500; font-size: 0.8rem; letter-spacing: 0.08em; transition: all 0.3s; font-family: 'Sora', sans-serif; }
+    .btn:hover { background: #2A2826; color: #F5F0EB; clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 95% 100%, 0% 100%); }
 
-    /* Who Am I */
-    .bio-text {
-      font-size: 1.25rem;
-      line-height: 1.65;
-      color: #3A3836;
-      margin-bottom: 2rem;
-    }
-    .stats {
-      display: flex;
-      gap: 3rem;
-      margin: 2.5rem 0;
-    }
-    .stat-number {
-      font-size: 2.2rem;
-      font-weight: 600;
-      color: #2A2826;
-    }
-    .stat-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #9B8B7A;
-    }
-    .skills-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem 1rem;
-      margin: 2rem 0;
-    }
-    .skill {
-      font-size: 0.85rem;
-      color: #5A5450;
-      padding: 0.2rem 0;
-      border-bottom: 1px solid #E2DDD8;
-    }
+    section { padding: 7rem 2rem; max-width: 1300px; margin: 0 auto; border-top: 1px solid rgba(0, 0, 0, 0.05); }
+    section:first-of-type { border-top: none; }
+    .chapter-intro { max-width: 700px; margin-bottom: 4rem; }
+    .chapter-content { max-width: 860px; }
+    .bio-text { font-size: 1.25rem; line-height: 1.65; color: #3A3836; margin-bottom: 2rem; }
+    .stats { display: flex; gap: 3rem; margin: 2.5rem 0; }
+    .stat-number { font-size: 2.2rem; font-weight: 600; color: #2A2826; }
+    .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #9B8B7A; }
+    .skills-list { display: flex; flex-wrap: wrap; gap: 0.6rem 1rem; margin: 2rem 0; }
+    .skill { font-size: 0.85rem; color: #5A5450; padding: 0.2rem 0; border-bottom: 1px solid #E2DDD8; }
+    .timeline-item { margin-bottom: 3rem; }
+    .timeline-year { font-size: 0.75rem; letter-spacing: 0.08em; color: #9B8B7A; margin-bottom: 0.5rem; }
+    .timeline-title { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .timeline-sub { font-size: 0.9rem; color: #6A6360; margin-bottom: 0.8rem; }
+    .badge { display: inline-block; background: #E8E2DC; padding: 0.2rem 0.8rem; font-size: 0.7rem; letter-spacing: 0.05em; color: #5A5450; }
+    .services-list { display: flex; flex-direction: column; gap: 2.5rem; }
+    .service-item { border-bottom: 1px solid #E2DDD8; padding-bottom: 1.8rem; }
+    .service-name { font-size: 1.5rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .service-desc { color: #6A6360; max-width: 600px; }
+    .project { margin: 6rem 0; }
+    .project:first-of-type { margin-top: 0; }
+    .project-meta { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #9B8B7A; margin-bottom: 1rem; }
+    .project-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1.2rem; line-height: 1.2; }
+    .project-description { font-size: 1rem; color: #3A3836; max-width: 700px; margin-bottom: 1.8rem; line-height: 1.6; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .project-stack span { font-size: 0.7rem; color: #9B8B7A; background: #E8E2DC; padding: 0.2rem 0.8rem; }
+    .project-link { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-weight: 500; color: #2A2826; border-bottom: 1px solid #2A2826; padding-bottom: 0.2rem; transition: gap 0.3s; }
+    .project-link:hover { gap: 0.8rem; }
+    .blog-cta { font-size: 1.1rem; text-decoration: none; color: #2A2826; border-bottom: 1px solid currentColor; padding-bottom: 0.2rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 1.8rem; margin-top: 2rem; }
+    .contact-link { font-size: 1.2rem; text-decoration: none; color: #2A2826; transition: color 0.2s; border-bottom: 1px dotted #CBC3BC; display: inline-block; }
+    .contact-link:hover { color: #B87C5A; }
+    footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid rgba(0,0,0,0.05); color: #9B8B7A; font-size: 0.75rem; letter-spacing: 0.04em; }
 
-    /* Education & Experience */
-    .timeline-item {
-      margin-bottom: 3rem;
-    }
-    .timeline-year {
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      color: #9B8B7A;
-      margin-bottom: 0.5rem;
-    }
-    .timeline-title {
-      font-size: 1.6rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .timeline-sub {
-      font-size: 0.9rem;
-      color: #6A6360;
-      margin-bottom: 0.8rem;
-    }
-    .badge {
-      display: inline-block;
-      background: #E8E2DC;
-      padding: 0.2rem 0.8rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.05em;
-      color: #5A5450;
-    }
-
-    /* Services */
-    .services-list {
-      display: flex;
-      flex-direction: column;
-      gap: 2.5rem;
-    }
-    .service-item {
-      border-bottom: 1px solid #E2DDD8;
-      padding-bottom: 1.8rem;
-    }
-    .service-name {
-      font-size: 1.5rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-    .service-desc {
-      color: #6A6360;
-      max-width: 600px;
-    }
-
-    /* Projects */
-    .project {
-      margin: 6rem 0;
-    }
-    .project:first-of-type {
-      margin-top: 0;
-    }
-    .project-meta {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #9B8B7A;
-      margin-bottom: 1rem;
-    }
-    .project-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.2rem;
-      line-height: 1.2;
-    }
-    .project-description {
-      font-size: 1rem;
-      color: #3A3836;
-      max-width: 700px;
-      margin-bottom: 1.8rem;
-      line-height: 1.6;
-    }
-    .project-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-    }
-    .project-stack span {
-      font-size: 0.7rem;
-      color: #9B8B7A;
-      background: #E8E2DC;
-      padding: 0.2rem 0.8rem;
-    }
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      font-weight: 500;
-      color: #2A2826;
-      border-bottom: 1px solid #2A2826;
-      padding-bottom: 0.2rem;
-      transition: gap 0.3s;
-    }
-    .project-link:hover {
-      gap: 0.8rem;
-    }
-
-    /* Blog & Contact */
-    .blog-cta {
-      font-size: 1.1rem;
-      text-decoration: none;
-      color: #2A2826;
-      border-bottom: 1px solid currentColor;
-      padding-bottom: 0.2rem;
-    }
-    .contact-links {
-      display: flex;
-      flex-direction: column;
-      gap: 1.8rem;
-      margin-top: 2rem;
-    }
-    .contact-link {
-      font-size: 1.2rem;
-      text-decoration: none;
-      color: #2A2826;
-      transition: color 0.2s;
-      border-bottom: 1px dotted #CBC3BC;
-      display: inline-block;
-    }
-    .contact-link:hover {
-      color: #B87C5A;
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      border-top: 1px solid rgba(0,0,0,0.05);
-      color: #9B8B7A;
-      font-size: 0.75rem;
-      letter-spacing: 0.04em;
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .nav-links { display: none; }
-      .mobile-menu-btn { display: block; }
-      .hero { padding: 6rem 1.5rem; }
-      section { padding: 5rem 1.5rem; }
-      .project-title { font-size: 1.8rem; }
-    }
-    @media (max-width: 600px) {
-      .hero-title { font-size: 3rem; }
-      .bio-text { font-size: 1rem; }
-      .stats { flex-direction: column; gap: 1rem; }
-      .project-description { font-size: 0.9rem; }
-    }
+    @media (max-width: 900px) { .nav-links { display: none; } .mobile-menu-btn { display: block; } .hero { padding: 6rem 1.5rem; } section { padding: 5rem 1.5rem; } .project-title { font-size: 1.8rem; } }
+    @media (max-width: 600px) { .hero-title { font-size: 3rem; } .bio-text { font-size: 1rem; } .stats { flex-direction: column; gap: 1rem; } .project-description { font-size: 0.9rem; } }
   </style>
 </head>
 <body>
@@ -427,7 +98,7 @@
 <nav>
   <div class="nav-inner">
     <a href="#top" class="logo">
-      <img src="images/logo.webp" alt="LxZY">
+      <img src="images/logo.webp" alt="LxZY" width="128" height="128" loading="eager" decoding="sync" fetchpriority="high">
     </a>
     <ul class="nav-links">
       <li><a href="#whoami">Who</a></li>
@@ -452,7 +123,6 @@
 </div>
 
 <main>
-  <!-- Hero -->
   <section class="hero" id="top">
     <div class="hero-eyebrow">Security, with texture</div>
     <h1 class="hero-title">Karim Abdel‑Nasser<br> <span style="font-weight: 400;"></span></h1>
@@ -460,7 +130,6 @@
     <a href="#projects" class="btn pixel-border-hover">See the work →</a>
   </section>
 
-  <!-- Who Am I -->
   <section id="whoami">
     <div class="chapter-intro reveal">
       <span class="section-label">01 / Presence</span>
@@ -469,8 +138,8 @@
     </div>
     <div class="chapter-content reveal d1">
       <div class="bio-text">
-        <p>I’m a SOC analyst and computer science student based in Cairo, living at the intersection of detection engineering and human instinct. I build security environments that don’t just catch threats — they tell a story about how the breach happened, and how to stop it from happening again.</p>
-        <p>My work is not about collecting alerts. It’s about understanding the rhythm of infrastructure, the anomalies that feel wrong, and the automation that gives analysts back their time. Every lab I build, every rule I write, is an invitation to think like an adversary — and then think better.</p>
+        <p>I'm a SOC analyst and computer science student based in Cairo, living at the intersection of detection engineering and human instinct. I build security environments that don't just catch threats — they tell a story about how the breach happened, and how to stop it from happening again.</p>
+        <p>My work is not about collecting alerts. It's about understanding the rhythm of infrastructure, the anomalies that feel wrong, and the automation that gives analysts back their time. Every lab I build, every rule I write, is an invitation to think like an adversary — and then think better.</p>
       </div>
       <div class="stats">
         <div><div class="stat-number">SOC</div><div class="stat-label">Analyst / Engineer</div></div>
@@ -489,7 +158,6 @@
     </div>
   </section>
 
-  <!-- Education -->
   <section id="education">
     <div class="chapter-intro reveal">
       <span class="section-label">02 / Foundation</span>
@@ -512,7 +180,6 @@
     </div>
   </section>
 
-  <!-- Experience -->
   <section id="experience">
     <div class="chapter-intro reveal">
       <span class="section-label">03 / Practice</span>
@@ -530,7 +197,6 @@
     </div>
   </section>
 
-  <!-- Services -->
   <section id="services">
     <div class="chapter-intro reveal">
       <span class="section-label">04 / Offerings</span>
@@ -553,14 +219,12 @@
     </div>
   </section>
 
-  <!-- Projects -->
   <section id="projects">
     <div class="chapter-intro reveal">
       <span class="section-label">05 / Artefacts</span>
       <h2>Projects</h2>
       <div class="lead-text">Every build has a story. Here are three of them.</div>
     </div>
-
     <div class="project reveal d1">
       <div class="project-meta">Zero Trust — NIST 800-207</div>
       <h3 class="project-title">Dual‑site Zero Trust Architecture Lab</h3>
@@ -568,7 +232,6 @@
       <div class="project-stack"><span>pfSense</span><span>Suricata</span><span>Splunk</span><span>Vector</span><span>Traefik</span><span>Authelia</span><span>Cloudflare ZT</span></div>
       <a href="https://kar1m.site/blog#zero-trust-lab-build" class="project-link" target="_blank">Read the full narrative →</a>
     </div>
-
     <div class="project reveal d2">
       <div class="project-meta">Identity — Linux IAM</div>
       <h3 class="project-title">Linux Identity & Access Management Lab</h3>
@@ -576,7 +239,6 @@
       <div class="project-stack"><span>FreeIPA</span><span>Keycloak</span><span>Vault</span><span>ELK</span><span>WireGuard</span><span>Docker</span></div>
       <a href="https://kar1m.site/blog#linux-identity-access-management-iam-lab" class="project-link" target="_blank">Explore the identity story →</a>
     </div>
-
     <div class="project reveal d3">
       <div class="project-meta">Blue Team — SOC Investigation Series</div>
       <h3 class="project-title">SOC Investigation Lab</h3>
@@ -584,7 +246,6 @@
       <div class="project-stack"><span>Splunk/Elastic</span><span>Volatility</span><span>Wireshark</span><span>Sysmon</span><span>MITRE</span></div>
       <a href="https://kar1m.site/blog" class="project-link" target="_blank">Read the investigation notes →</a>
     </div>
-
     <div class="project reveal d4">
       <div class="project-meta">Automation — IOC Enrichment</div>
       <h3 class="project-title">IOC Enrichment Tool (Python)</h3>
@@ -594,7 +255,6 @@
     </div>
   </section>
 
-  <!-- Blog -->
   <section id="blog">
     <div class="chapter-intro reveal">
       <span class="section-label">06 / Writing</span>
@@ -607,11 +267,10 @@
     </div>
   </section>
 
-  <!-- Contact -->
   <section id="contact">
     <div class="chapter-intro reveal">
       <span class="section-label">07 / Connect</span>
-      <h2>Let’s build something secure together.</h2>
+      <h2>Let's build something secure together.</h2>
       <div class="lead-text">Open for IR consulting, lab collaborations, or just a conversation about threat hunting.</div>
     </div>
     <div class="contact-links reveal d1">
@@ -630,41 +289,24 @@
 </footer>
 
 <script>
-  // Mobile menu toggle
   const menuBtn = document.getElementById('menuToggle');
   const mobileNav = document.getElementById('mobileNav');
   menuBtn?.addEventListener('click', () => mobileNav.classList.toggle('open'));
   window.closeMobile = () => mobileNav.classList.remove('open');
-
-  // Current year
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        observer.unobserve(entry.target);
-      }
+      if (entry.isIntersecting) { entry.target.classList.add('in'); observer.unobserve(entry.target); }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => observer.observe(el));
-
-  // Active nav highlight
   const sections = ['whoami', 'education', 'experience', 'services', 'projects', 'blog', 'contact'];
   const navLinks = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', () => {
     let current = '';
-    for (let s of sections) {
-      const el = document.getElementById(s);
-      if (el && el.offsetTop - 150 <= window.scrollY) current = s;
-    }
-    navLinks.forEach(link => {
-      const href = link.getAttribute('href')?.substring(1);
-      if (href === current) link.style.color = '#B87C5A';
-      else link.style.color = '#5A5450';
-    });
+    for (let s of sections) { const el = document.getElementById(s); if (el && el.offsetTop - 150 <= window.scrollY) current = s; }
+    navLinks.forEach(link => { const href = link.getAttribute('href')?.substring(1); if (href === current) link.style.color = '#B87C5A'; else link.style.color = '#5A5450'; });
   });
 </script>
 </body>
