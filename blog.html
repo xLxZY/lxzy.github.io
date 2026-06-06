@@ -1,123 +1,437 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Blog — LxZy</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — LxZY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;background:#01010a;}
-body{font-family:'Outfit',sans-serif;background:#01010a;color:#f0f0fa;line-height:1.6;overflow-x:hidden;}
-a{text-decoration:none;}
-button{cursor:pointer;font-family:'Outfit',sans-serif;}
-img{display:block;max-width:100%;}
-h1,h2,h3,h4{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;letter-spacing:-0.02em;}
-.label{font-size:0.7rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#a89eff;display:flex;align-items:center;gap:10px;}
-.label::before{content:'';width:32px;height:2px;background:#a89eff;}
-#nav{position:fixed;top:0;left:0;right:0;height:80px;z-index:1000;background:rgba(1,1,10,0.75);backdrop-filter:blur(20px);border-bottom:1px solid rgba(168,158,255,0.15);transition:0.3s;}
-#nav.scrolled{background:rgba(1,1,10,0.95);box-shadow:0 8px 28px rgba(0,0,0,0.5);}
-.nav-inner{max-width:1600px;margin:0 auto;height:100%;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{font-family:'Bebas Neue',cursive;font-size:2rem;background:linear-gradient(135deg,#fff,#bfb5ff);background-clip:text;-webkit-background-clip:text;color:transparent;}
-.nav-links{display:flex;gap:2rem;list-style:none;}
-.nav-links a{font-size:0.8rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:#ddddf5;transition:0.2s;padding-bottom:4px;border-bottom:1.5px solid transparent;}
-.nav-links a:hover,.nav-links a.active{color:white;border-bottom-color:#a89eff;}
-.nav-cta{background:#a89eff !important;color:#01010a !important;padding:8px 20px !important;border-radius:40px !important;font-weight:700 !important;}
-.nav-cta::after{display:none !important;}
-.nav-cta:hover{background:#c5bbff !important;transform:translateY(-2px);}
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;}
-.hamburger span{width:24px;height:2px;background:white;}
-.mobile-nav{display:none;position:fixed;top:80px;left:0;right:0;background:rgba(1,1,10,0.97);backdrop-filter:blur(24px);padding:2rem;flex-direction:column;gap:1.2rem;z-index:999;border-bottom:1px solid rgba(168,158,255,0.2);}
-.mobile-nav.open{display:flex;}
-.mobile-nav a{font-size:1.2rem;font-weight:600;color:white;}
-.page-hero{position:relative;padding:8rem 0 6rem;margin-bottom:5rem;overflow:hidden;background:radial-gradient(ellipse at 70% 20%,#15102e,#01010a);}
-.page-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 40%,rgba(168,158,255,0.08) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;}
-.page-hero::after{content:'BLOG';font-family:'Bebas Neue',cursive;font-size:18vw;position:absolute;bottom:-5vw;right:-2vw;color:rgba(168,158,255,0.04);pointer-events:none;line-height:1;letter-spacing:0.06em;}
-.page-hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 2rem;}
-.page-hero .label{margin-bottom:1.5rem;color:#b8adff;}
-.page-hero h1{font-size:clamp(3rem,10vw,6rem);font-weight:800;color:white;letter-spacing:-0.02em;margin-bottom:1.2rem;}
-.page-hero p{font-size:1.2rem;color:#b0b0e0;max-width:550px;}
-.tag-bar{display:flex;flex-wrap:wrap;gap:0.8rem;margin-bottom:4rem;padding:0 0.2rem;}
-.tag-btn{padding:0.6rem 1.4rem;border-radius:60px;font-size:0.85rem;font-weight:600;background:rgba(20,20,40,0.7);border:1px solid rgba(168,158,255,0.2);color:#cdcdf5;transition:all 0.25s;cursor:pointer;backdrop-filter:blur(4px);white-space:nowrap;}
-.tag-btn:hover,.tag-btn.active{background:#a89eff;border-color:#a89eff;color:#01010a;transform:translateY(-2px);box-shadow:0 6px 14px rgba(168,158,255,0.2);}
-@media (max-width:640px){.tag-btn{white-space:normal;font-size:0.75rem;padding:0.4rem 1rem;}}
-.wrap{max-width:1400px;margin:0 auto;padding:0 2rem;}
-@media (max-width:768px){.wrap{padding:0 1.5rem;}}
-.page{padding-top:calc(80px + 60px);padding-bottom:120px;}
-#listing{display:flex;flex-direction:column;gap:2.5rem;}
-.post-card{background:rgba(12,12,24,0.6);backdrop-filter:blur(4px);border:1px solid rgba(168,158,255,0.1);border-radius:2rem;padding:2.5rem 2.8rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;transition:all 0.35s cubic-bezier(0.2,0.9,0.4,1.1);cursor:pointer;}
-.post-card:hover{border-color:#a89eff;transform:translateY(-6px);background:rgba(20,18,40,0.8);box-shadow:0 20px 40px rgba(0,0,0,0.3);}
-.post-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;}
-.post-tag{padding:0.2rem 0.8rem;background:rgba(168,158,255,0.15);border-radius:40px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:#cdbeff;}
-.post-title{font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;margin-bottom:0.8rem;line-height:1.2;color:white;}
-.post-summary{font-size:0.95rem;color:#b7b7e8;line-height:1.65;}
-.post-meta{display:flex;flex-direction:column;align-items:flex-end;gap:0.6rem;}
-.post-date{font-size:0.8rem;font-weight:500;color:#a89eff;white-space:nowrap;}
-.post-read{font-size:0.7rem;color:#7f7fb0;}
-.post-arrow{width:44px;height:44px;background:rgba(168,158,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:0.25s;}
-.post-card:hover .post-arrow{background:#a89eff;transform:translateX(6px);}
-.post-arrow svg{width:20px;stroke:#a89eff;}
-.post-card:hover .post-arrow svg{stroke:#01010a;}
-#singleView{animation:fadeIn 0.6s ease;}
-.post-header{margin-bottom:3rem;padding:0 0.5rem;}
-.back-btn{position:sticky;top:90px;z-index:20;display:inline-flex;align-items:center;gap:8px;background:rgba(1,1,10,0.85);backdrop-filter:blur(12px);border:1px solid rgba(168,158,255,0.4);padding:0.6rem 1.4rem;border-radius:60px;font-size:0.8rem;font-weight:600;color:#cdbeff;margin-bottom:2.5rem;transition:0.2s;}
-.back-btn svg{stroke:#a89eff;width:16px;height:16px;}
-.back-btn:hover{background:#a89eff;color:#01010a;transform:translateX(-5px);}
-.back-btn:hover svg{stroke:#01010a;}
-.post-header-tags{display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:1.5rem;}
-.post-header-title{font-size:clamp(2rem,6vw,4.2rem);font-weight:800;line-height:1.15;margin-bottom:1.2rem;color:white;}
-.post-header-meta{display:flex;gap:1.5rem;font-size:0.9rem;color:#a8a8da;flex-wrap:wrap;}
-.post-divider{height:1px;background:rgba(168,158,255,0.2);margin:2.5rem 0;}
-.post-body{max-width:880px;margin:0 auto;padding:0 1rem;font-size:1.05rem;line-height:1.75;color:#e3e3f5;}
-.post-body h1{font-size:2.5rem;margin:2rem 0 1rem;font-weight:800;}
-.post-body h2{font-size:2rem;margin:1.8rem 0 1rem;font-weight:700;}
-.post-body h3{font-size:1.5rem;margin:1.5rem 0 0.8rem;font-weight:700;}
-.post-body p{margin-bottom:1.5rem;}
-.post-body a{color:#cbb9ff;text-decoration:underline;text-underline-offset:4px;}
-.post-body ul,.post-body ol{margin:1rem 0 1.5rem 2rem;}
-.post-body li{margin-bottom:0.4rem;}
-.post-body blockquote{border-left:4px solid #a89eff;background:rgba(168,158,255,0.05);padding:1rem 1.5rem;margin:2rem 0;font-style:italic;color:#d0d0ff;}
-.post-body code{background:rgba(168,158,255,0.15);padding:0.2rem 0.4rem;border-radius:6px;font-size:0.9em;font-family:monospace;}
-.post-body pre{background:#0a0a14;border-radius:1.2rem;padding:1.5rem;overflow-x:auto;margin:2rem 0;}
-.post-body pre code{background:transparent;padding:0;color:#cbd5e1;}
-.post-body img{border-radius:1.2rem;margin:2rem auto;display:block;max-width:100%;height:auto;box-shadow:0 20px 30px -10px black;}
-.post-body table{width:100%;border-collapse:collapse;margin:2rem 0;font-size:0.9rem;background:rgba(10,10,20,0.6);border-radius:1rem;overflow:hidden;}
-.post-body th,.post-body td{border:1px solid rgba(168,158,255,0.25);padding:0.8rem 1rem;text-align:left;vertical-align:top;}
-.post-body th{background:rgba(168,158,255,0.15);font-weight:700;color:#ffffff;text-transform:uppercase;letter-spacing:0.04em;font-size:0.8rem;}
-.post-body td{background:rgba(15,15,28,0.7);color:#e0e0f0;}
-.post-body tr:hover td{background:rgba(168,158,255,0.08);}
-.post-body table p{margin:0;}
-@media (max-width:768px){.post-body table{display:block;overflow-x:auto;white-space:nowrap;}.post-body{padding:0 0.5rem;}}
-footer{background:#01010a;border-top:1px solid rgba(168,158,255,0.1);padding:2rem 2rem;margin-top:5rem;}
-.footer-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
-.footer-logo{font-family:'Bebas Neue',cursive;font-size:1.8rem;background:linear-gradient(135deg,#fff,#bfb5ff);background-clip:text;-webkit-background-clip:text;color:transparent;}
-.footer-copy{font-size:0.75rem;color:#5a5a8a;}
-.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.8s cubic-bezier(0.2,0.9,0.4,1.1),transform 0.8s cubic-bezier(0.2,0.9,0.4,1.1);}
-.reveal.in{opacity:1;transform:translateY(0);}
-.loading{display:flex;justify-content:center;padding:5rem;}
-.spinner{width:36px;height:36px;border:3px solid rgba(168,158,255,0.2);border-top-color:#a89eff;border-radius:50%;animation:spin 0.8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-@media (max-width:768px){
-  .nav-links{display:none;}.hamburger{display:flex;}
-  .post-card{grid-template-columns:1fr;padding:1.8rem;}
-  .post-meta{flex-direction:row;justify-content:space-between;align-items:center;width:100%;}
-  .page-hero{padding:5rem 0 3rem;}
-  .page-hero-inner{padding:0 1.5rem;}
-  .wrap{padding:0 1.2rem;}
-  .post-header{padding:0;}
-  .back-btn{top:80px;padding:0.5rem 1.2rem;}
-}
-@media (min-width:1400px){.wrap{padding:0 2.5rem;}.post-body{max-width:960px;}}
+  /* ---------- RESET & BASE (Warm cream, no pure white) ---------- */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+    background-color: #F5F0EB;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F5F0EB;
+    color: #2A2826;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  a {
+    text-decoration: none;
+  }
+  button {
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* ---------- NAV (glass, same as index) ---------- */
+  #nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    z-index: 1000;
+    background: rgba(245, 240, 235, 0.7);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+  }
+  #nav.scrolled {
+    background: rgba(245, 240, 235, 0.95);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .nav-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .nav-logo {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: #2A2826;
+    transition: opacity 0.3s;
+  }
+  .nav-logo:hover { opacity: 0.7; }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #5A5450;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: #B87C5A;
+  }
+  .nav-cta {
+    background: #2A2826 !important;
+    color: #F5F0EB !important;
+    padding: 0.4rem 1.2rem !important;
+    border-radius: 0px !important;
+    transition: all 0.3s !important;
+  }
+  .nav-cta:hover {
+    background: #B87C5A !important;
+    transform: translateY(-2px);
+  }
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    width: 22px;
+    height: 1.5px;
+    background: #2A2826;
+  }
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #F5F0EB;
+    padding: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    z-index: 999;
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #2A2826;
+  }
+
+  /* ---------- PAGE HERO (soft) ---------- */
+  .page-hero {
+    padding: 9rem 2rem 5rem;
+    background: #E8E2DC;
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+  .page-hero-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .page-hero .label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9B8B7A;
+    margin-bottom: 1rem;
+  }
+  .page-hero h1 {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 700;
+    color: #2A2826;
+    margin-bottom: 1rem;
+  }
+  .page-hero p {
+    font-size: 1.1rem;
+    color: #6A6360;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* ---------- MAIN WRAP ---------- */
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .page {
+    padding-top: 0;
+    padding-bottom: 5rem;
+  }
+  @media (max-width: 768px) {
+    .wrap { padding: 0 1.2rem; }
+  }
+
+  /* ---------- TAG BAR ---------- */
+  .tag-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 3rem;
+    justify-content: center;
+  }
+  .tag-btn {
+    padding: 0.4rem 1rem;
+    background: #E8E2DC;
+    border: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #5A5450;
+    transition: all 0.2s;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+  .tag-btn:hover, .tag-btn.active {
+    background: #2A2826;
+    color: #F5F0EB;
+  }
+
+  /* ---------- POST LISTING (no cards, elegant) ---------- */
+  #listing {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .post-card {
+    border-bottom: 1px solid #E2DDD8;
+    padding: 2rem 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .post-card:hover {
+    padding-left: 1rem;
+    border-bottom-color: #B87C5A;
+  }
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .post-tag {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #E8E2DC;
+    padding: 0.2rem 0.6rem;
+    color: #5A5450;
+  }
+  .post-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #2A2826;
+  }
+  .post-summary {
+    font-size: 0.9rem;
+    color: #6A6360;
+    line-height: 1.5;
+  }
+  .post-meta {
+    text-align: right;
+  }
+  .post-date {
+    font-size: 0.75rem;
+    color: #9B8B7A;
+    white-space: nowrap;
+  }
+  .post-read {
+    font-size: 0.7rem;
+    color: #9B8B7A;
+    margin-top: 0.2rem;
+  }
+  .post-arrow {
+    margin-top: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    color: #B87C5A;
+    transition: gap 0.2s;
+  }
+  .post-card:hover .post-arrow {
+    gap: 0.6rem;
+  }
+
+  /* ---------- SINGLE POST (centered, readable) ---------- */
+  #singleView {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .back-btn {
+    background: none;
+    border: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #B87C5A;
+    margin-bottom: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+    transition: gap 0.2s;
+  }
+  .back-btn:hover { gap: 0.6rem; }
+  .back-btn svg {
+    width: 14px;
+    stroke: #B87C5A;
+  }
+  .post-header-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .post-header-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .post-header-meta {
+    font-size: 0.8rem;
+    color: #9B8B7A;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .post-divider {
+    height: 1px;
+    background: #E2DDD8;
+    margin: 2rem 0;
+  }
+  .post-body {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #3A3836;
+  }
+  .post-body h1, .post-body h2, .post-body h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .post-body p {
+    margin-bottom: 1.2rem;
+  }
+  .post-body a {
+    color: #B87C5A;
+    text-decoration: underline;
+  }
+  .post-body blockquote {
+    border-left: 3px solid #B87C5A;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #5A5450;
+  }
+  .post-body code {
+    background: #E8E2DC;
+    padding: 0.1rem 0.3rem;
+    font-size: 0.85em;
+  }
+  .post-body pre {
+    background: #2A2826;
+    color: #F5F0EB;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+  .post-body pre code {
+    background: none;
+    color: inherit;
+  }
+  .post-body img {
+    max-width: 100%;
+    margin: 1.5rem 0;
+    border-radius: 0;
+  }
+  .post-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background: #E8E2DC;
+  }
+  .post-body th, .post-body td {
+    border: 1px solid #CBC3BC;
+    padding: 0.5rem;
+    text-align: left;
+  }
+  .post-body th {
+    background: #D9D2CB;
+    font-weight: 600;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: #E8E2DC;
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #9B8B7A;
+    margin-top: 4rem;
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ---------- LOADING, REVEAL ETC ---------- */
+  .loading {
+    text-align: center;
+    padding: 3rem;
+    color: #9B8B7A;
+  }
+  .spinner {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #E2DDD8;
+    border-top-color: #B87C5A;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin: 0 auto 1rem;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .post-card { grid-template-columns: 1fr; gap: 1rem; }
+    .post-meta { text-align: left; }
+    .page-hero { padding: 6rem 1rem 3rem; }
+  }
 </style>
 </head>
 <body>
+
 <nav id="nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">LxZy</a>
+    <a href="index.html" class="nav-logo">LxZY</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Portfolio</a></li>
       <li><a href="index.html#whoami">About</a></li>
@@ -125,25 +439,25 @@ footer{background:#01010a;border-top:1px solid rgba(168,158,255,0.1);padding:2re
       <li><a href="blog.html" class="active">Blog</a></li>
       <li><a href="index.html#contact" class="nav-cta">Let's Connect</a></li>
     </ul>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="hamburger" id="hamburger">☰</button>
   </div>
 </nav>
 <nav class="mobile-nav" id="mobileNav">
-  <a href="index.html" onclick="closeMobile()">Portfolio</a>
-  <a href="index.html#whoami" onclick="closeMobile()">About</a>
-  <a href="index.html#projects" onclick="closeMobile()">Projects</a>
-  <a href="blog.html" onclick="closeMobile()">Blog</a>
-  <a href="index.html#contact" onclick="closeMobile()">Let's Connect</a>
+  <a href="index.html">Portfolio</a>
+  <a href="index.html#whoami">About</a>
+  <a href="index.html#projects">Projects</a>
+  <a href="blog.html">Blog</a>
+  <a href="index.html#contact">Let's Connect</a>
 </nav>
+
 <header class="page-hero" id="pageHero">
-  <div class="wrap page-hero-inner">
+  <div class="page-hero-inner">
     <p class="label">Hi, Welcome To the Playground</p>
     <h1>The Blog</h1>
     <p>Security research, lab write-ups, and thoughts from the SOC trenches.</p>
   </div>
 </header>
+
 <main class="page">
   <div class="wrap">
     <div id="listingView">
@@ -151,12 +465,15 @@ footer{background:#01010a;border-top:1px solid rgba(168,158,255,0.1);padding:2re
       <div id="listing"><div class="loading"><div class="spinner"></div><span>Loading posts…</span></div></div>
     </div>
     <div id="singleView" style="display:none;">
-      <button class="back-btn" id="backBtn"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> All Posts</button>
+      <button class="back-btn" id="backBtn">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="14"><polyline points="15 18 9 12 15 6"/></svg>
+        All Posts
+      </button>
       <article>
         <header class="post-header">
           <div class="post-header-tags" id="singleTags"></div>
           <h1 class="post-header-title" id="singleTitle"></h1>
-          <div class="post-header-meta"><span id="singleDate"></span><div class="meta-dot"></div><span id="singleReadTime"></span></div>
+          <div class="post-header-meta"><span id="singleDate"></span><span id="singleReadTime"></span></div>
         </header>
         <div class="post-divider"></div>
         <div class="post-body" id="singleBody"></div>
@@ -164,76 +481,91 @@ footer{background:#01010a;border-top:1px solid rgba(168,158,255,0.1);padding:2re
     </div>
   </div>
 </main>
+
 <footer>
-  <div class="footer-inner">
-    <span class="footer-logo">LxZy</span>
-    <span class="footer-copy">© 2026 Karim — All rights reserved.</span>
-  </div>
+  <div class="footer-inner">© 2026 Karim Abdel-Nasser — LxZY. All rights reserved.</div>
 </footer>
+
 <script>
-let allPosts = [];
-let activeTag = 'All';
-window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20); });
-document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('mobileNav').classList.toggle('open'); });
-function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
-function getSlug() { const hash = location.hash.slice(1); return hash && hash !== '/' ? hash : null; }
-function navigate(slug) {
-  if (slug) { history.pushState(null, '', '#' + slug); renderPost(slug); }
-  else { history.pushState(null, '', location.pathname); renderListing(); }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-window.addEventListener('popstate', () => { const slug = getSlug(); slug ? renderPost(slug) : renderListing(); });
-async function loadPosts() {
-  try {
-    const r = await fetch('posts.json?v=' + Date.now());
-    if (!r.ok) throw new Error('Failed to load');
-    allPosts = await r.json();
-    allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    init();
-  } catch (e) {
-    document.getElementById('listing').innerHTML = '<div class="empty-state"><div class="icon">⚠️</div><p>Could not load, Please Reload the Webpage :)</p></div>';
+  // --- ALL ORIGINAL JAVASCRIPT LOGIC (preserved) ---
+  let allPosts = [];
+  let activeTag = 'All';
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.toggle('open');
+  });
+  function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
+
+  function getSlug() { const hash = location.hash.slice(1); return hash && hash !== '/' ? hash : null; }
+  function navigate(slug) {
+    if (slug) { history.pushState(null, '', '#' + slug); renderPost(slug); }
+    else { history.pushState(null, '', location.pathname); renderListing(); }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-}
-function init() { const slug = getSlug(); slug ? renderPost(slug) : (buildTagBar(), renderListing()); }
-function buildTagBar() {
-  const tags = ['All', ...new Set(allPosts.flatMap(p => p.tags))];
-  const bar = document.getElementById('tagBar');
-  bar.innerHTML = tags.map(t => `<button class="tag-btn${t === activeTag ? ' active' : ''}" onclick="filterTag('${t}')">${t}</button>`).join('');
-}
-function filterTag(tag) { activeTag = tag; buildTagBar(); renderListing(); }
-function renderListing() {
-  document.getElementById('listingView').style.display = '';
-  document.getElementById('singleView').style.display = 'none';
-  document.getElementById('pageHero').style.display = '';
-  const filtered = activeTag === 'All' ? allPosts : allPosts.filter(p => p.tags.includes(activeTag));
-  const container = document.getElementById('listing');
-  if (!filtered.length) { container.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>No posts yet. Check back soon.</p></div>'; return; }
-  container.innerHTML = filtered.map((p, i) => `
-    <div class="post-card reveal" style="transition-delay:${i * 0.07}s" onclick="navigate('${p.id}')">
-      <div><div class="post-tags">${p.tags.map(t => `<span class="post-tag">${t}</span>`).join('')}</div>
-      <div class="post-title">${p.title}</div><div class="post-summary">${p.summary}</div></div>
-      <div class="post-meta"><span class="post-date">${formatDate(p.date)}</span><span class="post-read">${readTime(p.content)} min read</span>
-      <div class="post-arrow"><svg viewBox="0 0 24 24" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div></div>
-    </div>`).join('');
-  requestAnimationFrame(() => { document.querySelectorAll('.reveal').forEach((el, i) => { setTimeout(() => el.classList.add('in'), i * 60); }); });
-}
-function renderPost(slug) {
-  const post = allPosts.find(p => p.id === slug);
-  if (!post) { navigate(null); return; }
-  document.getElementById('listingView').style.display = 'none';
-  document.getElementById('pageHero').style.display = 'none';
-  document.getElementById('singleView').style.display = '';
-  document.title = post.title + ' — LxZy';
-  document.getElementById('singleTags').innerHTML = post.tags.map(t => `<span class="post-tag">${t}</span>`).join('');
-  document.getElementById('singleTitle').textContent = post.title;
-  document.getElementById('singleDate').textContent = formatDate(post.date);
-  document.getElementById('singleReadTime').textContent = readTime(post.content) + ' min read';
-  document.getElementById('singleBody').innerHTML = marked.parse(post.content);
-}
-document.getElementById('backBtn').addEventListener('click', () => { document.title = 'Blog — LxZy'; navigate(null); });
-function formatDate(iso) { return new Date(iso).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); }
-function readTime(content) { return Math.max(1, Math.ceil(content.split(/\s+/).length / 200)); }
-loadPosts();
+  window.addEventListener('popstate', () => { const slug = getSlug(); slug ? renderPost(slug) : renderListing(); });
+
+  async function loadPosts() {
+    try {
+      const r = await fetch('posts.json?v=' + Date.now());
+      if (!r.ok) throw new Error();
+      allPosts = await r.json();
+      allPosts.sort((a,b) => new Date(b.date) - new Date(a.date));
+      init();
+    } catch(e) {
+      document.getElementById('listing').innerHTML = '<div class="loading">⚠️ Could not load posts.</div>';
+    }
+  }
+  function init() { const slug = getSlug(); slug ? renderPost(slug) : (buildTagBar(), renderListing()); }
+  function buildTagBar() {
+    const tags = ['All', ...new Set(allPosts.flatMap(p => p.tags))];
+    document.getElementById('tagBar').innerHTML = tags.map(t => `<button class="tag-btn${t === activeTag ? ' active' : ''}" onclick="filterTag('${t}')">${t}</button>`).join('');
+  }
+  function filterTag(tag) { activeTag = tag; buildTagBar(); renderListing(); }
+  function renderListing() {
+    document.getElementById('listingView').style.display = '';
+    document.getElementById('singleView').style.display = 'none';
+    document.getElementById('pageHero').style.display = '';
+    const filtered = activeTag === 'All' ? allPosts : allPosts.filter(p => p.tags.includes(activeTag));
+    const container = document.getElementById('listing');
+    if (!filtered.length) { container.innerHTML = '<div class="loading">No posts found.</div>'; return; }
+    container.innerHTML = filtered.map((p,i) => `
+      <div class="post-card reveal" style="transition-delay:${i*0.05}s" onclick="navigate('${p.id}')">
+        <div>
+          <div class="post-tags">${p.tags.map(t => `<span class="post-tag">${t}</span>`).join('')}</div>
+          <div class="post-title">${p.title}</div>
+          <div class="post-summary">${p.summary}</div>
+        </div>
+        <div class="post-meta">
+          <div class="post-date">${formatDate(p.date)}</div>
+          <div class="post-read">${readTime(p.content)} min read</div>
+          <div class="post-arrow">Read →</div>
+        </div>
+      </div>
+    `).join('');
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.reveal').forEach((el,i) => setTimeout(() => el.classList.add('in'), i*50));
+    });
+  }
+  function renderPost(slug) {
+    const post = allPosts.find(p => p.id === slug);
+    if (!post) { navigate(null); return; }
+    document.getElementById('listingView').style.display = 'none';
+    document.getElementById('pageHero').style.display = 'none';
+    document.getElementById('singleView').style.display = '';
+    document.title = post.title + ' — LxZY';
+    document.getElementById('singleTags').innerHTML = post.tags.map(t => `<span class="post-tag">${t}</span>`).join('');
+    document.getElementById('singleTitle').textContent = post.title;
+    document.getElementById('singleDate').textContent = formatDate(post.date);
+    document.getElementById('singleReadTime').textContent = readTime(post.content) + ' min read';
+    document.getElementById('singleBody').innerHTML = marked.parse(post.content);
+  }
+  document.getElementById('backBtn').addEventListener('click', () => { document.title = 'Blog — LxZY'; navigate(null); });
+  function formatDate(iso) { return new Date(iso).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); }
+  function readTime(content) { return Math.max(1, Math.ceil(content.split(/\s+/).length / 200)); }
+  loadPosts();
 </script>
 </body>
 </html>
