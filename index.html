@@ -18,13 +18,13 @@
 
     html {
       scroll-behavior: smooth;
-      background-color: #F5F0EB;  /* soft cream, not pure white */
+      background-color: #F5F0EB;
     }
 
     body {
       font-family: 'Inter', sans-serif;
       background-color: #F5F0EB;
-      color: #2A2826;  /* warm dark gray, not pure black */
+      color: #2A2826;
       line-height: 1.5;
       font-weight: 400;
       overflow-x: hidden;
@@ -41,7 +41,7 @@
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      color: #9B8B7A;  /* muted warm gray */
+      color: #9B8B7A;
       margin-bottom: 1.5rem;
       display: inline-block;
     }
@@ -58,7 +58,7 @@
       font-size: 1.3rem;
       font-weight: 350;
       line-height: 1.5;
-      color: #6A6360;  /* softer mid-tone */
+      color: #6A6360;
       max-width: 680px;
     }
 
@@ -90,7 +90,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      padding: 1.8rem 2rem;
+      padding: 1rem 2rem;   /* reduced from 1.8rem to make navbar shorter */
       z-index: 1000;
       background: rgba(245, 240, 235, 0.7);
       backdrop-filter: blur(14px);
@@ -102,18 +102,17 @@
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      align-items: center;  /* changed from baseline to center for vertical alignment */
     }
     .logo {
-      font-size: 1.6rem;
-      font-weight: 600;
-      letter-spacing: -0.03em;
+      display: inline-flex;
+      align-items: center;
       text-decoration: none;
-      color: #2A2826;
-      transition: opacity 0.3s;
     }
-    .logo:hover {
-      opacity: 0.7;
+    .logo img {
+      height: 40px;        /* fixed logo size – navbar friendly */
+      width: auto;
+      display: block;
     }
     .nav-links {
       display: flex;
@@ -142,7 +141,7 @@
     .mobile-nav {
       display: none;
       position: fixed;
-      top: 80px;
+      top: 72px;           /* adjusted to match new nav height */
       left: 0;
       width: 100%;
       background: #F5F0EB;
@@ -414,6 +413,7 @@
       .hero { padding: 6rem 1.5rem; }
       section { padding: 5rem 1.5rem; }
       .project-title { font-size: 1.8rem; }
+      .logo img { height: 32px; }  /* slightly smaller on mobile */
     }
     @media (max-width: 600px) {
       .hero-title { font-size: 3rem; }
@@ -428,7 +428,7 @@
 <nav>
   <div class="nav-inner">
     <a href="#top" class="logo">
-      <img src="images/logo.png" alt="LxZY" style="height: 128px; width: auto; display: block;">
+      <img src="images/logo.png" alt="LxZY">
     </a>
     <ul class="nav-links">
       <li><a href="#whoami">Who</a></li>
@@ -436,7 +436,7 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="https://kar1m.site/blog.html">Blog</a></li>
+      <li><a href="blog.html">Blog</a></li>
       <li><a href="#contact">Connect</a></li>
     </ul>
     <button class="mobile-menu-btn" id="menuToggle" aria-label="Menu">☰</button>
@@ -448,7 +448,7 @@
   <a href="#experience" onclick="closeMobile()">Experience</a>
   <a href="#services" onclick="closeMobile()">Services</a>
   <a href="#projects" onclick="closeMobile()">Projects</a>
-  <a href="#blog" onclick="closeMobile()">Blog</a>
+  <a href="blog.html" onclick="closeMobile()">Blog</a>
   <a href="#contact" onclick="closeMobile()">Let's Connect</a>
 </div>
 
