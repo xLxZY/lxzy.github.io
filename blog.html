@@ -69,8 +69,14 @@
 
   /* MAIN WRAP */
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-  .page { padding-top: 0; padding-bottom: 5rem; }
-  @media (max-width: 768px) { .wrap { padding: 0 1.2rem; } }
+  .page {
+    padding-top: 80px;   /* push content below fixed nav */
+    padding-bottom: 5rem;
+  }
+  @media (max-width: 768px) {
+    .wrap { padding: 0 1.2rem; }
+    .page { padding-top: 70px; }
+  }
 
   /* TAG BAR */
   .tag-bar { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 3rem; justify-content: center; }
@@ -93,7 +99,16 @@
 
   /* SINGLE POST */
   #singleView { max-width: 800px; margin: 0 auto; }
-  .back-btn { position: sticky; top: 90px; z-index: 10; background: #F5F0EB; border: 1px solid #D9D2CB; padding: 0.5rem 1rem; font-size: 0.8rem; font-weight: 500; color: #B87C5A; margin-bottom: 2rem; margin-left: -10rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+  .back-btn {
+    position: sticky; top: 90px; z-index: 10;
+    background: #F5F0EB; border: 1px solid #D9D2CB;
+    padding: 0.5rem 1rem; font-size: 0.8rem; font-weight: 500;
+    color: #B87C5A; margin-bottom: 2rem;
+    margin-left: 0;                     /* reset to normal left alignment */
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    cursor: pointer; transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
   .back-btn:hover { background: #B87C5A; color: #F5F0EB; border-color: #B87C5A; gap: 0.8rem; }
   .back-btn svg { width: 14px; stroke: currentColor; stroke-width: 2; }
   .post-header-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
