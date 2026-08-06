@@ -1,280 +1,1591 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog — LxZY</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; background-color: #F5F0EB; }
-  body { font-family: 'Inter', sans-serif; background-color: #F5F0EB; color: #2A2826; line-height: 1.6; overflow-x: hidden; }
-  a { text-decoration: none; }
-  button { cursor: pointer; font-family: 'Inter', sans-serif; }
-  h1, h2, h3, h4 { font-family: 'Sora', sans-serif; font-weight: 600; letter-spacing: -0.02em; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Hub — LxZY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js">
+    </script>
+    <style>
+        :root {
+            --bg: #F5F0EB;
+            --bg-alt: #EDE8E3;
+            --bg-card: #E8E2DC;
+            --text: #2A2826;
+            --text-secondary: #5A5450;
+            --text-muted: #9B8B7A;
+            --border: #E2DDD8;
+            --border-subtle: rgba(0, 0, 0, 0.05);
+            --accent: #B87C5A;
+            --accent-hover: #9E6A4D;
+            --dark: #2A2826;
+            --code-bg: #1E1C1A;
+            --code-text: #E8E2DC;
+            --callout-note-bg: #F0EDE8;
+            --callout-note-border: #9B8B7A;
+            --callout-tip-bg: #F2EFEA;
+            --callout-tip-border: #7BA07E;
+            --callout-warning-bg: #F5F0E8;
+            --callout-warning-border: #C9A44B;
+            --callout-danger-bg: #F5EDEC;
+            --callout-danger-border: #C4726A;
+            --sidebar-width: 280px;
+            --nav-height: 72px;
+            --progress-height: 3px;
+        }
 
-  /* NAV */
-  #nav {
-    position: fixed; top: 0; left: 0; width: 100%;
-    padding: 1.2rem 2rem; z-index: 1000;
-    background: rgba(245, 240, 235, 0.7);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    transition: all 0.3s;
-  }
-  #nav.scrolled { background: rgba(245, 240, 235, 0.95); border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
-  .nav-inner {
-    max-width: 1440px; margin: 0 auto;
-    display: flex; justify-content: space-between; align-items: center;
-  }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        button {
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            background: none;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Sora', sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text);
+        }
 
-  /* LOGO — matches index.html */
-  .nav-logo {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    transition: opacity 0.3s;
-    overflow: visible;
-  }
-  .nav-logo img {
-    height: 36px;
-    width: 36px;
-    display: block;
-    object-fit: contain;
-    transform: scale(1.9);
-    transform-origin: left center;
-  }
-  .nav-logo:hover { opacity: 0.7; }
+        /* ── NAV ── */
+        #nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            padding: 0 2rem;
+            z-index: 1100;
+            background: rgba(245, 240, 235, 0.7);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        #nav.scrolled {
+            background: rgba(245, 240, 235, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .nav-inner {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            flex-shrink: 0;
+        }
+        .nav-logo img {
+            height: 36px;
+            width: 36px;
+            display: block;
+            object-fit: contain;
+            transform: scale(1.9);
+            transform-origin: left center;
+        }
+        .nav-logo:hover {
+            opacity: 0.7;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        .nav-cta {
+            background: var(--dark) !important;
+            color: var(--bg) !important;
+            padding: 0.4rem 1.2rem !important;
+            border-radius: 0px !important;
+            transition: all 0.3s !important;
+        }
+        .nav-cta:hover {
+            background: var(--accent) !important;
+            transform: translateY(-2px);
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .hamburger span {
+            width: 22px;
+            height: 1.5px;
+            background: var(--text);
+            transition: all 0.3s;
+        }
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: var(--nav-height);
+            left: 0;
+            width: 100%;
+            background: var(--bg);
+            padding: 1.5rem;
+            flex-direction: column;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 1099;
+        }
+        .mobile-nav.open {
+            display: flex;
+        }
+        .mobile-nav a {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text);
+        }
 
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: #5A5450; transition: color 0.3s; }
-  .nav-links a:hover, .nav-links a.active { color: #B87C5A; }
-  .nav-cta { background: #2A2826 !important; color: #F5F0EB !important; padding: 0.4rem 1.2rem !important; border-radius: 0px !important; transition: all 0.3s !important; }
-  .nav-cta:hover { background: #B87C5A !important; transform: translateY(-2px); }
-  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; }
-  .hamburger span { width: 22px; height: 1.5px; background: #2A2826; }
-  .mobile-nav { display: none; position: fixed; top: 70px; left: 0; width: 100%; background: #F5F0EB; padding: 1.5rem; flex-direction: column; gap: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 999; }
-  .mobile-nav.open { display: flex; }
-  .mobile-nav a { font-size: 1.1rem; font-weight: 500; color: #2A2826; }
+        /* ── PROGRESS BAR ── */
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: var(--progress-height);
+            background: var(--accent);
+            z-index: 1200;
+            transition: width 0.1s linear;
+            pointer-events: none;
+            opacity: 0;
+        }
+        #progressBar.visible {
+            opacity: 1;
+        }
 
-  /* PAGE HERO */
-  .page-hero { padding: 9rem 2rem 5rem; background: #E8E2DC; margin-bottom: 4rem; text-align: center; }
-  .page-hero-inner { max-width: 800px; margin: 0 auto; }
-  .page-hero .label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #9B8B7A; margin-bottom: 1rem; }
-  .page-hero h1 { font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; color: #2A2826; margin-bottom: 1rem; }
-  .page-hero p { font-size: 1.1rem; color: #6A6360; max-width: 500px; margin: 0 auto; }
+        /* ── APP LAYOUT ── */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            padding-top: var(--nav-height);
+        }
+        .main-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-  /* MAIN WRAP */
-  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-  .page { padding-top: 0; padding-bottom: 5rem; }
-  @media (max-width: 768px) { .wrap { padding: 0 1.2rem; } }
+        /* ── SIDEBAR ── */
+        .sidebar {
+            position: fixed;
+            top: var(--nav-height);
+            left: 0;
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--nav-height));
+            background: var(--bg-alt);
+            border-right: 1px solid var(--border);
+            z-index: 1050;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar-header {
+            padding: 1.5rem 1.4rem 1rem;
+            flex-shrink: 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .sidebar-header h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.9rem;
+            letter-spacing: -0.01em;
+        }
+        .search-wrap {
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.55rem 0.9rem 0.55rem 2.2rem;
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            outline: none;
+            transition: all 0.25s;
+            border-radius: 6px;
+        }
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(184, 124, 90, 0.08);
+        }
+        .search-icon {
+            position: absolute;
+            left: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            pointer-events: none;
+            color: var(--text-muted);
+        }
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.6rem 0;
+            overscroll-behavior: contain;
+        }
+        .sidebar-nav::-webkit-scrollbar {
+            width: 3px;
+        }
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+        .sidebar-category {
+            margin-bottom: 0.15rem;
+        }
+        .sidebar-category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1.4rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s;
+            user-select: none;
+            font-family: 'Sora', sans-serif;
+        }
+        .sidebar-category-header:hover {
+            color: var(--text-secondary);
+        }
+        .sidebar-category-chevron {
+            width: 12px;
+            height: 12px;
+            transition: transform 0.25s;
+            opacity: 0.5;
+        }
+        .sidebar-category.open .sidebar-category-chevron {
+            transform: rotate(90deg);
+        }
+        .sidebar-category-items {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s;
+            opacity: 0;
+        }
+        .sidebar-category.open .sidebar-category-items {
+            max-height: 2000px;
+            opacity: 1;
+        }
+        .sidebar-article {
+            display: block;
+            padding: 0.45rem 1.4rem 0.45rem 2rem;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            cursor: pointer;
+            border-left: 2px solid transparent;
+            line-height: 1.35;
+        }
+        .sidebar-article:hover {
+            color: var(--text);
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .sidebar-article.active {
+            color: var(--accent);
+            background: rgba(184, 124, 90, 0.06);
+            border-left-color: var(--accent);
+            font-weight: 500;
+        }
+        .sidebar-article.hidden-by-search {
+            display: none;
+        }
+        .sidebar-category.hidden-by-search {
+            display: none;
+        }
+        .sidebar-no-results {
+            padding: 1.5rem 1.4rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+            display: none;
+        }
+        .sidebar-no-results.show {
+            display: block;
+        }
 
-  /* TAG BAR */
-  .tag-bar { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 3rem; justify-content: center; }
-  .tag-btn { padding: 0.4rem 1rem; background: #E8E2DC; border: none; font-size: 0.8rem; font-weight: 500; color: #5A5450; transition: all 0.2s; cursor: pointer; font-family: 'Inter', sans-serif; }
-  .tag-btn:hover, .tag-btn.active { background: #2A2826; color: #F5F0EB; }
+        /* ── SIDEBAR BACKDROP (mobile) ── */
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1049;
+            opacity: 0;
+            transition: opacity 0.35s;
+            pointer-events: none;
+        }
+        .sidebar-backdrop.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-  /* POST LISTING */
-  #listing { display: flex; flex-direction: column; gap: 2rem; }
-  .post-card { border-bottom: 1px solid #E2DDD8; padding: 2rem 0; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start; cursor: pointer; transition: all 0.3s; }
-  .post-card:hover { padding-left: 1rem; border-bottom-color: #B87C5A; }
-  .post-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
-  .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; background: #E8E2DC; padding: 0.2rem 0.6rem; color: #5A5450; }
-  .post-title { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.5rem; color: #2A2826; }
-  .post-summary { font-size: 0.9rem; color: #6A6360; line-height: 1.5; }
-  .post-meta { text-align: right; }
-  .post-date { font-size: 0.75rem; color: #9B8B7A; white-space: nowrap; }
-  .post-read { font-size: 0.7rem; color: #9B8B7A; margin-top: 0.2rem; }
-  .post-arrow { margin-top: 0.8rem; display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; color: #B87C5A; transition: gap 0.2s; }
-  .post-card:hover .post-arrow { gap: 0.6rem; }
+        /* ── MOBILE SIDEBAR TOGGLE ── */
+        .mobile-sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            z-index: 1060;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--dark);
+            color: var(--bg);
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+            transition: all 0.3s;
+            border: none;
+        }
+        .mobile-sidebar-toggle:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+        }
+        .mobile-sidebar-toggle svg {
+            width: 18px;
+            height: 18px;
+        }
 
-  /* SINGLE POST */
-  #singleView { max-width: 800px; margin: 0 auto; }
-  .back-btn { position: sticky; top: 90px; z-index: 10; background: #F5F0EB; border: 1px solid #D9D2CB; padding: 0.5rem 1rem; font-size: 0.8rem; font-weight: 500; color: #B87C5A; margin-bottom: 2rem; margin-left: -10rem; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
-  .back-btn:hover { background: #B87C5A; color: #F5F0EB; border-color: #B87C5A; gap: 0.8rem; }
-  .back-btn svg { width: 14px; stroke: currentColor; stroke-width: 2; }
-  .post-header-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-  .post-header-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 1rem; line-height: 1.2; }
-  .post-header-meta { font-size: 0.8rem; color: #9B8B7A; display: flex; gap: 1rem; margin-bottom: 2rem; }
-  .post-divider { height: 1px; background: #E2DDD8; margin: 2rem 0; }
-  .post-body { font-size: 1rem; line-height: 1.7; color: #3A3836; }
-  .post-body h1, .post-body h2, .post-body h3 { margin-top: 2rem; margin-bottom: 1rem; }
-  .post-body p { margin-bottom: 1.2rem; }
-  .post-body a { color: #B87C5A; text-decoration: underline; }
-  .post-body blockquote { border-left: 3px solid #B87C5A; padding-left: 1rem; margin: 1.5rem 0; font-style: italic; color: #5A5450; }
-  .post-body code { background: #E8E2DC; padding: 0.1rem 0.3rem; font-size: 0.85em; }
-  .post-body pre { background: #2A2826; color: #F5F0EB; padding: 1rem; overflow-x: auto; margin: 1.5rem 0; }
-  .post-body pre code { background: none; color: inherit; }
-  .post-body img { max-width: 100%; margin: 1.5rem 0; border-radius: 0; }
-  .post-body table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: #E8E2DC; }
-  .post-body th, .post-body td { border: 1px solid #CBC3BC; padding: 0.5rem; text-align: left; }
-  .post-body th { background: #D9D2CB; font-weight: 600; }
+        /* ── MAIN CONTENT ── */
+        .main-content {
+            flex: 1;
+            padding: 0;
+            max-width: 860px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 2.5rem 4rem;
+        }
 
-  /* FOOTER */
-  footer { background: #E8E2DC; padding: 2rem; text-align: center; font-size: 0.7rem; color: #9B8B7A; margin-top: 4rem; }
-  .footer-inner { max-width: 1200px; margin: 0 auto; }
+        /* ── WELCOME STATE ── */
+        .welcome-state {}
+        .welcome-state .welcome-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+        }
+        .welcome-state h1 {
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            line-height: 1.15;
+        }
+        .welcome-state .welcome-desc {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            line-height: 1.55;
+        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+        .category-card {
+            background: var(--bg-card);
+            padding: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        .category-card:hover {
+            border-color: var(--border);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+        .category-card h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--text);
+        }
+        .category-card .cat-count {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .recent-section {
+            margin-top: 1rem;
+        }
+        .recent-section h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .recent-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .recent-list li {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        .recent-list li:hover {
+            padding-left: 0.6rem;
+            border-bottom-color: var(--accent);
+        }
+        .recent-list .rec-title {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .recent-list .rec-cat {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        .recent-list .rec-arrow {
+            color: var(--accent);
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+        .recent-list li:hover .rec-arrow {
+            transform: translateX(4px);
+        }
 
-  /* LOADING, REVEAL */
-  .loading { text-align: center; padding: 3rem; color: #9B8B7A; }
-  .spinner { width: 30px; height: 30px; border: 2px solid #E2DDD8; border-top-color: #B87C5A; border-radius: 50%; animation: spin 0.6s linear infinite; margin: 0 auto 1rem; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .reveal.in { opacity: 1; transform: translateY(0); }
+        /* ── ARTICLE VIEW ── */
+        .article-view {
+            animation: fadeSlideIn 0.4s ease;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+            letter-spacing: 0.03em;
+        }
+        .breadcrumbs span {
+            color: var(--text-muted);
+        }
+        .breadcrumbs .bread-link {
+            color: var(--accent);
+            cursor: pointer;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .breadcrumbs .bread-link:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+        .breadcrumbs .bread-sep {
+            color: var(--border);
+            user-select: none;
+        }
+        .article-header-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 0.6rem;
+        }
+        .article-tag {
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            background: var(--bg-card);
+            padding: 0.2rem 0.55rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .article-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            line-height: 1.2;
+            color: var(--text);
+        }
+        .article-meta {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .article-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 1.8rem 0;
+        }
+        .post-body {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: #3A3836;
+        }
+        .post-body h1,
+        .post-body h2,
+        .post-body h3,
+        .post-body h4 {
+            margin-top: 2.2rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+        }
+        .post-body h2 {
+            font-size: 1.4rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.4rem;
+        }
+        .post-body h3 {
+            font-size: 1.15rem;
+        }
+        .post-body p {
+            margin-bottom: 1.1rem;
+        }
+        .post-body a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.2s;
+        }
+        .post-body a:hover {
+            color: var(--accent-hover);
+        }
+        .post-body blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 0.6rem 1.1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+            background: rgba(184, 124, 90, 0.04);
+            border-radius: 0 4px 4px 0;
+        }
+        .post-body ul,
+        .post-body ol {
+            margin-bottom: 1.1rem;
+            padding-left: 1.5rem;
+        }
+        .post-body li {
+            margin-bottom: 0.35rem;
+        }
+        .post-body code {
+            background: var(--bg-card);
+            padding: 0.15rem 0.4rem;
+            font-size: 0.85em;
+            border-radius: 3px;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+        }
+        .post-body pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.2rem 1.3rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            position: relative;
+        }
+        .post-body pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+            font-size: inherit;
+            border-radius: 0;
+        }
+        .code-lang-label {
+            position: absolute;
+            top: 0.4rem;
+            right: 0.8rem;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: rgba(232, 226, 220, 0.5);
+            pointer-events: none;
+            font-family: 'Inter', sans-serif;
+        }
+        .post-body img {
+            max-width: 100%;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .post-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.85rem;
+            background: var(--bg-card);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .post-body th,
+        .post-body td {
+            border: 1px solid var(--border);
+            padding: 0.6rem 0.9rem;
+            text-align: left;
+        }
+        .post-body th {
+            background: #D9D2CB;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-secondary);
+        }
+        .post-body tr:hover td {
+            background: rgba(0, 0, 0, 0.015);
+        }
 
-  @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    .post-card { grid-template-columns: 1fr; gap: 1rem; }
-    .post-meta { text-align: left; }
-    .page-hero { padding: 6rem 1rem 3rem; }
-    .back-btn { top: 80px; }
-  }
-</style>
+        /* ── CALLOUT BOXES ── */
+        .callout {
+            padding: 1rem 1.2rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+        .callout-note {
+            background: var(--callout-note-bg);
+            border-left-color: var(--callout-note-border);
+        }
+        .callout-tip {
+            background: var(--callout-tip-bg);
+            border-left-color: var(--callout-tip-border);
+        }
+        .callout-warning {
+            background: var(--callout-warning-bg);
+            border-left-color: var(--callout-warning-border);
+        }
+        .callout-danger {
+            background: var(--callout-danger-bg);
+            border-left-color: var(--callout-danger-border);
+        }
+        .callout-info {
+            background: var(--callout-note-bg);
+            border-left-color: #7B9EBF;
+        }
+        .callout-title {
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.35rem;
+            font-family: 'Sora', sans-serif;
+        }
+        .callout p {
+            margin-bottom: 0.3rem;
+        }
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+        .callout code {
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        /* ── PREV / NEXT ── */
+        .prev-next-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .prev-next-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.25s;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            max-width: 48%;
+        }
+        .prev-next-btn:hover {
+            color: var(--accent);
+            background: rgba(184, 124, 90, 0.05);
+        }
+        .prev-next-btn.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+            cursor: default;
+        }
+        .prev-next-btn .pn-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+        }
+        .prev-next-btn .pn-title {
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .prev-next-btn.prev {
+            text-align: left;
+        }
+        .prev-next-btn.next {
+            text-align: right;
+            margin-left: auto;
+            flex-direction: row-reverse;
+        }
+        .prev-next-btn svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* ── RELATED ARTICLES ── */
+        .related-section {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .related-section h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .related-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .related-item {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        .related-item:hover {
+            padding-left: 0.5rem;
+            border-bottom-color: var(--accent);
+        }
+        .related-item .rel-title {
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+        .related-item .rel-arrow {
+            color: var(--accent);
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+        }
+        .related-item:hover .rel-arrow {
+            transform: translateX(3px);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--bg-card);
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+        .footer-inner {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        /* ── EMPTY / LOADING ── */
+        .loading-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .main-content {
+                padding: 1.5rem 1.8rem 3rem;
+                max-width: 100%;
+            }
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+                box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .sidebar-backdrop {
+                display: block;
+            }
+            .main-wrapper {
+                margin-left: 0 !important;
+            }
+            .mobile-sidebar-toggle {
+                display: flex;
+            }
+            .main-content {
+                padding: 1.2rem 1rem 3rem;
+                max-width: 100%;
+            }
+            .prev-next-nav {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .prev-next-btn {
+                max-width: 100%;
+            }
+            .prev-next-btn.next {
+                margin-left: 0;
+                flex-direction: row;
+            }
+            .category-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.7rem;
+            }
+            .category-card {
+                padding: 1rem;
+            }
+            .article-title {
+                font-size: 1.5rem;
+            }
+            .post-body {
+                font-size: 0.9rem;
+            }
+            .post-body pre {
+                font-size: 0.75rem;
+                padding: 1rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            .main-content {
+                padding: 1rem 0.8rem 2.5rem;
+            }
+            .welcome-state h1 {
+                font-size: 1.7rem;
+            }
+            .breadcrumbs {
+                font-size: 0.68rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<nav id="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img src="images/logo.webp" alt="LxZY" width="128" height="128" loading="eager" decoding="sync" fetchpriority="high">
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Portfolio</a></li>
-      <li><a href="index.html#whoami">About</a></li>
-      <li><a href="index.html#projects">Projects</a></li>
-      <li><a href="blog.html" class="active">Blog</a></li>
-      <li><a href="index.html#contact" class="nav-cta">Let's Connect</a></li>
-    </ul>
-    <button class="hamburger" id="hamburger">☰</button>
-  </div>
-</nav>
-<nav class="mobile-nav" id="mobileNav">
-  <a href="index.html">Portfolio</a>
-  <a href="index.html#whoami">About</a>
-  <a href="index.html#projects">Projects</a>
-  <a href="blog.html">Blog</a>
-  <a href="index.html#contact">Let's Connect</a>
-</nav>
+    <!-- PROGRESS BAR -->
+    <div id="progressBar"></div>
 
-<header class="page-hero" id="pageHero">
-  <div class="page-hero-inner">
-    <p class="label">Hi, Welcome To the Playground</p>
-    <h1>The Blog</h1>
-    <p>Security research, lab write-ups, and thoughts from the SOC trenches.</p>
-  </div>
-</header>
-
-<main class="page">
-  <div class="wrap">
-    <div id="listingView">
-      <div class="tag-bar" id="tagBar"></div>
-      <div id="listing"><div class="loading"><div class="spinner"></div><span>Loading posts…</span></div></div>
-    </div>
-    <div id="singleView" style="display:none;">
-      <button class="back-btn" id="backBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        All Posts
-      </button>
-      <article>
-        <header class="post-header">
-          <div class="post-header-tags" id="singleTags"></div>
-          <h1 class="post-header-title" id="singleTitle"></h1>
-          <div class="post-header-meta"><span id="singleDate"></span><span id="singleReadTime"></span></div>
-        </header>
-        <div class="post-divider"></div>
-        <div class="post-body" id="singleBody"></div>
-      </article>
-    </div>
-  </div>
-</main>
-
-<footer>
-  <div class="footer-inner">© 2026 LxZY. All rights reserved.</div>
-</footer>
-
-<script>
-  let allPosts = [];
-  let activeTag = 'All';
-
-  window.addEventListener('scroll', () => {
-    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
-  });
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('mobileNav').classList.toggle('open');
-  });
-  function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
-
-  function getSlug() { const hash = location.hash.slice(1); return hash && hash !== '/' ? hash : null; }
-  function navigate(slug) {
-    if (slug) { history.pushState(null, '', '#' + slug); renderPost(slug); }
-    else { history.pushState(null, '', location.pathname); renderListing(); }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-  window.addEventListener('popstate', () => { const slug = getSlug(); slug ? renderPost(slug) : renderListing(); });
-
-  async function loadPosts() {
-    try {
-      const r = await fetch('posts.json?v=' + Date.now());
-      if (!r.ok) throw new Error();
-      allPosts = await r.json();
-      allPosts.sort((a,b) => new Date(b.date) - new Date(a.date));
-      init();
-    } catch(e) {
-      document.getElementById('listing').innerHTML = '<div class="loading">⚠️ Could not load posts.</div>';
-    }
-  }
-  function init() { const slug = getSlug(); slug ? renderPost(slug) : (buildTagBar(), renderListing()); }
-  function buildTagBar() {
-    const tags = ['All', ...new Set(allPosts.flatMap(p => p.tags))];
-    document.getElementById('tagBar').innerHTML = tags.map(t => `<button class="tag-btn${t === activeTag ? ' active' : ''}" onclick="filterTag('${t}')">${t}</button>`).join('');
-  }
-  function filterTag(tag) { activeTag = tag; buildTagBar(); renderListing(); }
-  function renderListing() {
-    document.getElementById('listingView').style.display = '';
-    document.getElementById('singleView').style.display = 'none';
-    document.getElementById('pageHero').style.display = '';
-    const filtered = activeTag === 'All' ? allPosts : allPosts.filter(p => p.tags.includes(activeTag));
-    const container = document.getElementById('listing');
-    if (!filtered.length) { container.innerHTML = '<div class="loading">No posts found.</div>'; return; }
-    container.innerHTML = filtered.map((p,i) => `
-      <div class="post-card reveal" style="transition-delay:${i*0.05}s" onclick="navigate('${p.id}')">
-        <div>
-          <div class="post-tags">${p.tags.map(t => `<span class="post-tag">${t}</span>`).join('')}</div>
-          <div class="post-title">${p.title}</div>
-          <div class="post-summary">${p.summary}</div>
+    <!-- NAV -->
+    <nav id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <img src="images/logo.webp" alt="LxZY" width="128" height="128" loading="eager" decoding="sync" fetchpriority="high">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Portfolio</a></li>
+                <li><a href="index.html#whoami">About</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="blog.html" class="active">Knowledge Hub</a></li>
+                <li><a href="index.html#contact" class="nav-cta">Let's Connect</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
-        <div class="post-meta">
-          <div class="post-date">${formatDate(p.date)}</div>
-          <div class="post-read">${readTime(p.content)} min read</div>
-          <div class="post-arrow">Read →</div>
+    </nav>
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="index.html">Portfolio</a>
+        <a href="index.html#whoami">About</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="blog.html">Knowledge Hub</a>
+        <a href="index.html#contact">Let's Connect</a>
+    </nav>
+
+    <!-- APP CONTAINER -->
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Knowledge Hub</h2>
+                <div class="search-wrap">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search articles…" autocomplete="off">
+                </div>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav"></nav>
+            <div class="sidebar-no-results" id="sidebarNoResults">No articles found.</div>
+        </aside>
+
+        <!-- SIDEBAR BACKDROP -->
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+        <!-- MOBILE SIDEBAR TOGGLE -->
+        <button class="mobile-sidebar-toggle" id="mobileSidebarToggle" aria-label="Browse articles">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        </button>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper" id="mainWrapper">
+            <main class="main-content" id="mainContent">
+                <div class="loading-state" id="loadingState">
+                    <div class="spinner"></div>
+                    <span>Loading…</span>
+                </div>
+                <div id="welcomeState" style="display:none;"></div>
+                <div id="articleView" style="display:none;"></div>
+            </main>
+            <footer>
+                <div class="footer-inner">© 2026 LxZY. All rights reserved.</div>
+            </footer>
         </div>
-      </div>
-    `).join('');
-    requestAnimationFrame(() => {
-      document.querySelectorAll('.reveal').forEach((el,i) => setTimeout(() => el.classList.add('in'), i*50));
-    });
-  }
-  function renderPost(slug) {
-    const post = allPosts.find(p => p.id === slug);
-    if (!post) { navigate(null); return; }
-    document.getElementById('listingView').style.display = 'none';
-    document.getElementById('pageHero').style.display = 'none';
-    document.getElementById('singleView').style.display = '';
-    document.title = post.title + ' — LxZY';
-    // Remove tags from single post view (only change from original)
-    document.getElementById('singleTags').innerHTML = '';
-    document.getElementById('singleTitle').textContent = post.title;
-    document.getElementById('singleDate').textContent = formatDate(post.date);
-    document.getElementById('singleReadTime').textContent = readTime(post.content) + ' min read';
-    document.getElementById('singleBody').innerHTML = marked.parse(post.content);
-  }
-  document.getElementById('backBtn').addEventListener('click', () => { document.title = 'Blog — LxZY'; navigate(null); });
-  function formatDate(iso) { return new Date(iso).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); }
-  function readTime(content) { return Math.max(1, Math.ceil(content.split(/\s+/).length / 200)); }
-  loadPosts();
-</script>
+    </div>
+
+    <script>
+        (function() {
+            // ── DOM REFS ──
+            const nav = document.getElementById('nav');
+            const hamburger = document.getElementById('hamburger');
+            const mobileNav = document.getElementById('mobileNav');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarNav = document.getElementById('sidebarNav');
+            const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+            const sidebarNoResults = document.getElementById('sidebarNoResults');
+            const searchInput = document.getElementById('searchInput');
+            const mainContent = document.getElementById('mainContent');
+            const loadingState = document.getElementById('loadingState');
+            const welcomeState = document.getElementById('welcomeState');
+            const articleView = document.getElementById('articleView');
+            const progressBar = document.getElementById('progressBar');
+            const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
+            const mainWrapper = document.getElementById('mainWrapper');
+
+            // ── STATE ──
+            let allPosts = [];
+            let activeSlug = null;
+            let activeCategory = null;
+            let sidebarOpen = false;
+
+            // ── NAV SCROLL ──
+            window.addEventListener('scroll', () => {
+                nav.classList.toggle('scrolled', window.scrollY > 20);
+                updateProgressBar();
+            });
+
+            // ── MOBILE NAV ──
+            hamburger.addEventListener('click', () => {
+                mobileNav.classList.toggle('open');
+            });
+
+            function closeMobileNav() {
+                mobileNav.classList.remove('open');
+            }
+
+            // ── SIDEBAR TOGGLE (mobile) ──
+            function openSidebar() {
+                sidebar.classList.add('open');
+                sidebarBackdrop.classList.add('visible');
+                sidebarOpen = true;
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                sidebarBackdrop.classList.remove('visible');
+                sidebarOpen = false;
+                document.body.style.overflow = '';
+            }
+            mobileSidebarToggle.addEventListener('click', () => {
+                if (sidebarOpen) closeSidebar();
+                else openSidebar();
+            });
+            sidebarBackdrop.addEventListener('click', closeSidebar);
+
+            // Close sidebar on Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && sidebarOpen) closeSidebar();
+            });
+
+            // Close sidebar when clicking an article link on mobile
+            sidebarNav.addEventListener('click', (e) => {
+                const articleLink = e.target.closest('.sidebar-article');
+                if (articleLink && window.innerWidth <= 768) {
+                    setTimeout(closeSidebar, 150);
+                }
+            });
+
+            // ── ROUTING ──
+            function getSlug() {
+                const hash = location.hash.slice(1);
+                return hash && hash !== '/' ? hash : null;
+            }
+
+            function navigate(slug) {
+                if (slug) {
+                    history.pushState(null, '', '#' + slug);
+                    renderArticle(slug);
+                } else {
+                    history.pushState(null, '', location.pathname);
+                    renderWelcome();
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (window.innerWidth <= 768 && sidebarOpen) closeSidebar();
+            }
+            window.addEventListener('popstate', () => {
+                const slug = getSlug();
+                slug ? renderArticle(slug) : renderWelcome();
+            });
+
+            // ── DATA LOADING ──
+            async function loadPosts() {
+                try {
+                    const r = await fetch('posts.json?v=' + Date.now());
+                    if (!r.ok) throw new Error('Failed to fetch posts');
+                    allPosts = await r.json();
+                    allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    init();
+                } catch (e) {
+                    console.error(e);
+                    loadingState.innerHTML =
+                        '<div style="text-align:center;padding:3rem;color:#9B8B7A;">⚠️ Could not load articles. Please check that <code>posts.json</code> exists.</div>';
+                }
+            }
+
+            function init() {
+                buildSidebar();
+                const slug = getSlug();
+                slug ? renderArticle(slug) : renderWelcome();
+                setupSearch();
+            }
+
+            // ── CATEGORY GROUPING ──
+            function getCategory(post) {
+                if (post.category) return post.category;
+                if (post.tags && post.tags.length > 0) return post.tags[0];
+                return 'Uncategorized';
+            }
+
+            function groupByCategory() {
+                const groups = {};
+                allPosts.forEach(p => {
+                    const cat = getCategory(p);
+                    if (!groups[cat]) groups[cat] = [];
+                    groups[cat].push(p);
+                });
+                // Sort categories alphabetically, but keep specific order for common ones
+                const priorityOrder = ['SOC', 'Labs', 'Projects', 'Programming', 'Write-ups', 'Cheat Sheets',
+                    'Notes', 'Detection Engineering'
+                ];
+                const sortedKeys = Object.keys(groups).sort((a, b) => {
+                    const ia = priorityOrder.indexOf(a);
+                    const ib = priorityOrder.indexOf(b);
+                    if (ia !== -1 && ib !== -1) return ia - ib;
+                    if (ia !== -1) return -1;
+                    if (ib !== -1) return 1;
+                    return a.localeCompare(b);
+                });
+                const result = {};
+                sortedKeys.forEach(k => { result[k] = groups[k]; });
+                return result;
+            }
+
+            // ── BUILD SIDEBAR ──
+            function buildSidebar(filterText = '') {
+                const grouped = groupByCategory();
+                const filter = filterText.toLowerCase().trim();
+                let html = '';
+                let anyVisible = false;
+
+                Object.entries(grouped).forEach(([cat, posts]) => {
+                    const filteredPosts = filter ?
+                        posts.filter(p =>
+                            p.title.toLowerCase().includes(filter) ||
+                            p.summary.toLowerCase().includes(filter) ||
+                            (p.tags && p.tags.some(t => t.toLowerCase().includes(filter)))
+                        ) :
+                        posts;
+
+                    const isOpen = activeCategory === cat || (filter && filteredPosts.length > 0) || (!filter &&
+                        activeSlug && posts.some(p => p.id === activeSlug));
+                    const catHidden = filter && filteredPosts.length === 0;
+
+                    if (filteredPosts.length > 0) anyVisible = true;
+
+                    html += `
+                <div class="sidebar-category${isOpen ? ' open' : ''}${catHidden ? ' hidden-by-search' : ''}" data-category="${escapeHTML(cat)}">
+                  <div class="sidebar-category-header" onclick="window._toggleCategory(this)" data-cat="${escapeHTML(cat)}">
+                    <span>${escapeHTML(cat)}</span>
+                    <svg class="sidebar-category-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                  </div>
+                  <div class="sidebar-category-items">
+                    ${filteredPosts.map(p => `
+                      <div class="sidebar-article${p.id === activeSlug ? ' active' : ''}${filter && !filteredPosts.includes(p) ? ' hidden-by-search' : ''}" onclick="window._navigateArticle('${p.id}')" data-slug="${p.id}">
+                        ${escapeHTML(p.title)}
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>`;
+                });
+
+                sidebarNav.innerHTML = html;
+
+                if (filter && !anyVisible) {
+                    sidebarNoResults.classList.add('show');
+                } else {
+                    sidebarNoResults.classList.remove('show');
+                }
+
+                // Scroll active article into view
+                requestAnimationFrame(() => {
+                    const activeEl = sidebarNav.querySelector('.sidebar-article.active');
+                    if (activeEl) {
+                        activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                    }
+                });
+            }
+
+            function escapeHTML(str) {
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
+
+            // Expose for onclick in HTML
+            window._toggleCategory = function(header) {
+                const catDiv = header.closest('.sidebar-category');
+                catDiv.classList.toggle('open');
+                const cat = header.getAttribute('data-cat');
+                if (activeCategory === cat && catDiv.classList.contains('open')) {
+                    // keep open
+                }
+                activeCategory = catDiv.classList.contains('open') ? cat : null;
+            };
+
+            window._navigateArticle = function(slug) {
+                navigate(slug);
+            };
+
+            // ── SEARCH ──
+            function setupSearch() {
+                let debounceTimer;
+                searchInput.addEventListener('input', () => {
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(() => {
+                        const val = searchInput.value;
+                        buildSidebar(val);
+                    }, 200);
+                });
+                // Clear search on Escape
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        searchInput.value = '';
+                        buildSidebar('');
+                        searchInput.blur();
+                    }
+                });
+            }
+
+            // ── RENDER WELCOME ──
+            function renderWelcome() {
+                activeSlug = null;
+                activeCategory = null;
+                document.title = 'Knowledge Hub — LxZY';
+                loadingState.style.display = 'none';
+                articleView.style.display = 'none';
+                welcomeState.style.display = '';
+                progressBar.classList.remove('visible');
+                progressBar.style.width = '0%';
+                buildSidebar('');
+                searchInput.value = '';
+
+                const grouped = groupByCategory();
+                const categories = Object.entries(grouped);
+                const recentPosts = allPosts.slice(0, 6);
+
+                let catCardsHTML = categories.map(([cat, posts]) => `
+              <div class="category-card" onclick="window._scrollToCategory('${escapeHTML(cat)}')">
+                <h3>${escapeHTML(cat)}</h3>
+                <span class="cat-count">${posts.length} article${posts.length !== 1 ? 's' : ''}</span>
+              </div>
+            `).join('');
+
+                let recentHTML = recentPosts.map(p => `
+              <li onclick="navigate('${p.id}')">
+                <span class="rec-title">${escapeHTML(p.title)}</span>
+                <span class="rec-cat">${escapeHTML(getCategory(p))}</span>
+                <span class="rec-arrow">→</span>
+              </li>
+            `).join('');
+
+                welcomeState.innerHTML = `
+              <div class="welcome-state">
+                <p class="welcome-eyebrow">Hi, Welcome To the Playground</p>
+                <h1>Knowledge Hub</h1>
+                <p class="welcome-desc">Security research, lab write-ups, and technical notes from the SOC trenches. A curated personal knowledge base.</p>
+                <div class="category-grid">${catCardsHTML}</div>
+                ${recentPosts.length > 0 ? `
+                  <div class="recent-section">
+                    <h3>Recently Updated</h3>
+                    <ul class="recent-list">${recentHTML}</ul>
+                  </div>` : ''}
+              </div>
+            `;
+            }
+
+            window._scrollToCategory = function(cat) {
+                activeCategory = cat;
+                buildSidebar('');
+                // On mobile, open sidebar to show the category
+                if (window.innerWidth <= 768) {
+                    openSidebar();
+                }
+                // Scroll to category in sidebar
+                requestAnimationFrame(() => {
+                    const catHeader = sidebarNav.querySelector(`[data-cat="${cat}"]`);
+                    if (catHeader) {
+                        const catDiv = catHeader.closest('.sidebar-category');
+                        catDiv.classList.add('open');
+                        catHeader.scrollIntoView({ block: 'start', behavior: 'smooth' });
+                    }
+                });
+            };
+
+            // ── RENDER ARTICLE ──
+            function renderArticle(slug) {
+                const post = allPosts.find(p => p.id === slug);
+                if (!post) {
+                    navigate(null);
+                    return;
+                }
+                activeSlug = slug;
+                activeCategory = getCategory(post);
+                document.title = post.title + ' — LxZY';
+                loadingState.style.display = 'none';
+                welcomeState.style.display = 'none';
+                articleView.style.display = '';
+                progressBar.classList.add('visible');
+                progressBar.style.width = '0%';
+                buildSidebar('');
+                searchInput.value = '';
+
+                const cat = getCategory(post);
+                const categoryPosts = allPosts.filter(p => getCategory(p) === cat);
+                const currentIndex = categoryPosts.findIndex(p => p.id === slug);
+                const prevPost = currentIndex > 0 ? categoryPosts[currentIndex - 1] : null;
+                const nextPost = currentIndex < categoryPosts.length - 1 ? categoryPosts[currentIndex + 1] : null;
+
+                // Related articles: share at least one tag, exclude current, max 3
+                const related = allPosts
+                    .filter(p => p.id !== slug && p.tags && post.tags && p.tags.some(t => post.tags.includes(t)))
+                    .slice(0, 3);
+
+                // Render markdown
+                let bodyHTML = marked.parse(post.content || '');
+
+                // Post-process callouts: convert blockquotes with [!TYPE] to callout divs
+                bodyHTML = bodyHTML.replace(/<blockquote>\s*<p>\s*<strong>\[!(NOTE|TIP|WARNING|DANGER|INFO)\]<\/strong>\s*(.*?)<\/p>\s*<\/blockquote>/gis,
+                    (match, type, content) => {
+                        const typeLower = type.toLowerCase();
+                        return `
+                  <div class="callout callout-${typeLower}">
+                    <div class="callout-title">${type}</div>
+                    <p>${content}</p>
+                  </div>`;
+                    });
+                // Also handle multi-paragraph callouts
+                bodyHTML = bodyHTML.replace(/<blockquote>\s*<p>\s*<strong>\[!(NOTE|TIP|WARNING|DANGER|INFO)\]<\/strong>\s*(.*?)<\/p>\s*(<p>.*?<\/p>)*\s*<\/blockquote>/gis,
+                    (match, type, firstPara, rest) => {
+                        const typeLower = type.toLowerCase();
+                        const restClean = rest ? rest.replace(/<p>/g, '<p>').replace(/<\/p>/g, '</p>') : '';
+                        return `
+                  <div class="callout callout-${typeLower}">
+                    <div class="callout-title">${type}</div>
+                    <p>${firstPara}</p>${restClean}
+                  </div>`;
+                    });
+
+                // Add language labels to code blocks
+                bodyHTML = bodyHTML.replace(/<pre><code class="language-(\w+)">/g,
+                    '<pre style="position:relative;"><span class="code-lang-label">$1</span><code class="language-$1">');
+                bodyHTML = bodyHTML.replace(/<pre><code>/g, '<pre><code>');
+
+                // Build breadcrumbs
+                const breadcrumbsHTML = `
+              <span class="bread-link" onclick="window._breadcrumbHome()">Knowledge Hub</span>
+              <span class="bread-sep">›</span>
+              <span class="bread-link" onclick="window._breadcrumbCategory('${escapeHTML(cat)}')">${escapeHTML(cat)}</span>
+              <span class="bread-sep">›</span>
+              <span>${escapeHTML(post.title)}</span>
+            `;
+
+                // Build prev/next
+                const prevNextHTML = `
+              <div class="prev-next-nav">
+                <div class="prev-next-btn prev${prevPost ? '' : ' disabled'}" onclick="${prevPost ? "navigate('" + prevPost.id + "')" : ''}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                  <div>
+                    <div class="pn-label">Previous</div>
+                    <div class="pn-title">${prevPost ? escapeHTML(prevPost.title) : '—'}</div>
+                  </div>
+                </div>
+                <div class="prev-next-btn next${nextPost ? '' : ' disabled'}" onclick="${nextPost ? "navigate('" + nextPost.id + "')" : ''}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                  <div>
+                    <div class="pn-label">Next</div>
+                    <div class="pn-title">${nextPost ? escapeHTML(nextPost.title) : '—'}</div>
+                  </div>
+                </div>
+              </div>
+            `;
+
+                // Build related
+                const relatedHTML = related.length > 0 ? `
+              <div class="related-section">
+                <h3>Related Articles</h3>
+                <div class="related-list">
+                  ${related.map(r => `
+                    <div class="related-item" onclick="navigate('${r.id}')">
+                      <span class="rel-title">${escapeHTML(r.title)}</span>
+                      <span class="rel-arrow">→</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : '';
+
+                articleView.innerHTML = `
+              <div class="article-view">
+                <div class="breadcrumbs">${breadcrumbsHTML}</div>
+                <div class="article-header-tags">${(post.tags || []).map(t => `<span class="article-tag">${escapeHTML(t)}</span>`).join('')}</div>
+                <h1 class="article-title">${escapeHTML(post.title)}</h1>
+                <div class="article-meta">
+                  <span>${formatDate(post.date)}</span>
+                  <span>·</span>
+                  <span>${readTime(post.content)} min read</span>
+                </div>
+                <div class="article-divider"></div>
+                <div class="post-body">${bodyHTML}</div>
+                ${prevNextHTML}
+                ${relatedHTML}
+              </div>
+            `;
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                updateProgressBar();
+            }
+
+            // Breadcrumb handlers
+            window._breadcrumbHome = function() { navigate(null); };
+            window._breadcrumbCategory = function(cat) {
+                activeCategory = cat;
+                buildSidebar('');
+                renderWelcome();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                requestAnimationFrame(() => {
+                    const catHeader = sidebarNav.querySelector(`[data-cat="${cat}"]`);
+                    if (catHeader) {
+                        const catDiv = catHeader.closest('.sidebar-category');
+                        catDiv.classList.add('open');
+                    }
+                });
+            };
+
+            // ── PROGRESS BAR ──
+            function updateProgressBar() {
+                if (!activeSlug) {
+                    progressBar.classList.remove('visible');
+                    progressBar.style.width = '0%';
+                    return;
+                }
+                const articleEl = articleView.querySelector('.article-view');
+                if (!articleEl) {
+                    progressBar.style.width = '0%';
+                    return;
+                }
+                const rect = articleEl.getBoundingClientRect();
+                const articleTop = rect.top;
+                const articleHeight = rect.height;
+                const viewportHeight = window.innerHeight;
+                const scrolledPast = -articleTop;
+                const totalScrollable = articleHeight - viewportHeight;
+                if (totalScrollable <= 0) {
+                    progressBar.style.width = '100%';
+                    return;
+                }
+                let progress = (scrolledPast / totalScrollable) * 100;
+                progress = Math.max(0, Math.min(100, progress));
+                progressBar.style.width = progress + '%';
+                progressBar.classList.add('visible');
+            }
+
+            // ── UTILS ──
+            function formatDate(iso) {
+                return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            }
+
+            function readTime(content) {
+                return Math.max(1, Math.ceil((content || '').split(/\s+/).length / 200));
+            }
+
+            // ── RESIZE HANDLER ──
+            let resizeDebounce;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeDebounce);
+                resizeDebounce = setTimeout(() => {
+                    if (window.innerWidth > 768 && sidebarOpen) {
+                        closeSidebar();
+                    }
+                    updateProgressBar();
+                }, 200);
+            });
+
+            // ── KEYBOARD SHORTCUTS ──
+            document.addEventListener('keydown', (e) => {
+                // Cmd/Ctrl + K to focus search
+                if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                    e.preventDefault();
+                    searchInput.focus();
+                    if (window.innerWidth <= 768 && !sidebarOpen) {
+                        openSidebar();
+                    }
+                }
+                // Cmd/Ctrl + \ to toggle sidebar
+                if ((e.metaKey || e.ctrlKey) && e.key === '\\') {
+                    e.preventDefault();
+                    if (window.innerWidth <= 768) {
+                        sidebarOpen ? closeSidebar() : openSidebar();
+                    }
+                }
+            });
+
+            // ── START ──
+            loadPosts();
+        })();
+    </script>
 </body>
 </html>
