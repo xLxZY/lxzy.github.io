@@ -3,6 +3,7 @@
     "id": "phishy",
     "title": "Phishy",
     "date": "2026-07-10",
+    "category": "Projects",
     "tags": [
       "n8n",
       "Automation",
@@ -16,6 +17,7 @@
     "id": "linux-identity-access-management-iam-lab",
     "title": "Linux Identity & Access Management (IAM) Lab",
     "date": "2026-06-11",
+    "category": "Projects",
     "tags": [
       "IAM"
     ],
@@ -26,6 +28,7 @@
     "id": "thm-invite-only",
     "title": "THM : Invite Only",
     "date": "2026-06-10",
+    "category": "Write-ups",
     "tags": [
       "THM",
       "Threat Intelligence"
@@ -37,6 +40,7 @@
     "id": "soc-investigation-lab",
     "title": "SOC Investigation Lab",
     "date": "2026-06-02",
+    "category": "Projects",
     "tags": [
       "Elastic",
       "Sysmon",
@@ -51,6 +55,7 @@
     "id": "ioc-enrichment-tool",
     "title": "IOC Enrichment Tool",
     "date": "2026-06-01",
+    "category": "Projects",
     "tags": [
       "Python",
       "Automation",
@@ -65,6 +70,7 @@
     "id": "zero-trust-lab-build",
     "title": "Zero Trust Architecture Lab: Engineering and Validation of a Dual-Site Security Homelab",
     "date": "2026-05-10",
+    "category": "Projects",
     "tags": [
       "Zero Trust",
       "pfSense",
