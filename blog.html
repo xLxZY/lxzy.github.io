@@ -1155,6 +1155,10 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 if (window.innerWidth <= 768 && sidebarOpen) closeSidebar();
             }
+
+            // *** FIX: Expose navigate globally for inline onclick ***
+            window.navigate = navigate;
+
             window.addEventListener('popstate', () => {
                 const slug = getSlug();
                 slug ? renderArticle(slug) : renderWelcome();
