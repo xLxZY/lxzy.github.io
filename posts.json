@@ -71,6 +71,7 @@
     "title": "Zero Trust Architecture Lab: Engineering and Validation of a Dual-Site Security Homelab",
     "date": "2026-05-10",
     "tags": [
+      "Projects",
       "Zero Trust",
       "pfSense",
       "Splunk",
