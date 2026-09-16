@@ -912,6 +912,81 @@
             }
         }
 
+        /* ── IMAGE LIGHTBOX ── */
+        .post-body img {
+            cursor: zoom-in;
+            transition: opacity 0.2s;
+        }
+        .post-body img:hover {
+            opacity: 0.92;
+        }
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            background: rgba(20, 18, 17, 0.9);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.28s ease, visibility 0.28s ease;
+        }
+        .lightbox-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            margin: 0;
+            border-radius: 4px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+            transform: scale(0.94);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        .lightbox-overlay.open .lightbox-img {
+            transform: scale(1);
+        }
+        .lightbox-close {
+            position: fixed;
+            top: 1.2rem;
+            right: 1.2rem;
+            z-index: 2001;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(245, 240, 235, 0.22);
+            background: rgba(245, 240, 235, 0.1);
+            color: #F5F0EB;
+            transition: all 0.25s ease;
+        }
+        .lightbox-close:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: rotate(90deg);
+        }
+        .lightbox-close svg {
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+        }
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
         /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
             .main-content {
@@ -977,6 +1052,15 @@
             .post-body pre {
                 font-size: 0.75rem;
                 padding: 1rem;
+            }
+            .lightbox-overlay {
+                padding: 3.5rem 1rem 1.5rem;
+            }
+            .lightbox-close {
+                top: 0.8rem;
+                right: 0.8rem;
+                width: 40px;
+                height: 40px;
             }
         }
         @media (max-width: 480px) {
@@ -1586,6 +1670,72 @@
                     }
                 }
             });
+
+            // ── IMAGE LIGHTBOX ──
+            let lightboxEl = null;
+
+            function createLightbox() {
+                const el = document.createElement('div');
+                el.className = 'lightbox-overlay';
+                el.id = 'lightbox';
+                el.innerHTML = `
+                  <button class="lightbox-close" id="lightboxClose" aria-label="Close image">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+                  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+                `;
+                document.body.appendChild(el);
+                return el;
+            }
+
+            function openLightbox(src, alt) {
+                if (!lightboxEl) lightboxEl = createLightbox();
+                const img = lightboxEl.querySelector('#lightboxImg');
+                img.src = src;
+                img.alt = alt || '';
+                lightboxEl.classList.add('open');
+                document.body.classList.add('lightbox-open');
+            }
+
+            function closeLightbox() {
+                if (!lightboxEl || !lightboxEl.classList.contains('open')) return;
+                lightboxEl.classList.remove('open');
+                document.body.classList.remove('lightbox-open');
+                setTimeout(() => {
+                    if (lightboxEl && !lightboxEl.classList.contains('open')) {
+                        lightboxEl.querySelector('#lightboxImg').src = '';
+                    }
+                }, 300);
+            }
+
+            // Delegated clicks: open on article image, close on X or backdrop
+            document.addEventListener('click', (e) => {
+                // Click on an image inside an article → zoom in
+                const articleImg = e.target.closest('.post-body img');
+                if (articleImg && !articleImg.closest('.lightbox-overlay')) {
+                    e.preventDefault();
+                    openLightbox(articleImg.currentSrc || articleImg.src, articleImg.alt);
+                    return;
+                }
+                // Click the X button → close
+                if (e.target.closest('#lightboxClose')) {
+                    e.preventDefault();
+                    closeLightbox();
+                    return;
+                }
+                // Click the dark backdrop itself (not the image) → close
+                if (e.target.classList && e.target.classList.contains('lightbox-overlay')) {
+                    closeLightbox();
+                }
+            });
+
+            // Escape closes the lightbox
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightboxEl && lightboxEl.classList.contains('open')) {
+                    e.stopPropagation();
+                    closeLightbox();
+                }
+            }, true);
 
             // ── START ──
             loadPosts();
